@@ -1,3 +1,6 @@
+"""
+This file manages the dependencies for the Promplate Demo project and specifies the required Python version.
+"""
 [project]
 authors = [{ name = "Muspi Merol", email = "me@promplate.dev" }]
 dependencies = []
