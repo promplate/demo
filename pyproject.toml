@@ -1,6 +1,20 @@
 [project]
 authors = [{ name = "Muspi Merol", email = "me@promplate.dev" }]
-dependencies = []
 requires-python = ">=3.10"
 readme = "README.md"
 license = { text = "MIT" }
+dependencies = [
+    "fastapi>=0.105.0",
+    "uvicorn[standard]>=0.24.0.post1",
+]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "isort>=5.13.1",
+    "black>=23.12.0",
+]
+
+[tool.pdm.scripts]
+fmt = { composite = ["isort ./{args}", "black ./{args}"] }
+dev = "uvicorn src:app --reload"
+prod = "uvicorn src:app --host 0.0.0.0 --port $PORT"
