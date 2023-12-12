@@ -1,0 +1,10 @@
+.vscode
+.fleet
+.idea
+
+*.env
+
+pdm.lock
+.pdm-python
+
+__pycache__
