@@ -1,5 +1,6 @@
 import pytest
 from fastapi.responses import JSONResponse, PlainTextResponse
+
 from src import render_template
 from src.utils.helpers import DotTemplate
 from src.utils.load import Templates, load_template
