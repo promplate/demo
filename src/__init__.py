@@ -22,6 +22,20 @@ async def render_template(
     format: Literal["text", "list", "script"] = "text",
     sync: bool = False,
 ):
+    """
+    Render the specified template with the given context.
+
+    Parameters:
+    - template: The template to render.
+    - context: The context to use for rendering.
+    - format: The format of the output (default: "text").
+    - sync: Whether to render synchronously (default: False).
+
+    Returns:
+    - If format is "text", returns the rendered template as plain text.
+    - If format is "list", returns the rendered template as a list of messages.
+    - If format is "script", returns the rendered template as a Python script.
+    """
     try:
         t = load_template(template)
         if format == "script":
