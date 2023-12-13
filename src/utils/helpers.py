@@ -11,6 +11,10 @@ class SilentBox(Box):
 
 
 class DotTemplate(Template):
-    def render(self, context: dict):
-        context = SilentBox(default_box=True) | get_builtins() | context
+    def render(self, context=None):
+        context = SilentBox(default_box=True) | get_builtins() | (context or {})
         return super().render(context)
+
+    async def arender(self, context=None):
+        context = SilentBox(default_box=True) | get_builtins() | (context or {})
+        return await super().arender(context)
