@@ -12,6 +12,7 @@ app = FastAPI()
 
 @app.get("/heartbeat", response_model=str, response_class=PlainTextResponse)
 async def greet():
+    """Handles GET requests to the '/heartbeat' endpoint and returns a plain text response."""
     return f"hi from {now()}"
 
 
