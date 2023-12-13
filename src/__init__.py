@@ -16,9 +16,17 @@ async def greet():
 
 
 @app.post("/render/{template}", response_model=list[Message] | str)
-async def render_template(template: Templates, context: Context, format: Literal["text", "list"] = "text"):
+async def render_template(
+    template: Templates,
+    context: Context,
+    format: Literal["text", "list", "script"] = "text",
+    sync: bool = False,
+):
     try:
-        prompt = load_template(template).render(context)
+        t = load_template(template)
+        if format == "script":
+            return PlainTextResponse(t.get_script(sync), media_type="text/x-python")
+        prompt = t.render(context) if sync else await t.arender(context)
         return PlainTextResponse(prompt) if format == "text" else JSONResponse(parse_chat_markup(prompt))
     except Exception as e:
         return PlainTextResponse(str(e), 400)
