@@ -1,3 +1,7 @@
+"""
+This file contains utility functions and classes for loading templates.
+"""
+
 from functools import cache
 from pathlib import Path
 from typing import Annotated, Literal
@@ -10,6 +14,9 @@ root = Path("src/templates")
 
 
 def load_template(path: str):
+    """
+    Reads a template file and returns a DotTemplate object.
+    """
     return DotTemplate.read(root / f"{path}.j2")
 
 
@@ -18,6 +25,9 @@ if not __debug__:
 
 
 class LazyLoader(dict):
+    """
+    A dictionary subclass that loads a template when a key is missing.
+    """
     def __missing__(self, key):
         try:
             return load_template(key)
