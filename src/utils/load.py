@@ -10,6 +10,7 @@ root = Path("src/templates")
 
 
 def load_template(path: str):
+    """Loads a template from a given path and returns a DotTemplate object."""
     return DotTemplate.read(root / f"{path}.j2")
 
 
