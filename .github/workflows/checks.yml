@@ -1,4 +1,4 @@
-name: Python Code Formatting Checks
+name: Formatting and Type Checks
 
 on: ["push", "pull_request"]
 
