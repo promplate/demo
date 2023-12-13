@@ -12,6 +12,7 @@ class SilentBox(Box):
 
 
 class DotTemplate(Template):
+    """This class extends the Template class and overrides the render method to render the template with a given context."""
     def render(self, context: dict):
         context = SilentBox(default_box=True) | get_builtins() | context
         return super().render(context)
