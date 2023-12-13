@@ -1,4 +1,5 @@
 import pytest
+
 from src import render_template
 from src.utils.load import Context, Templates
 
