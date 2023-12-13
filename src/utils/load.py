@@ -19,6 +19,13 @@ if not __debug__:
 
 class LazyLoader(dict):
     def __missing__(self, key):
+        """
+        Special method called by Python when a key is not found in the dictionary.
+
+        This function attempts to load the template with the given key. If the template
+        is not found, it raises a FileNotFoundError indicating the prompt cannot be
+        located.
+        """
         try:
             return load_template(key)
         except FileNotFoundError:
