@@ -6,6 +6,8 @@ license = { text = "MIT" }
 dependencies = [
     "fastapi>=0.105.0",
     "uvicorn[standard]>=0.24.0.post1",
+    "promplate[all]==0.3.0b4",
+    "python-box>=7.1.1",
 ]
 
 [tool.pdm.dev-dependencies]
@@ -18,3 +20,6 @@ dev = [
 fmt = { composite = ["isort ./{args}", "black ./{args}"] }
 dev = "uvicorn src:app --reload"
 prod = "uvicorn src:app --host 0.0.0.0 --port $PORT"
+
+[tool.black]
+line-length = 120

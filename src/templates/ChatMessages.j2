@@ -1,0 +1,4 @@
+{% for message in messages -%}
+<| {{ message.role }} {{ message.name }} |>
+{{ message.content }}
+{% endfor %}
