@@ -28,6 +28,7 @@ class LazyLoader(dict):
     """
     A dictionary subclass that loads a template when a key is missing.
     """
+
     def __missing__(self, key):
         try:
             return load_template(key)
