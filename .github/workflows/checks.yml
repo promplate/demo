@@ -20,3 +20,6 @@ jobs:
       - name: Run black check
         run: |
           pdm run black . --check --diff
+      - name: Run pyright check
+        run: |
+          pdm run npx pyright

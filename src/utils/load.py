@@ -28,4 +28,4 @@ class LazyLoader(dict):
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
 
 
-Templates = Annotated[Literal.__getitem__(tuple((i.stem for i in root.glob("*.j2")))), str]
+Templates = Annotated[Literal.__getitem__(tuple((i.stem for i in root.glob("*.j2")))), str]  # type: ignore
