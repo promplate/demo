@@ -26,10 +26,7 @@ class LazyLoader(dict):
         is not found, it raises a FileNotFoundError indicating the prompt cannot be
         located.
         """
-        try:
-            return load_template(key)
-        except FileNotFoundError:
-            raise KeyError(f"Prompt {key} not found")
+        return load_template(key) if key in self else raise KeyError(f"Prompt {key} not found")
 
 
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
