@@ -6,7 +6,7 @@ license = { text = "MIT" }
 dependencies = [
     "fastapi>=0.105.0",
     "uvicorn[standard]>=0.24.0.post1",
-    "promplate[all]==0.3.0b4",
+    "promplate[all]==0.3.0b5",
     "python-box>=7.1.1",
 ]
 
