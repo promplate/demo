@@ -13,6 +13,13 @@ def load_template(stem: str):
     return DotTemplate.read(glob()[stem])
 
 
+def generate_pyi():
+    if __debug__:
+        source = Path(__file__)
+        target = source.with_suffix(".pyi")
+        target.write_text(source.read_text().replace("stem: str", f"stem: Literal{list(glob())}"))
+
+
 def glob():
     return {
         path.as_posix().removeprefix(f"{root}/").removesuffix(path.suffix): path

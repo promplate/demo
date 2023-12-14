@@ -4,10 +4,10 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse, PlainTextResponse
 from promplate import Context, Message, parse_chat_markup
 
-from .utils.load import Templates, load_template
+from .utils.load import Templates, generate_pyi, load_template
 from .utils.time import now
 
-app = FastAPI()
+app = FastAPI(title="Promplate Demo", on_startup=[generate_pyi])
 
 
 @app.get("/heartbeat", response_model=str, response_class=PlainTextResponse)

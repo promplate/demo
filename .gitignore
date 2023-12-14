@@ -8,3 +8,4 @@ pdm.lock
 .pdm-python
 
 __pycache__
+*.pyi
