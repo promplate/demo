@@ -1,5 +1,5 @@
-from promplate import Node
+from promplate import Node, Template
 
-from ..utils.load import load_template
+from ..utils.load import load_template, Template
 
 main = Node(load_template("Main"))
