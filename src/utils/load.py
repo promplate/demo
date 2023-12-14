@@ -11,6 +11,7 @@ root = Path("src/templates")
 
 
 def load_template(stem: str):
+    """Loads a template from the given stem. If the stem is a directory, it returns the corresponding component. If the stem is not found, it raises a KeyError."""
     try:
         return DotTemplate.read(glob()[stem])
     except KeyError:
