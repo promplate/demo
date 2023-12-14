@@ -51,7 +51,7 @@ class LazyLoader(dict):
         except FileNotFoundError:
             raise KeyError(f"Prompt {key} not found")
 
-    def __getattr__(self, stem: str) -> Self | DotTemplate:
+    def __getattr__(self, stem: str) -> 'LazyLoader':
         if (root / stem).is_dir():
             loader = LazyLoader()
             loader.path = self.path / stem
