@@ -11,6 +11,14 @@ root = Path("src/templates")
 
 
 def load_template(stem: str):
+    """Load a template given the stem of the template file.
+
+    Args:
+        stem (str): The stem (base name without suffix) of the template file.
+
+    Returns:
+        DotTemplate | LazyLoader: The loaded template as a DotTemplate object or LazyLoader if the stem corresponds to a directory.
+    """
     try:
         return DotTemplate.read(glob()[stem])
     except KeyError:
@@ -48,6 +56,14 @@ class LazyLoader(dict):
             raise KeyError(f"Prompt {key} not found")
 
     def __getattr__(self, stem: str) -> Self | DotTemplate:
+        """Get an attribute representing a sub-directory or a template.
+
+        Args:
+            stem (str): The stem (base name without suffix) of the directory or template.
+
+        Returns:
+            Self | DotTemplate: A new LazyLoader instance if stem is a directory, or a DotTemplate object if stem is a template file.
+        """
         if (root / stem).is_dir():
             loader = LazyLoader()
             loader.path = self.path / stem
