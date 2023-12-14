@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse, PlainTextResponse
 from promplate import Context, Message, parse_chat_markup
 
-from .utils.load import Templates, generate_pyi, load_template
+from .utils.load import Templates, generate_pyi, load_template, TemplateNotFoundError, TemplateNotFoundError
 from .utils.time import now
 
 app = FastAPI(title="Promplate Demo", on_startup=[generate_pyi])
@@ -42,5 +42,7 @@ async def render_template(
             return PlainTextResponse(t.get_script(sync), media_type="text/x-python")
         prompt = t.render(context) if sync else await t.arender(context)
         return PlainTextResponse(prompt) if format == "text" else JSONResponse(parse_chat_markup(prompt))
+    except TemplateNotFoundError as e:
+        return JSONResponse({"error": "Template not found: " + str(e)}, status_code=404)
     except Exception as e:
         return PlainTextResponse(str(e), 400)
