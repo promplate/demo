@@ -11,6 +11,14 @@ root = Path("src/templates")
 
 
 def load_template(stem: str):
+    """Load a template based on its stem name.
+
+    Parameters:
+    stem (str): The stem name of the template to load.
+
+    Returns:
+    DotTemplate: The loaded template object.
+    """
     try:
         return DotTemplate.read(glob()[stem])
     except KeyError:
@@ -19,6 +27,8 @@ def load_template(stem: str):
 
 
 def generate_pyi():
+    """Generate a .pyi file from the current module for static typing.
+    """
     if __debug__:
         source = Path(__file__)
         target = source.with_suffix(".pyi")
@@ -26,6 +36,11 @@ def generate_pyi():
 
 
 def glob():
+    """Return a mapping of file stems to file paths for all files in the root directory.
+
+    Returns:
+    dict: A dictionary where keys are stems and values are file paths.
+    """
     return {
         path.as_posix().removeprefix(f"{root}/").removesuffix(path.suffix): path
         for path in root.glob("**/*")
@@ -39,15 +54,36 @@ if not __debug__ and not TYPE_CHECKING:
 
 
 class LazyLoader(dict):
+    """A dictionary-like object that lazily loads templates on access.
+    """
     path = root
 
     def __missing__(self, key):
+        """Handle requests for missing items by trying to load the template.
+
+        Parameters:
+        key (str): The key for the missing item.
+
+        Returns:
+        DotTemplate: The loaded template if found; otherwise, raises KeyError.
+
+        Raises:
+        KeyError: If the prompt for the given key is not found.
+        """
         try:
             return load_template(key)
         except FileNotFoundError:
             raise KeyError(f"Prompt {key} not found")
 
     def __getattr__(self, stem: str) -> Self | DotTemplate:
+        """Get an attribute or lazily load a sub-template based on a directory stem.
+
+        Parameters:
+        stem (str): The directory stem to lazily load sub-templates from.
+
+        Returns:
+        LazyLoader | DotTemplate: A new LazyLoader if directory, else the template object.
+        """
         if (root / stem).is_dir():
             loader = LazyLoader()
             loader.path = self.path / stem
@@ -59,6 +95,11 @@ class LazyLoader(dict):
         __getattr__ = cache(__getattr__)
 
     def __hash__(self):
+        """Compute the hash based on the path of the LazyLoader.
+
+        Returns:
+        int: The hash value of the path.
+        """
         return hash(self.path)
 
 
