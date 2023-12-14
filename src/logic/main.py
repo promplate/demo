@@ -1,5 +1,8 @@
 from promplate import Node
 
-from ..utils.load import load_template
+from ..utils.load import load_template, TemplateNotFoundError
 
-main = Node(load_template("Main"))
+try:
+    main = Node(load_template("Main"))
+except TemplateNotFoundError as e:
+    main = Node(lambda context: f"Template not found: {e}")
