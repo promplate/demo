@@ -10,12 +10,18 @@ from .helpers import DotTemplate
 root = Path("src/templates")
 
 
+def read_template(stem: str):
+    return DotTemplate.read(glob()[stem])
+
+def get_component(stem: str):
+    if (root / stem).is_dir():
+        return getattr(components, stem)
+
 def load_template(stem: str):
     try:
-        return DotTemplate.read(glob()[stem])
+        return read_template(stem)
     except KeyError:
-        if (root / stem).is_dir():
-            return getattr(components, stem)
+        return get_component(stem)
 
 
 def generate_pyi():
