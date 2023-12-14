@@ -27,8 +27,7 @@ def load_template(stem: str):
 
 
 def generate_pyi():
-    """Generate a .pyi file from the current module for static typing.
-    """
+    """Generate a .pyi file from the current module for static typing."""
     if __debug__:
         source = Path(__file__)
         target = source.with_suffix(".pyi")
