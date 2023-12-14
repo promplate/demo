@@ -15,7 +15,7 @@ async def greet():
     return f"hi from {now()}"
 
 
-@app.post("/render/{template}", response_model=list[Message] | str)
+@app.post("/render/{template:path}", response_model=list[Message] | str)
 async def render_template(
     template: Templates,
     context: Context,

@@ -1,6 +1,6 @@
 from functools import cache
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import TYPE_CHECKING, Annotated, Literal
 
 from promplate.prompt.utils import get_builtins
 
@@ -14,10 +14,14 @@ def load_template(stem: str):
 
 
 def glob():
-    return {path.stem: path for path in root.glob("**/*")}
+    return {
+        path.as_posix().removeprefix(f"{root}/").removesuffix(path.suffix): path
+        for path in root.glob("**/*")
+        if path.is_file()
+    }
 
 
-if not __debug__:
+if not __debug__ and not TYPE_CHECKING:
     load_template = cache(load_template)
     glob = cache(glob)
 
