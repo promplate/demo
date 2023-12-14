@@ -9,12 +9,17 @@ from .helpers import DotTemplate
 root = Path("src/templates")
 
 
-def load_template(path: str):
-    return DotTemplate.read(root / f"{path}.j2")
+def load_template(stem: str):
+    return DotTemplate.read(glob()[stem])
+
+
+def glob():
+    return {path.stem: path for path in root.glob("**/*")}
 
 
 if not __debug__:
     load_template = cache(load_template)
+    glob = cache(glob)
 
 
 class LazyLoader(dict):
@@ -28,4 +33,4 @@ class LazyLoader(dict):
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
 
 
-Templates = Annotated[Literal.__getitem__(tuple((i.stem for i in root.glob("*.j2")))), str]  # type: ignore
+Templates = Annotated[Literal.__getitem__(tuple(glob())), str]  # type: ignore

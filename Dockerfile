@@ -13,4 +13,4 @@ ENV PORT 9040
 
 EXPOSE $PORT
 
-CMD /bin/bash -c "$(cat /activate.sh) && python3 -m uvicorn src:app --host 0.0.0.0 --port $PORT"
+CMD /bin/bash -c "$(cat /activate.sh) && python3 -O -m uvicorn src:app --host 0.0.0.0 --port $PORT"
