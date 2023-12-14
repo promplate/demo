@@ -28,6 +28,7 @@ def generate_pyi():
 
 
 def glob():
+    """Returns a dictionary where the keys are the relative paths of all files in the root directory, and the values are the corresponding Path objects."""
     return {
         path.as_posix().removeprefix(f"{root}/").removesuffix(path.suffix): path
         for path in root.glob("**/*")
