@@ -39,6 +39,16 @@ if not __debug__ and not TYPE_CHECKING:
 
 
 class LazyLoader(dict):
+
+    def __load_template__(self, stem: str) -> DotTemplate:
+        return self[(self.path / stem).relative_to(root).as_posix()]
+
+    def __load_directory__(self, stem: str) -> Self | None:
+        if (root / stem).is_dir():
+            loader = LazyLoader()
+            loader.path = self.path / stem
+            return loader
+        return None
     path = root
 
     def __missing__(self, key):
@@ -48,12 +58,10 @@ class LazyLoader(dict):
             raise KeyError(f"Prompt {key} not found")
 
     def __getattr__(self, stem: str) -> Self | DotTemplate:
-        if (root / stem).is_dir():
-            loader = LazyLoader()
-            loader.path = self.path / stem
-            return loader
-
-        return self[(self.path / stem).relative_to(root).as_posix()]
+        directory_loader = self.__load_directory__(stem)
+        if directory_loader is not None:
+            return directory_loader
+        return self.__load_template__(stem)
 
     if not __debug__:
         __getattr__ = cache(__getattr__)
