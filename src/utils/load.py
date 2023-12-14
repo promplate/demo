@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Annotated, Literal
 from typing_extensions import Self
 
 from promplate.prompt.utils import get_builtins
+from typing_extensions import Self
 
 from .helpers import DotTemplate
 
