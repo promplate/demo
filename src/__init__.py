@@ -39,8 +39,8 @@ async def render_template(
     try:
         t = load_template(template)
         if format == "script":
-            return PlainTextResponse(t.get_script(sync), media_type="text/x-python")
-        prompt = t.render(context) if sync else await t.arender(context)
+            return PlainTextResponse(t.get_script(sync) if t is not None else None, media_type="text/x-python")
+        prompt = (t.render(context) if sync else await t.arender(context)) if t is not None else None
         return PlainTextResponse(prompt) if format == "text" else JSONResponse(parse_chat_markup(prompt))
     except Exception as e:
         return PlainTextResponse(str(e), 400)
