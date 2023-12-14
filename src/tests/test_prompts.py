@@ -23,6 +23,6 @@ class TestShowRawTemplate(unittest.TestCase):
         actual_output = show_raw_template(template)
         self.assertEqual(actual_output, expected_output)
 
+
 if __name__ == "__main__":
     unittest.main()
-\n
