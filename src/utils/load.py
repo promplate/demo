@@ -20,6 +20,7 @@ def load_template(stem: str):
 
 
 def generate_pyi():
+    """Generates a .pyi file from the source file. This is only done if the program is running in debug mode."""
     if __debug__:
         source = Path(__file__)
         target = source.with_suffix(".pyi")
