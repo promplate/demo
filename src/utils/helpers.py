@@ -42,6 +42,7 @@ class DotTemplate(Template):
             the stored context.
         arender(context=None): Asynchronously render the template similar to the render method.
     """
+    
     def __init__(self, text, /, context=None):
         from .load import components
 
