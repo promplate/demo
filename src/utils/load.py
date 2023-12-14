@@ -53,8 +53,7 @@ if not __debug__ and not TYPE_CHECKING:
 
 
 class LazyLoader(dict):
-    """A dictionary-like object that lazily loads templates on access.
-    """
+    """A dictionary-like object that lazily loads templates on access."""
     path = root
 
     def __missing__(self, key):
