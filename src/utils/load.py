@@ -45,6 +45,7 @@ class LazyLoader(dict):
     path = root
 
     def __missing__(self, key):
+        """Attempts to load a template from the given key. If the key is not found, it raises a KeyError with a message indicating that the prompt was not found."""
         try:
             return load_template(key)
         except FileNotFoundError:
