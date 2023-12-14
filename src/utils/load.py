@@ -73,4 +73,4 @@ class LazyLoader(dict):
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
 
 
-Templates = Annotated[Literal.__getitem__(tuple(glob())), str]  # type: ignore
+Template = Annotated[Literal.__getitem__(tuple(glob())), str]  # type: ignore
