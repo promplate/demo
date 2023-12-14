@@ -4,14 +4,14 @@ from fastapi import APIRouter
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from promplate import Context, Message, parse_chat_markup
 
-from ..utils.load import Templates, glob, load_template
+from ..utils.load import Template, glob, load_template
 
 prompts_router = APIRouter(tags=["Prompt templates management"])
 
 
 @prompts_router.post("/render/{template:path}", response_model=list[Message] | str)
 async def render_template(
-    template: Templates,
+    template: Template,
     context: Context,
     format: Literal["text", "list", "script"] = "text",
     sync: bool = False,
@@ -41,5 +41,5 @@ async def render_template(
 
 
 @prompts_router.get("/{template:path}", response_class=FileResponse)
-async def show_raw_template(template: Templates):
+async def show_raw_template(template: Template):
     return glob()[template]

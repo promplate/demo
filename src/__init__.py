@@ -6,7 +6,7 @@ from .utils.load import generate_pyi
 from .utils.time import now
 
 app = FastAPI(title="Promplate Demo", on_startup=[generate_pyi])
-app.include_router(prompts_router)
+app.include_router(prompts_router, prefix="/prompts")
 
 
 @app.get("/heartbeat", response_model=str, response_class=PlainTextResponse)
