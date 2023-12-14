@@ -10,18 +10,23 @@ from .helpers import DotTemplate
 root = Path("src/templates")
 
 
+class TemplateNotFoundError(Exception):
+    pass
+
 def read_template(stem: str):
-    return DotTemplate.read(glob()[stem])
+    try:
+        return DotTemplate.read(glob()[stem])
+    except KeyError:
+        raise TemplateNotFoundError(f'Template {stem} not found')
 
 def get_component(stem: str):
     if (root / stem).is_dir():
         return getattr(components, stem)
+    else:
+        raise TemplateNotFoundError(f'Component {stem} not found')
 
 def load_template(stem: str):
-    try:
-        return read_template(stem)
-    except KeyError:
-        return get_component(stem)
+    return read_template(stem)
 
 
 def generate_pyi():
