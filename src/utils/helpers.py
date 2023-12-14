@@ -1,4 +1,5 @@
 from collections import ChainMap
+from typing import cast
 
 from box import Box
 from promplate import Context, Template
@@ -20,7 +21,7 @@ class DotTemplate(Template):
         from .load import components
 
         super().__init__(text, context)
-        self.context = ChainMap(get_top_level_box(self.context), components)
+        self.context = cast(Context, ChainMap(get_top_level_box(self.context), components))
 
     def render(self, context=None):
         return super().render(context if context is None else get_top_level_box(context))
