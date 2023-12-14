@@ -62,8 +62,7 @@ class LazyLoader(dict):
     if not __debug__:
         __getattr__ = cache(__getattr__)
 
-    def __hash__(self):
-        return hash(self.path)
+
 
 
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
