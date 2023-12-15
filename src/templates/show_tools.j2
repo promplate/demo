@@ -1,0 +1,7 @@
+{% if tools -%}
+{% for tool in tools -%}
+{{ tool -}}
+{% endfor -%}
+{% else -%}
+[empty]
+{% endif %}
