@@ -25,7 +25,7 @@ class EOC(Exception):
 
 
 class Callback(BaseCallback):
-    last = ""
+    last = " "
 
     def on_enter(self, context: Context | None, config: Context):
         if context is None:
@@ -37,7 +37,7 @@ class Callback(BaseCallback):
         return context, config
 
     def post_process(self, context: ChainContext):
-        if context.get("<end>"):
+        if context.get("<end>") and not context.get("<stream>"):
             return
 
         if context.result != self.last:

@@ -1,6 +1,6 @@
 type Span = {
   text?: string;
-  reference?: string; // url related to this span. REMEMBER: Adjacent spans must have distinct references; otherwise, they should be merged into a single span.
+  reference?: string; // url related to this span. REMEMBER: Adjacent spans must have distinct references; otherwise, they should be merged into a single span. If the content involves any factual text, a reference must be provided.
 };
 
 type Output = {
