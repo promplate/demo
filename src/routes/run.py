@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from fastapi.responses import PlainTextResponse
 from promplate import Context
 
@@ -20,8 +20,8 @@ async def invoke(node: Template, context: Context):
     Returns:
         The result of the invocation.
 
-    Raises:
-        Exception: If there is an error during the invocation.
+    Responses:
+        HTTP 500: If there is an error during the invocation.
     """
     n = get_node(node)
     try:
