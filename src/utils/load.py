@@ -1,10 +1,11 @@
-from functools import cache
 from pathlib import Path
+from re import sub
 from typing import TYPE_CHECKING, Annotated, Literal
 from typing_extensions import Self
 
 from promplate.prompt.utils import get_builtins
 
+from .cache import cache
 from .helpers import DotTemplate
 
 root = Path("src/templates")
@@ -25,13 +26,19 @@ def load_template(stem: Component) -> DotTemplate:
 def generate_pyi():
     if __debug__:
         source = Path(__file__)
-        target = source.with_suffix(".pyi")
-        target.write_text(source.read_text().replace("Component = str", f"Component = Literal{list(glob())}"))
+        target = source.read_text()
+
+        all_paths = f"Literal{list(glob())}"
+
+        target = sub(r"\nComponent\s*=\s*.*?\n", f"Component = {all_paths}", target)
+        target = sub(r"\nTemplate\s*=\s*.*\n", f"Template = {all_paths}", target)
+
+        source.with_suffix(".pyi").write_text(target)
 
 
 def glob():
     return {
-        path.as_posix().removeprefix(f"{root}/").removesuffix(path.suffix): path
+        path.as_posix().removeprefix(f"{root.as_posix()}/").removesuffix(path.suffix): path
         for path in root.glob("**/*")
         if path.is_file()
     }
