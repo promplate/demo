@@ -39,7 +39,7 @@ def glob():
     return {
         path.as_posix().removeprefix(f"{root.as_posix()}/").removesuffix(path.suffix): path
         for path in root.glob("**/*")
-        if path.is_file()
+        if path.is_file() and path.suffix not in {".py", ".pyc"}
     }
 
 
