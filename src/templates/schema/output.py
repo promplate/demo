@@ -16,6 +16,7 @@ class Span(TypedDict):
 
 
 class Action(TypedDict):
+    
     """
     The `Action` class represents an action with a name and an optional body. It includes the `name` field, which is a string representing the name of the action, and the `body` field, which is an optional dictionary representing the body of the action.
     """
@@ -30,3 +31,5 @@ class Output(TypedDict):
     content: NotRequired[list[Span]]
     end: NotRequired[bool]
     actions: NotRequired[list[Action]]
+    
+    
