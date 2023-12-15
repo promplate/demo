@@ -1,13 +1,13 @@
 type Span = {
-  text?: string;
-  reference?: string;
+  text?: string;      // a few words / sentences
+  reference?: string; // the url reference related to the text above
 };
 
 type Output = {
-  content?: Span[]; // what you want to say to the user
-  end?: boolean;    // if you want to end your response with the results of the actions, set it to true
-  actions?: {       // use the tools
+  content?: Span[];   // what you want to say to the user
+  end?: boolean;      // set it to true only when your response can be end with the actions' results directly
+  actions?: {         // use one or multiple tools
     name: string;
-    body?: JSON;    // parameters
+    body?: JSON;      // parameters to call the tool
   }[];
 };

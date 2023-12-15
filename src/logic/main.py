@@ -1,38 +1,89 @@
-from asyncio import Task, gather, get_running_loop
+from asyncio import gather, get_running_loop
+from collections import defaultdict
+from json import dumps
+from typing import cast
 
-from box import Box
-from promplate import ChainContext, JumpTo, Node
+from promplate import BaseCallback, ChainContext, Context, Loop, Message, Node
 from promptools.extractors import extract_json
 
 from ..templates.schema.output import Output
 from ..utils.llm.openai import openai
 from ..utils.load import load_template
-from .tools.stub import Browser
-
-tools = [Browser()]
-tools_map = {tool.name: tool for tool in tools}
-
+from .tools import call_tool, tools
 
 main = Node(load_template("main"), {"tools": tools}, llm=openai)
 
+main_loop = Loop(main)
+
+
+class EOC(Exception):
+    "end of chain"
+
+    def __init__(self, context: ChainContext):
+        super().__init__(context)
+        self.context = context
+
+
+class Callback(BaseCallback):
+    last = ""
+
+    def on_enter(self, context: Context | None, config: Context):
+        if context is None:
+            context = {}
+
+        if config.get("stream") != True:
+            context["<end>"] = True
+
+        return context, config
+
+    def post_process(self, context: ChainContext):
+        if context.get("<end>"):
+            return
+
+        if context.result != self.last:
+            context["<end>"] = False
+            self.last = context.result
+        else:
+            context["<end>"] = True
+
+
+main.callbacks.append(Callback)
+
 
 @main.post_process
-async def parse_json(context: ChainContext):
-    res = context["parsed"] = Box(extract_json(context.result, {}, Output), default_box=True, default_box_attr=None)
+async def run_tool(context: ChainContext):
+    res = context["parsed"] = defaultdict(lambda: None, extract_json(context.result, {}, Output))
+    print(f"parsed json: {res}")
 
-    if res["actions"]:
+    already_stop = context["<end>"]
+    have_actions = isinstance(res["actions"], list)
+
+    if have_actions:
         loop = get_running_loop()
+        actions = cast(list, res["actions"])
 
-        jobs: dict[int, Task] = context.get("__jobs__", {})
-        for i, action in enumerate(res["actions"]):  # todo: the last one is incomplete
-            if i not in jobs:
-                jobs[i] = loop.create_task(tools_map[action["name"]](**action["body"]))
-                print(f"running {action['name']} with {action['body']}")
+        for action in actions[slice(None, None if already_stop else -1)]:
+            loop.create_task(call_tool(action["name"], action["body"]))
+            print(f"running {action['name']} with {action['body']}")
 
-        if True:  # todo: support streaming
-            await gather(*jobs.values())
+    if already_stop:
+        if not have_actions:
+            raise EOC(context)
 
-        context["return_values"] = {i: job.result() or job.exception() for i, job in jobs.items() if job.done()}
+        assert isinstance(actions, list)  # type: ignore
 
-        if True and not res["end"]:
-            raise JumpTo(main)
+        results = await gather(*(call_tool(i["name"], i["body"]) for i in actions))
+        cast(list[Message], context["messages"]).extend(
+            [
+                {
+                    "role": "system",
+                    "name": cast(str, action["name"]),
+                    "content": (
+                        str(result)
+                        if isinstance(result, (Exception, str))
+                        else dumps(result, ensure_ascii=False, indent=2)
+                    ),
+                }
+                for action, result in zip(actions, results)
+            ]
+        )

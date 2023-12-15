@@ -32,6 +32,9 @@ class Browser(AbstractTool):
         for img in soup.select("img"):
             if cast(str, img.get("src", "")).startswith("data"):
                 del img["src"]
+        for a in soup.select("a"):
+            if len(cast(str, a.get("href", ""))) > 50:
+                del a["href"]
         return html2text(str(soup), url, 0)
 
     async def fetch(self, url: str):
