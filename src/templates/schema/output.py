@@ -30,6 +30,7 @@ class Output(TypedDict):
     """
     The `Output` class represents the output of the application. It includes the `content` field, which is an optional list of `Span` objects representing the content of the output, and the `end` field, which is an optional boolean indicating whether the output is the end.
     """
+
     content: NotRequired[list[Span]]
     end: NotRequired[bool]
     actions: NotRequired[list[Action]]
