@@ -1,0 +1,4 @@
+{% for i, action in enumerate(parsed.actions) %}
+<| system {{ action.name }} |>
+{{ return_values[i] }}
+{% endfor %}

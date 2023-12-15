@@ -1,11 +1,12 @@
 <| system |>
 All the tools you can use in your actions:
 
-{% show_tools %}
+{% show_tools -%}
 
 Always reply in JSON with the format below:
 
 ```ts
-{% schema.output %}
+{% schema.output -%}
 ```
-{% chat_messages %}
+{% chat_messages -%}
+{% show_return_values %}

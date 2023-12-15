@@ -12,6 +12,8 @@ dependencies = [
     "httpx[http2]>=0.25.2",
     "promptools[validation]>=0.1.1.2",
     "fake-useragent>=1.4.0",
+    "html2text>=2020.1.16",
+    "beautifulsoup4>=4.12.2",
 ]
 
 [tool.pdm.dev-dependencies]

@@ -27,5 +27,5 @@ async def invoke(node: Template, context: ContextIn):
     try:
         return await n.ainvoke(context.model_dump(exclude_unset=True))
     except Exception as e:
-        print_exc(1, stderr)
+        print_exc(file=stderr)
         return PlainTextResponse(str(e), 500)
