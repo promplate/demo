@@ -14,9 +14,11 @@ class Browser(AbstractTool):
 
     name = "fetch"
 
-    @cached_property
+    @property
     def client(self):
-        return AsyncClient(http2=True, headers={"accept": "application/json,text/html,text/*"})
+        if not hasattr(self, '_client'):
+            self._client = AsyncClient(http2=True, headers={"accept": "application/json,text/html,text/*"})
+        return self._client
 
     @property
     def headers(self):
