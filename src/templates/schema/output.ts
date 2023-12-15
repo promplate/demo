@@ -6,8 +6,8 @@ type Span = {
 type Output = {
   content: Span[];
   end: boolean;
-  action: {
+  action?: {
     name: string;
     body: any;
-  };
+  }[];
 };
