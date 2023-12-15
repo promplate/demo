@@ -2,6 +2,7 @@ import unittest
 
 import asynctest
 from httpx import AsyncClient
+
 from src.logic.tools.stub import Browser
 
 
