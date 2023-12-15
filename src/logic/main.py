@@ -37,6 +37,7 @@ class Callback(BaseCallback):
         return context, config
 
     def post_process(self, context: ChainContext):
+        """A decorator used for post-processing. It takes a function as an argument and returns a new function that includes post-processing steps."""
         if context.get("<end>"):
             return
 
