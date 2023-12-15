@@ -10,6 +10,7 @@ dependencies = [
     "python-box>=7.1.1",
     "pydantic-settings>=2.1.0",
     "httpx[http2]>=0.25.2",
+    "promptools[validation]>=0.1.1.2",
 ]
 
 [tool.pdm.dev-dependencies]
