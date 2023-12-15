@@ -52,11 +52,12 @@ main.callbacks.append(Callback)
 
 @main.post_process
 async def run_tool(context: ChainContext):
-    res = context["parsed"] = defaultdict(lambda: None, extract_json(context.result, {}, Output))
-    print(f"parsed json: {res}")
+    context["parsed"] = extract_json(context.result, {}, Output)
+    res = defaultdict(lambda: None, context["parsed"])
+    print(f"parsed json: {context['parsed']}")
 
     already_stop = context["<end>"]
-    have_actions = isinstance(res["actions"], list)
+    have_actions = isinstance(res["actions"], list) and len(res["actions"])
 
     if have_actions:
         loop = get_running_loop()
@@ -73,15 +74,18 @@ async def run_tool(context: ChainContext):
         assert isinstance(actions, list)  # type: ignore
 
         results = await gather(*(call_tool(i["name"], i["body"]) for i in actions))
-        cast(list[Message], context["messages"]).extend(
+
+        messages = cast(list[Message], context["messages"])
+
+        messages.append({"role": "assistant", "content": context.result})
+
+        messages.extend(
             [
                 {
                     "role": "system",
                     "name": cast(str, action["name"]),
                     "content": (
-                        str(result)
-                        if isinstance(result, (Exception, str))
-                        else dumps(result, ensure_ascii=False, indent=2)
+                        str(result) if isinstance(result, (Exception, str)) else dumps(result, ensure_ascii=False, indent=2)
                     ),
                 }
                 for action, result in zip(actions, results)

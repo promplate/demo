@@ -20,7 +20,7 @@ class Browser(AbstractTool):
 
     @cached_property
     def client(self):
-        return AsyncClient(http2=True, headers={"accept": "application/json,text/html,text/*"}, follow_redirects=True)
+        return AsyncClient(http2=True, headers={"accept": "application/json,text/html,text/*"}, follow_redirects=True, timeout=10)
 
     @property
     def headers(self):
