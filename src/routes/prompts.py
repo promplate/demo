@@ -6,7 +6,7 @@ from promplate import Context, Message, parse_chat_markup
 
 from ..utils.load import Template, glob, load_template
 
-prompts_router = APIRouter(tags=["Prompt templates management"])
+prompts_router = APIRouter(tags=["template"])
 
 
 @prompts_router.post("/render/{template:path}", response_model=list[Message] | str)
