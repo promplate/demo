@@ -1,6 +1,7 @@
 from contextlib import suppress
 from functools import cached_property
 from json import JSONDecodeError
+from typing import cast
 
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -29,7 +30,7 @@ class Browser(AbstractTool):
         soup = BeautifulSoup(html, "html.parser")
         # todo: give each url an id and replace it
         for img in soup.select("img"):
-            if img.get("src", "").startswith("data"):
+            if cast(str, img.get("src", "")).startswith("data"):
                 del img["src"]
         return html2text(str(soup), url, 0)
 
