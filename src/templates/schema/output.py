@@ -1,4 +1,6 @@
-from typing_extensions import Any, NotRequired, TypedDict
+from typing import Any
+
+from typing_extensions import NotRequired, TypedDict
 
 
 class Span(TypedDict):
