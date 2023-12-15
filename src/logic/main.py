@@ -4,8 +4,9 @@ from promptools.extractors import extract_json
 from ..templates.schema.output import Output
 from ..utils.llm.openai import openai
 from ..utils.load import load_template
+from .tools.stub import Browser
 
-main = Node(load_template("main"), llm=openai)
+main = Node(load_template("main"), {"tools": [Browser()]}, llm=openai)
 
 
 main.add_pre_processes(print)

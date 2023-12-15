@@ -1,6 +1,8 @@
 {% if tools -%}
 {% for tool in tools -%}
-{{ tool -}}
+<tool name="{{ tool.name }}">
+{{ tool.description }}
+</tool>
 {% endfor -%}
 {% else -%}
 [empty]
