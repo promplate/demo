@@ -12,6 +12,7 @@ class Span(TypedDict):
     The `Span` class represents a span of text and an optional reference. It includes the `text` field, which is an optional string representing the span of text, and the `reference` field, which is an optional string representing a reference.
     """
     text: NotRequired[str]
+
     reference: NotRequired[str]
 
 
