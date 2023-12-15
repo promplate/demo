@@ -1,5 +1,6 @@
 import pytest
 from promplate import ChainContext
+
 from src.logic import Node, load_template, openai
 from src.logic.main import Browser, main, parse_json
 from src.templates.schema.output import Output
