@@ -1,11 +1,13 @@
-from typing import Protocol
+from typing import Awaitable, Callable, Protocol
 
 from partial_json_parser import JSON
 
 
 class AbstractTool(Protocol):
     name: str
-    description: str
 
-    def __call__(self, **kwargs) -> JSON:
-        ...
+    __call__: Callable[..., JSON | Awaitable[JSON]]
+
+    @property
+    def description(self):
+        return self.__doc__
