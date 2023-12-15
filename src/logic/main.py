@@ -53,6 +53,20 @@ main.callbacks.append(Callback)
 
 @main.post_process
 async def run_tool(context: ChainContext):
+    """Asynchronously processes actions extracted from the parsed JSON and executes the corresponding tools.
+
+    Args:
+        context (ChainContext): The context object containing relevant data for the chain's execution.
+
+    Keys in the context object:
+        'parsed' (dict): Contains the results of JSON extraction from the input.
+        '<end>' (bool): Indicates whether the current processing chain should stop.
+        'actions' (list): A list of actions to be taken based on the parsed JSON.
+        'messages' (list): Accumulated messages throughout the chain's execution.
+
+    Returns:
+        None
+    """
     context["parsed"] = extract_json(context.result, {}, Output)
     res = defaultdict(lambda: None, context["parsed"])
     print(f"parsed json: {context['parsed']}")
