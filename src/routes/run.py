@@ -38,13 +38,14 @@ async def invoke(node: Template, context: ContextIn):
 
 
 @run_router.post("/stream/{node:path}")
-async def stream(node: Template, context: ContextIn):
+async def stream(node: Template, context: ContextIn, astream_func=None):
     n = get_node(node)
 
     @server_sent_events
     async def make_stream():
         try:
-            async for c in n.astream(context.model_dump(exclude_unset=True) | {"<stream>": True}):
+            stream_func = n.astream if astream_func is None else astream_func
+            async for c in stream_func(context.model_dump(exclude_unset=True) | {"<stream>": True}):
                 yield "partial", dumps(c["parsed"], ensure_ascii=False)
         except EOC:
             yield "complete", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
