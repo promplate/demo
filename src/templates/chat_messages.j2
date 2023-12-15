@@ -1,4 +1,4 @@
 {% for message in messages -%}
-<| {{ message.role }} {{ message.name }} |>
+<| {{ message.role }}{{ f" {message.name}" if message.name else "" }} |>
 {{ message.content }}
 {% endfor %}
