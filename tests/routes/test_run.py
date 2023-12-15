@@ -6,8 +6,8 @@ from src.routes.run import stream
 
 
 class TestRun(unittest.TestCase):
-    @patch('src.routes.run.get_node')
-    @patch('src.routes.run.server_sent_events')
+    @patch("src.routes.run.get_node")
+    @patch("src.routes.run.server_sent_events")
     async def test_stream(self, mock_sse, mock_get_node):
         mock_node = Mock()
         mock_context = Mock()
@@ -28,5 +28,6 @@ class TestRun(unittest.TestCase):
         response = await stream(mock_node, mock_context)
         self.assertTrue(b'data: ("error", ' in response.body)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
