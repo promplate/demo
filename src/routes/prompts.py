@@ -1,3 +1,5 @@
+from sys import stderr
+from traceback import print_exc
 from typing import Literal
 
 from fastapi import APIRouter
@@ -37,6 +39,7 @@ async def render_template(
         prompt = t.render(context) if sync else await t.arender(context)
         return PlainTextResponse(prompt) if format == "text" else JSONResponse(parse_chat_markup(prompt))
     except Exception as e:
+        print_exc(1, stderr)
         return PlainTextResponse(str(e), 400)
 
 
