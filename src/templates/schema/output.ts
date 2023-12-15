@@ -1,3 +1,8 @@
+/**
+ * This file defines the schema for the output data.
+ * It includes the types for spans and the overall output structure.
+ */
+
 type Span = {
   text?: string;
   reference?: string; // url related to this span. REMEMBER: Adjacent spans must have distinct references; otherwise, they should be merged into a single span. If the content involves any factual text, a reference must be provided.
