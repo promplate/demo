@@ -6,7 +6,7 @@ license = { text = "MIT" }
 dependencies = [
     "fastapi>=0.105.0",
     "uvicorn[standard]>=0.24.0.post1",
-    "promplate[all]==0.3.0rc1",
+    "promplate[all]==0.3.0rc2",
     "python-box>=7.1.1",
     "pydantic-settings>=2.1.0",
     "httpx[http2]>=0.25.2",
@@ -14,6 +14,7 @@ dependencies = [
     "fake-useragent>=1.4.0",
     "html2text>=2020.1.16",
     "beautifulsoup4>=4.12.2",
+    "rich>=13.7.0",
 ]
 
 [tool.pdm.dev-dependencies]
