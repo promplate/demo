@@ -42,8 +42,8 @@ async def stream(node: Template, context: ContextIn):
     async def make_stream():
         try:
             async for c in n.astream(context.model_dump(exclude_unset=True)):
-                yield "partial", dumps(c["parsed"], ensure_ascii=False)
-            yield "complete", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
+                yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+            yield "finish", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
         except Exception as e:
             print_exc(file=stderr)
             yield "error", str(e)

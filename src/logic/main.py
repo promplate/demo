@@ -50,10 +50,10 @@ def parse_json(context: ChainContext):
     try:
         context["parsed"] = loads(context.result)
         context.pop("partial", None)
+        print("parsed json:", context["parsed"])
     except JSONDecodeError:
-        context["parsed"] = extract_json(context.result, {}, Output)
+        context["parsed"] = extract_json(context.result, context.get("parsed", {}), Output)
         context["partial"] = True
-    print("parsed json:", context["parsed"])
 
 
 @main.mid_process
