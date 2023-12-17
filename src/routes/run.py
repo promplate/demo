@@ -10,7 +10,6 @@ from pydantic import BaseModel
 from src.routes.sse import server_sent_events
 
 from ..logic import get_node
-from ..logic.main import EOC
 from ..utils.load import Template
 
 run_router = APIRouter(tags=["call"])
@@ -30,8 +29,6 @@ async def invoke(node: Template, context: ContextIn):
     n = get_node(node)
     try:
         return await n.ainvoke(context.model_dump(exclude_unset=True))
-    except EOC as err:
-        return err.context.maps[0]
     except Exception as e:
         print_exc(file=stderr)
         return PlainTextResponse(str(e), 500)
@@ -44,9 +41,8 @@ async def stream(node: Template, context: ContextIn):
     @server_sent_events
     async def make_stream():
         try:
-            async for c in n.astream(context.model_dump(exclude_unset=True) | {"<stream>": True}):
+            async for c in n.astream(context.model_dump(exclude_unset=True)):
                 yield "partial", dumps(c["parsed"], ensure_ascii=False)
-        except EOC:
             yield "complete", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
         except Exception as e:
             print_exc(file=stderr)
