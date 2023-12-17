@@ -2,6 +2,10 @@ from asyncio import gather, get_running_loop
 from json import JSONDecodeError, dumps, loads
 from typing import cast
 
+from asyncio import gather, get_running_loop
+from json import JSONDecodeError, dumps, loads
+from typing import cast
+
 from promplate import ChainContext, Jump, Message, Node
 from promplate.chain.node import ChainContext
 from promptools.extractors import extract_json
@@ -18,20 +22,7 @@ main = Node(load_template("main"), {"tools": tools}, llm=openai)
 @main.end_process
 async def collect_results(context: ChainContext):
     await collect_results(context)
-
     raise Jump(into=main)
-
-
-
-    try:
-        context["parsed"] = loads(context.result)
-        context.pop("partial", None)
-    except JSONDecodeError:
-        context["parsed"] = extract_json(context.result, {}, Output)
-        context["partial"] = True
-    print("parsed json:", context["parsed"])
-
-
 
     actions = cast(dict, context["parsed"]).get("actions", [])
 
