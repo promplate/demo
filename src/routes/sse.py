@@ -13,12 +13,10 @@ def server_sent_events(generator: Callable[..., AsyncGenerator[tuple[str, str], 
     A decorator that converts a generator function into a server-sent events endpoint.
 
     Args:
-
-        generator: The generator function that yields event and data pairs.
+        generator: A generator function yielding event and data pairs to be sent.
 
     Yields:
-
-        tuple[str, str]: The event and data pairs to be sent as server-sent events.
+        tuple[str, str]: Event and data pairs for server-sent events.
     """
     @wraps(generator)
     async def wrapper(*args, **kwargs):
