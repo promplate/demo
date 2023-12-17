@@ -15,5 +15,4 @@ class Action(TypedDict):
 
 class Output(TypedDict):
     content: NotRequired[list[Span]]
-    end: NotRequired[bool]
     actions: NotRequired[list[Action]]
