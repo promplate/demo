@@ -19,6 +19,7 @@ class CodeInterpreter(AbstractTool):
     @staticmethod
     def eval(code: str):
         print(code)
+        code = load_template("python").render({"code": code})
         namespace: dict[str, Any] = {}
         exec(code, namespace)
         return {k: repr(v) for k, v in namespace.items() if not k.startswith("_")}
