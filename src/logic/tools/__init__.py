@@ -8,8 +8,9 @@ from promplate.chain.utils import resolve
 
 from .base import AbstractTool
 from .fetch import Browser
+from .python import CodeInterpreter
 
-tools = [Browser()]
+tools: list[AbstractTool] = [Browser(), CodeInterpreter()]
 tool_map: dict[str, AbstractTool] = {tool.name: tool for tool in tools}
 
 

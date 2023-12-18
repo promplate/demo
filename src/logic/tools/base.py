@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import Awaitable, Callable, Protocol
 
 from partial_json_parser import JSON
@@ -8,6 +9,6 @@ class AbstractTool(Protocol):
 
     __call__: Callable[..., JSON | Awaitable[JSON]]
 
-    @property
+    @cached_property
     def description(self):
-        return self.__doc__
+        return str(self.__doc__)
