@@ -7,8 +7,6 @@ from os import environ
 
 from httpx import AsyncClient
 from promplate.llm.openai import AsyncChatOpenAI
-# TODO: Add a docstring to the `AsyncChatOpenAI` class in the `promplate.llm.openai` module to describe its purpose and usage.
-
 from ..config import env
 
 openai = AsyncChatOpenAI(http_client=AsyncClient(http2=True), api_key=env.openai_api_key, base_url=env.openai_base_url).bind(
@@ -24,5 +22,7 @@ openai = AsyncChatOpenAI(http_client=AsyncClient(http2=True), api_key=env.openai
     # response_format={"type": "json_object"},
 )
 
+
+# TODO: Add a docstring to the `AsyncChatOpenAI` class in the `promplate.llm.openai` module to describe its purpose and usage.
 
 environ.clear()
