@@ -17,7 +17,7 @@ main = Node(load_template("main"), {"tools": tools}, llm=openai)
 
 @main.end_process
 async def collect_results(context: ChainContext):
-    parsed = cast(dict, context["parsed"])
+    parsed = cast(dict, context["parsed"] or {"content": [{"text": context.result}]})
     actions = parsed.get("actions", [])
 
     if not actions:
@@ -27,7 +27,7 @@ async def collect_results(context: ChainContext):
 
     messages = cast(list[Message], context["messages"])
 
-    messages.append({"role": "assistant", "content": context.result})
+    messages.append({"role": "assistant", "content": dumps(parsed, ensure_ascii=False)})
 
     messages.extend(
         [
