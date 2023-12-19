@@ -82,6 +82,7 @@ class LazyLoader(dict):
     This handles the dynamic retrieval of templates upon access, allowing components to
     be loaded only when needed from the 'templates' directory.
     """
+
     path = root
 
     def __missing__(self, key):
