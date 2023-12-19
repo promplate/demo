@@ -54,8 +54,8 @@ class LazyLoader(dict):
     def __missing__(self, key):
         try:
             return load_template(key)
-        except FileNotFoundError:
-            raise KeyError(f"Prompt {key} not found")
+        except FileNotFoundError as e:
+            raise KeyError(f"Prompt {key} not found") from e
 
     if TYPE_CHECKING:
 

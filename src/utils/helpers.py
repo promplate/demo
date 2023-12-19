@@ -8,9 +8,7 @@ from promplate import Context, Template
 
 class SilentBox(Box):
     def __str__(self):
-        if len(self):
-            return super().__str__()
-        return ""
+        return super().__str__() if len(self) else ""
 
 
 SilentBox = partial(SilentBox, default_box=True)  # type: ignore

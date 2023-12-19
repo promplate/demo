@@ -58,9 +58,7 @@ def parse_json(context: ChainContext):
 
 @main.mid_process
 async def run_tools(context: ChainContext):
-    actions = cast(dict, context["parsed"]).get("actions", [])
-
-    if actions:
+    if actions := cast(dict, context["parsed"]).get("actions", []):
         loop = get_running_loop()
         for action in actions[slice(None, -1 if context.get("partial") else None)]:
             loop.create_task(call_tool(action["name"], action["body"]))
