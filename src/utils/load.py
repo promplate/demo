@@ -1,3 +1,8 @@
+"""
+This module defines functionality for loading and handling template components
+for use with the promplate system, as well as utilities for file generation.
+"""
+
 from pathlib import Path
 from re import sub
 from typing import TYPE_CHECKING, Annotated, Literal
@@ -14,6 +19,18 @@ Component = str
 
 
 def load_template(stem: Component) -> DotTemplate:
+    """
+    Load a template component based on the provided identifier.
+
+    Args:
+        stem (Component): The identifier for the template to be loaded.
+
+    Returns:
+        DotTemplate: The loaded template object.
+
+    Raises:
+        KeyError: If the specified component is not found.
+    """
     try:
         return DotTemplate.read(glob()[stem])
     except KeyError:
@@ -23,6 +40,10 @@ def load_template(stem: Component) -> DotTemplate:
 
 
 def generate_pyi():
+    """
+    Generate a .pyi file containing type hints for the current module.
+    This reflects the available components within the module for type checking.
+    """
     if __debug__:
         source = Path(__file__)
         target = source.read_text()
@@ -36,6 +57,12 @@ def generate_pyi():
 
 
 def glob():
+    """
+    Glob the file paths for all components available within the templates directory.
+
+    Returns:
+        dict: A dictionary mapping component identifiers to their respective file paths.
+    """
     return {
         path.as_posix().removeprefix(f"{root.as_posix()}/").removesuffix(path.suffix): path
         for path in root.glob("**/*")
@@ -49,6 +76,12 @@ if not __debug__ and not TYPE_CHECKING:
 
 
 class LazyLoader(dict):
+    """
+    A dictionary-like class that provides lazy loading functionality for template components.
+
+    This handles the dynamic retrieval of templates upon access, allowing components to
+    be loaded only when needed from the 'templates' directory.
+    """
     path = root
 
     def __missing__(self, key):
