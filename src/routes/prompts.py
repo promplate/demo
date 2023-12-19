@@ -1,3 +1,9 @@
+"""
+This module defines the API routes for rendering and viewing templates in the promplate system.
+
+It provides endpoints for rendering a specified template with a given context and for viewing the raw content of a template.
+"""
+
 from sys import stderr
 from traceback import print_exc
 from typing import Literal
@@ -21,16 +27,16 @@ async def render_template(
     """
     Render the specified template with the given context.
 
-    Parameters:
-    - template: The template to render.
-    - context: The context to use for rendering.
-    - format: The format of the output (default: "text").
-    - sync: Whether to render synchronously (default: False).
+    Args:
+        template (Template): The template to render.
+        context (Context): The context to use for rendering.
+        format (Literal["text", "list", "script"]): The format of the output (default: "text").
+        sync (bool): Whether to render synchronously (default: False).
 
     Returns:
-    - If format is "text", returns the rendered template as plain text.
-    - If format is "list", returns the rendered template as a list of messages.
-    - If format is "script", returns the rendered template as a Python script.
+        Union[PlainTextResponse, JSONResponse]: If format is "text", returns the rendered template as plain text.
+            If format is "list", returns the rendered template as a list of messages.
+            If format is "script", returns the rendered template as a Python script.
     """
     try:
         t = load_template(template)
