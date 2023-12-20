@@ -20,8 +20,9 @@ class TestLoop(unittest.TestCase):
         self.assertEqual(node, self.loop)
 
     def test_get_node_with_other_input(self):
-        node = get_node('other')
+        node = get_node("other")
         self.assertNotEqual(node, self.loop)
+
 
 if __name__ == '__main__':
     unittest.main()
