@@ -63,7 +63,11 @@ def parse_json(context: ChainContext):
         context.pop("partial", None)
         print("parsed json:", context["parsed"])
     except JSONDecodeError:
-        context["parsed"] = extract_json(context.result, context.get("parsed", {}), Output)
+        try:
+            context["parsed"] = extract_json(context.result, context.get("parsed", {}), Output)
+        except SyntaxError:
+            context["parsed"] = {"content": [{"text": context.result}]}
+
         context["partial"] = True
 
 
