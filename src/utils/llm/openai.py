@@ -7,6 +7,8 @@ client = AsyncClient(http2=True)
 complete = patch.chat.acomplete(AsyncChatComplete(http_client=client))
 generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
 
+"""This class is a wrapper for the OpenAI API. It provides methods for generating and completing prompts using the OpenAI model."""
+
 
 class OpenAI(AsyncChatOpenAI):
     def complete(self, prompt, /, **config):  # type: ignore
