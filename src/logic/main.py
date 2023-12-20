@@ -23,8 +23,6 @@ class Loop(Chain, AutoNaming):
 
 
     """This function initializes the main loop for the application. It takes the main node as input and continuously processes actions until the application is terminated."""
-
-    
 main_loop = Loop(main)
 
 
