@@ -14,7 +14,6 @@ from .helpers import DotTemplate
 
 root = Path("src/templates")
 
-
 Component = str
 
 
@@ -50,8 +49,8 @@ def generate_pyi():
 
         all_paths = f"Literal{list(glob())}"
 
-        target = sub(r"\nComponent\s*=\s*.*?\n", f"Component = {all_paths}", target)
-        target = sub(r"\nTemplate\s*=\s*.*\n", f"Template = {all_paths}", target)
+        target = sub(r"\nComponent\s*=\s*.*?\n", f"\nComponent = {all_paths}\n", target)
+        target = sub(r"\nTemplate\s*=\s*.*\n", f"\nTemplate = {all_paths}\n", target)
 
         source.with_suffix(".pyi").write_text(target)
 
@@ -68,7 +67,6 @@ def glob():
         for path in root.glob("**/*")
         if path.is_file() and path.suffix not in {".py", ".pyc"}
     }
-
 
 if not __debug__ and not TYPE_CHECKING:
     load_template = cache(load_template)
@@ -92,7 +90,6 @@ class LazyLoader(dict):
             raise KeyError(f"Prompt {key} not found") from e
 
     if TYPE_CHECKING:
-
         def __getitem__(self, _: Component) -> DotTemplate:
             ...
 
@@ -101,7 +98,6 @@ class LazyLoader(dict):
             loader = LazyLoader()
             loader.path = self.path / stem
             return loader
-
         return self[(self.path / stem).relative_to(root).as_posix()]
 
     if not __debug__:
@@ -110,8 +106,6 @@ class LazyLoader(dict):
     def __hash__(self):  # type: ignore
         return hash(self.path)
 
-
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
-
 
 Template = Annotated[Literal.__getitem__(tuple(glob())), str]  # type: ignore
