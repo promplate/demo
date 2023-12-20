@@ -3,7 +3,9 @@ from json import JSONDecodeError, dumps, loads
 from typing import cast
 
 from promplate import ChainContext, Jump, Message, Node
-from promplate.chain.node import ChainContext
+from promplate.chain.node import Chain, ChainContext
+from promplate.prompt.utils import AutoNaming
+from promplate_trace.auto import patch
 from promptools.extractors import extract_json
 from rich import print
 
@@ -12,7 +14,15 @@ from ..utils.llm.openai import openai
 from ..utils.load import load_template
 from .tools import call_tool, tools
 
-main = Node(load_template("main"), {"tools": tools}, llm=openai)
+main = patch.node(Node)(load_template("main"), {"tools": tools}, llm=openai)
+
+
+@patch.chain
+class Loop(Chain, AutoNaming):
+    __str__ = Node.__str__  # type: ignore
+
+
+main_loop = Loop(main)
 
 
 @main.end_process
