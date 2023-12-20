@@ -1,10 +1,10 @@
-Run some python code. If user queries questions about code, you should actually run some code for demonstration.
+Run any python code. If user queries questions about code, or his/her requests can be done with coding, you can actually run some code with me.
 
-There is only 1 parameters for this tool:
+There is only 1 parameters:
 
 - `code: str`: the python code to `exec()`
 
-For example, if you want to caculate 0.409 * 2023, you can make a call like this:
+For example, if you want to caculate 0.409 \* 2023, you can make a call like this:
 
 ```json
 {
@@ -31,8 +31,9 @@ def python(code: str) -> dict[str, str]:
     return {k, repr(v) for k, v in namespace.items()}
 ```
 
+You must assign values to variables, and I can just return the values that is defined in the namespace.
+
+Notes:
+If your scripts fail, exceptions will be returned to you. You can attempt another approach accordingly.
+This is a synchronous code interpreter, so you can't use `await` inside.
 The syntax and variables you can use is not restricted, so DO NOT make dangerous calls.
-
-Note that if the code fails, I will return the exception to you. You should attempt another approach accordingly.
-
-ATTENTION: this is a synchronous code interpreter, so you can't use `await` inside.
