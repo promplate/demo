@@ -9,8 +9,9 @@ from promplate.chain.utils import resolve
 from .base import AbstractTool
 from .fetch import Browser
 from .python import CodeInterpreter
+from .serp import Serper
 
-tools: list[AbstractTool] = [Browser(), CodeInterpreter()]
+tools: list[AbstractTool] = [CodeInterpreter(), Serper(), Browser()]
 tool_map: dict[str, AbstractTool] = {tool.name: tool for tool in tools}
 
 
