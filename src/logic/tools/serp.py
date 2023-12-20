@@ -5,11 +5,12 @@ from httpx import AsyncClient
 from pydantic import validate_call
 
 from ...utils.config import env
+from ...utils.load import load_template
 from .base import AbstractTool
 
 
 class Serper(AbstractTool):
-    """Google Serp API. There are 3 parameters: query(str, required), type("search"|"news"|"places", default: "search"), page(int, default: 1)"""
+    __doc__ = load_template("schema/serp").text
 
     name = "serp"
 

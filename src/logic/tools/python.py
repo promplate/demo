@@ -10,11 +10,9 @@ from .base import AbstractTool
 
 
 class CodeInterpreter(AbstractTool):
-    name = "python"
+    __doc__ = load_template("schema/code_interpreter").text
 
-    @cached_property
-    def description(self):
-        return load_template("schema/code_interpreter").text
+    name = "python"
 
     @staticmethod
     def eval(code: str):
