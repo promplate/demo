@@ -52,20 +52,7 @@ async def invoke_node(node: Node, data: ChainInput):
 
 @run_router.post(f"{env.base}/stream/{{template:path}}")
 async def stream(data: ChainInput, node: Node = Depends(get_node)):
-    @server_sent_events
-    async def make_stream():
-        try:
-            async for c in node.astream(data.context, **data.config):
-                if "parsed" in c:
-                    yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
-                else:
-                    yield "result", dumps(c.result, ensure_ascii=False)
-            yield "finish", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
-        except Exception as e:
-            print_exc(file=stderr)
-            yield "error", str(e)
-
-    return StreamingResponse(make_stream(), media_type="text/event-stream")
+    return StreamingResponse(create_stream(node, data), media_type="text/event-stream")
 
 
 @run_router.put(f"{env.base}/single/{{template}}")
@@ -78,3 +65,22 @@ async def step_run(data: ChainInput, node: Node = Depends(get_node)):
                 last = c.result
 
     return StreamingResponse(make_stream(), media_type="text/plain")
+@server_sent_events
+async def create_stream(node: Node, data: ChainInput):
+    try:
+        async for c in iterate_node_stream(node, data):
+            yield handle_content(c)
+    except Exception as e:
+        print_exc(file=stderr)
+        yield "error", str(e)
+
+async def iterate_node_stream(node: Node, data: ChainInput):
+    async for c in node.astream(data.context, **data.config):
+        yield c
+
+def handle_content(c):
+    if "parsed" in c:
+        return "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+    else:
+        return "result", dumps(c.result, ensure_ascii=False)
+    yield "finish", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
