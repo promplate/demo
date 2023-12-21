@@ -99,6 +99,7 @@ async def step_run(data: ChainInput, node: Node = Depends(get_node)):
     Returns:
         StreamingResponse: The result of processing a single step as a plain text stream.
     """
+    
     async def make_stream():
         last = ""
         async for c in node.astream(data.context, **data.config):
