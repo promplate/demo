@@ -53,7 +53,10 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
     async def make_stream():
         try:
             async for c in node.astream(data.context, **data.config):
-                yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+                if "parsed" in c:
+                    yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+                else:
+                    yield "result", dumps(c.result, ensure_ascii=False)
             yield "finish", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
         except Exception as e:
             print_exc(file=stderr)
