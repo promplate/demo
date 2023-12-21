@@ -24,7 +24,7 @@ class Msg(BaseModel):
 
 class ChainInput(BaseModel):
     messages: list[Msg]
-    model: Literal["gpt-3.5-turbo-0301", "gpt-3.5-turbo-0613", "gpt-3.5-turbo-1106"] = "gpt-3.5-turbo-1106"
+    model: Literal["gpt-3.5-turbo-0301", "gpt-3.5-turbo-0613", "gpt-3.5-turbo-1106", "chatglm_turbo"] = "gpt-3.5-turbo-1106"
     temperature: float = Field(0.7, ge=0, le=1)
 
     @property
@@ -53,7 +53,10 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
     async def make_stream():
         try:
             async for c in node.astream(data.context, **data.config):
-                yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+                if "parsed" in c:
+                    yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+                else:
+                    yield "result", dumps(c.result, ensure_ascii=False)
             yield "finish", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
         except Exception as e:
             print_exc(file=stderr)
