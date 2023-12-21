@@ -65,6 +65,7 @@ async def step_run(data: ChainInput, node: Node = Depends(get_node)):
                 last = c.result
 
     return StreamingResponse(make_stream(), media_type="text/plain")
+
 @server_sent_events
 async def create_stream(node: Node, data: ChainInput):
     try:
@@ -74,9 +75,11 @@ async def create_stream(node: Node, data: ChainInput):
         print_exc(file=stderr)
         yield "error", str(e)
 
+
 async def iterate_node_stream(node: Node, data: ChainInput):
     async for c in node.astream(data.context, **data.config):
         yield c
+
 
 def handle_content(c):
     if "parsed" in c:
