@@ -89,6 +89,15 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(data: ChainInput, node: Node = Depends(get_node)):
+    """Route handler for running a single step of a specific template.
+
+    Args:
+        data (ChainInput): The input data containing the messages and parameters for the step.
+        node (Node): The template node that will process the input data.
+
+    Returns:
+        StreamingResponse: The result of processing a single step as a plain text stream.
+    """
     async def make_stream():
         last = ""
         async for c in node.astream(data.context, **data.config):
