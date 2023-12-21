@@ -6,6 +6,7 @@ class Config(BaseSettings):
     openai_api_key: str = "*"
     openai_base_url: str = ""
     serper_api_key: str = ""
+    zhipu_api_key: str = ""
 
     base_path: str = ""
 

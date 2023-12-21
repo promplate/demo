@@ -16,6 +16,7 @@ dependencies = [
     "html2text>=2020.1.16",
     "beautifulsoup4>=4.12.2",
     "rich>=13.7.0",
+    "zhipuai>=1.0.7",
 ]
 
 [tool.pdm.dev-dependencies]
