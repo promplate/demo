@@ -59,6 +59,18 @@ async def invoke(data: ChainInput, node: Node = Depends(get_node)):
 
 @run_router.post(f"{env.base}/stream/{{template:path}}")
 async def stream(data: ChainInput, node: Node = Depends(get_node)):
+    """Route handler for streaming data from a specific template.
+
+    This endpoint provides a streaming interface to send continuous data updates
+    to the client as they become available.
+
+    Args:
+        data (ChainInput): The input data containing messages and other parameters to start the stream.
+        node (Node): The template node that will produce the data stream.
+
+    Returns:
+        StreamingResponse: A continuous stream of server-sent events (SSE) as data is generated.
+    """
     @server_sent_events
     async def make_stream():
         try:
