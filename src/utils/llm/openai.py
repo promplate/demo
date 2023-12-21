@@ -1,4 +1,5 @@
 from httpx import AsyncClient
+from typing import Any
 from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
 from promplate_trace.auto import patch
 
@@ -12,16 +13,16 @@ generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
 
 @link_llm("gpt")
 class OpenAI(AsyncChatOpenAI):
-    def generate(self, prompt: str, /, **config):
+    async def generate(self, prompt: str, **config) -> Any:
         """
-        Generates a response from the OpenAI model based on the given prompt.
+        Asynchronously generates a response from the OpenAI model based on the given prompt.
 
         Parameters:
             prompt (str): The input text prompt to guide the model's response generation.
             config (dict): Additional optional keyword arguments to configure the model's response.
 
         Returns:
-            The generated response from the OpenAI model as specified by the input prompt and configuration.
+            Any: The generated response from the OpenAI model as specified by the input prompt and configuration, as an asynchronous operation.
         """  # type: ignore
         config = self._run_config | config
         return generate(prompt, **config)
