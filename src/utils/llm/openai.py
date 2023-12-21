@@ -12,7 +12,17 @@ generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
 
 @link_llm("gpt")
 class OpenAI(AsyncChatOpenAI):
-    def generate(self, prompt: str, /, **config):  # type: ignore
+    def generate(self, prompt: str, /, **config):
+        """
+        Generates a response from the OpenAI model based on the given prompt.
+
+        Parameters:
+            prompt (str): The input text prompt to guide the model's response generation.
+            config (dict): Additional optional keyword arguments to configure the model's response.
+
+        Returns:
+            The generated response from the OpenAI model as specified by the input prompt and configuration.
+        """  # type: ignore
         config = self._run_config | config
         return generate(prompt, **config)
 
