@@ -22,6 +22,17 @@ def patch_prompt(prompt: str | list[Message]):
 
 
 class ChatGLM(LLM):
+    """A language model designed specifically for chat applications.
+
+    This class provides methods to validate configuration parameters for language model generation,
+    to complete a given prompt and to generate responses in a conversational manner. It leverages
+    the OpenAI Codex model to produce human-like text based on the provided context.
+
+    Methods:
+        validate(temperature, top_p, **_): Validates the configuration parameters for the chat generation.
+        complete(prompt, /, **config): Given a prompt, returns a complete chat response.
+        generate(prompt, /, **config): Streams a generated response to a given prompt in real-time.
+    """
     @staticmethod
     @validate_call
     def validate(temperature: float = Field(0.95, gt=0, le=1), top_p: float = Field(0.7, gt=0, lt=1), **_):
