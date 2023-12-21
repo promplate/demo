@@ -10,10 +10,12 @@ generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
 
 class OpenAI(AsyncChatOpenAI):
     def complete(self, prompt, /, **config):  # type: ignore
-        return complete(prompt, **config, **self._run_config)
+        config = self._run_config | config
+        return complete(prompt, **config)
 
     def generate(self, prompt: str, /, **config):  # type: ignore
-        return generate(prompt, **config, **self._run_config)
+        config = self._run_config | config
+        return generate(prompt, **config)
 
 
 openai = OpenAI().bind(
