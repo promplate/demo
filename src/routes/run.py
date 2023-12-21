@@ -40,6 +40,9 @@ class ChainInput(BaseModel):
 
 @run_router.post(f"{env.base}/invoke/{{template:path}}")
 async def invoke(data: ChainInput, node: Node = Depends(get_node)):
+    return await invoke_node(node, data)
+
+async def invoke_node(node: Node, data: ChainInput):
     try:
         return await node.ainvoke(data.context, **data.config)
     except Exception as e:
