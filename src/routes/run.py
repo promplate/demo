@@ -1,3 +1,6 @@
+"""
+This module provides API routes for invoking, streaming, and single step running of templates.
+"""
 from json import dumps
 from sys import stderr
 from traceback import print_exc
@@ -32,6 +35,16 @@ class ContextIn(BaseModel):
 
 @run_router.post(f"{env.base}/invoke/{{template:path}}")
 async def invoke(context: ContextIn, node: Node = Depends(get_node)):
+    """
+    Invoke a template with the provided context and return the result.
+
+    Parameters:
+        context: Context input including the messages and configuration for the model.
+        node: Node representing the template to be invoked.
+
+    Returns:
+        The result of the template invocation as a plain text response.
+    """
     try:
         return await node.ainvoke(context.model_dump(exclude_unset=True), temperature=context.temperature, model=context.model)
     except Exception as e:
@@ -41,6 +54,16 @@ async def invoke(context: ContextIn, node: Node = Depends(get_node)):
 
 @run_router.post(f"{env.base}/stream/{{template:path}}")
 async def stream(context: ContextIn, node: Node = Depends(get_node)):
+    """
+    Provides a streaming response of the template invocation.
+
+    Parameters:
+        context: Context input including the messages and configuration for the model.
+        node: Node representing the template to be streamed.
+
+    Returns:
+        A streaming response where each event represents a partial or whole response from the template invocation.
+    """
     @server_sent_events
     async def make_stream():
         try:
@@ -56,6 +79,16 @@ async def stream(context: ContextIn, node: Node = Depends(get_node)):
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(context: ContextIn, node: Node = Depends(get_node)):
+    """
+    Runs a single step of the template and provides the response as a streaming response.
+
+    Parameters:
+        context: Context input including the messages and configuration for the model.
+        node: Node representing the template to be run in a single step.
+
+    Returns:
+        A streaming response representing the outcome of the single step template run.
+    """
     async def make_stream():
         last = ""
         async for c in node.astream(context.model_dump(exclude_unset=True)):
