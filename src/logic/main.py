@@ -10,11 +10,10 @@ from promptools.extractors import extract_json
 from rich import print
 
 from ..templates.schema.output import Output
-from ..utils.llm.openai import openai
 from ..utils.load import load_template
 from .tools import call_tool, tools
 
-main = patch.node(Node)(load_template("main"), {"tools": tools}, llm=openai)
+main = patch.node(Node)(load_template("main"), {"tools": tools})
 
 
 @patch.chain
