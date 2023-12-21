@@ -8,6 +8,7 @@ from promplate_trace.auto import patch
 from pydantic import Field, validate_call
 
 from ..config import env
+from .dispatch import link_llm
 
 zhipuai.api_key = env.zhipu_api_key
 
@@ -21,6 +22,7 @@ def patch_prompt(prompt: str | list[Message]):
     return messages
 
 
+@link_llm("chatglm")
 class ChatGLM(LLM):
     @staticmethod
     @validate_call
