@@ -65,6 +65,16 @@ async def invoke(data: ChainInput, node: Node = Depends(get_node)):
 async def stream(data: ChainInput, node: Node = Depends(get_node)):
     @server_sent_events
     async def make_stream():
+        """
+        A generator function that streams server-sent events.
+
+        Parameters:
+            data (ChainInput): The input data containing the messages and model configuration.
+            node (Node): The execution context for the model invocation.
+
+        Yields:
+            Server-sent events as JSON strings, containing message parts, results, or errors.
+        """
         try:
             async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
                 if "parsed" in c:
