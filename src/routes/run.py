@@ -63,6 +63,7 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
     This endpoint provides a streaming interface to send continuous data updates
     to the client as they become available.
+    
 
     Args:
         data (ChainInput): The input data containing messages and other parameters to start the stream.
