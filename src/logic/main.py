@@ -57,6 +57,15 @@ async def collect_results(context: ChainContext):
 
 @main.mid_process
 def parse_json(context: ChainContext):
+    """
+    Parses the JSON data in the given context.
+
+    Args:
+        context (ChainContext): The context containing the JSON data.
+
+    Returns:
+        None
+    """
     try:
         context["parsed"] = loads(context.result)
         context.pop("partial", None)
