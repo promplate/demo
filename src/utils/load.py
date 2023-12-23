@@ -35,11 +35,13 @@ Template = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))
 
 
 @validate_call
-def load_template(stem: Template) -> DotTemplate:
+def load_template(stem: Template, global_object=None, root_directory=None) -> DotTemplate:
+    global_object = global_object if global_object is not None else glob()
+    root_directory = root_directory if root_directory is not None else root
     try:
-        return DotTemplate.read(glob()[stem])
+        return DotTemplate.read(global_object[stem])
     except KeyError:
-        if (root / stem).is_dir():
+        if (root_directory / stem).is_dir():
             return getattr(components, stem)
         raise
 
