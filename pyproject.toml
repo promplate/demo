@@ -5,8 +5,8 @@ readme = "README.md"
 license = { text = "MIT" }
 dependencies = [
     "fastapi>=0.105.0",
-    "uvicorn[standard]>=0.24.0.post1",
-    "promplate[all]==0.3.0rc3",
+    "uvicorn[standard]>=0.25.0",
+    "promplate[all]>=0.3.0",
     "promplate-trace[langfuse,langsmith]>=0.1.0",
     "python-box>=7.1.1",
     "pydantic-settings>=2.1.0",
@@ -21,8 +21,8 @@ dependencies = [
 
 [tool.pdm.dev-dependencies]
 dev = [
-    "isort>=5.13.1",
-    "black>=23.12.0",
+    "isort>=5.13.2",
+    "black>=23.12.1",
 ]
 
 [tool.pdm.scripts]
