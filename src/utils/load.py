@@ -1,6 +1,7 @@
+from src.logic import Template
 from pathlib import Path
 from re import sub
-from typing import TYPE_CHECKING, Literal
+
 
 from promplate.prompt.utils import get_builtins
 from pydantic import validate_call
@@ -23,6 +24,8 @@ def generate_pyi():
         source.with_suffix(".pyi").write_text(target)
 
 
+from typing import TYPE_CHECKING, Literal
+
 def glob():
     return {
         path.as_posix().removeprefix(f"{root.as_posix()}/").removesuffix(path.suffix): path
@@ -31,17 +34,30 @@ def glob():
     }
 
 
-Template = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))
 
+
+
+@validate_call
+def read_template(stem: Template) -> DotTemplate:
+    try:
+        return DotTemplate.read(glob()[stem])
+    except KeyError:
+        raise KeyError(f"Template '{stem}' not found.")
+
+@validate_call
+def get_component(stem: str) -> DotTemplate:
+    if (root / stem).is_dir():
+        return getattr(components, stem)
+    raise FileNotFoundError(f"Component '{stem}' not found.")
+
+Template = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))
 
 @validate_call
 def load_template(stem: Template) -> DotTemplate:
     try:
-        return DotTemplate.read(glob()[stem])
+        return read_template(stem)
     except KeyError:
-        if (root / stem).is_dir():
-            return getattr(components, stem)
-        raise
+        return get_component(stem)
 
 
 if not __debug__ and not TYPE_CHECKING:
