@@ -1,3 +1,16 @@
+"""
+This module contains utility functions for working with template files,
+including generating stub types, listing available templates, and loading
+specific templates into a lazy-loaded structure for efficient access.
+
+Functions:
+- generate_pyi: Generates '.pyi' stub files for template type hinting.
+- glob: Lists available templates in a predefined root directory.
+- load_template: Loads and validates a template given its stem path.
+
+Classes:
+- LazyLoader: A lazy-loaded dictionary-like class for accessing templates as attributes.
+"""
 from pathlib import Path
 from re import sub
 from typing import TYPE_CHECKING, Literal
@@ -9,6 +22,17 @@ from .cache import cache
 from .helpers import DotTemplate
 
 root = Path("src/templates")
+
+"""
+Load and return a template given its stem (template name without file extension).
+Validates that the template exists and raises an exception if not.
+
+Args:
+    stem (Template): The stem path of the template to be loaded.
+
+Returns:
+    DotTemplate: The DotTemplate object representing the loaded template.
+"""
 
 
 def generate_pyi():
@@ -53,6 +77,16 @@ class LazyLoader(dict):
     path = root
 
     def __missing__(self, key):
+        """
+        Attempt to load a prompt template with a given key. If the file is not found,
+        raise a KeyError with a message indicating the prompt is not found.
+
+        Args:
+            key (str): The key representing the template to be loaded.
+
+        Raises:
+            KeyError: If the prompt with the given key does not exist.
+        """
         try:
             return load_template(key)
         except FileNotFoundError as e:
@@ -61,9 +95,29 @@ class LazyLoader(dict):
     if TYPE_CHECKING:
 
         def __getitem__(self, _: Template) -> DotTemplate:
+            """
+            Retrieve the DotTemplate object associated with the given type-checked key.
+
+            Args:
+                _ (Template): The key used to retrieve the template.
+
+            Returns:
+                DotTemplate: The requested DotTemplate object.
+            """
             ...
 
     def __getattr__(self, stem: str):
+        """
+        Dynamically access templates as if they were attributes of a class. If the provided
+        stem corresponds to a directory, a new LazyLoader instance for that directory is created.
+
+        Args:
+            stem (str): The stem that represents the template or directory.
+
+        Returns:
+            Union[DotTemplate, LazyLoader]: Either a DotTemplate object if the stem
+            is a file, or a new LazyLoader instance if the stem is a directory.
+        """
         if (root / stem).is_dir():
             loader = LazyLoader()
             loader.path = self.path / stem
@@ -75,6 +129,13 @@ class LazyLoader(dict):
         __getattr__ = cache(__getattr__)
 
     def __hash__(self):  # type: ignore
+        """
+        Generate a hash based on the current path attribute of the LazyLoader.
+        This method allows LazyLoader instances to be used in hashed collections like sets.
+
+        Returns:
+            int: The hash value of the path attribute.
+        """
         return hash(self.path)
 
 
