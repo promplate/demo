@@ -97,6 +97,7 @@ class LazyLoader(dict):
     templates to be loaded on-demand, which can provide performance benefits by not
     loading all templates at startup.
     """
+
     path = root
 
     def __missing__(self, key):
