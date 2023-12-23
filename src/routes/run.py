@@ -44,6 +44,16 @@ class ChainInput(BaseModel):
 
 @run_router.post(f"{env.base}/invoke/{{template:path}}")
 async def invoke(data: ChainInput, node: Node = Depends(get_node)):
+    """
+    Route handler for a POST request that invokes a model with the provided data.
+
+    Parameters:
+        data (ChainInput): The input data containing the messages and model configuration.
+        node (Node): The execution context for the model invocation.
+
+    Returns:
+        JSON response with the result of the model invocation or an error message.
+    """
     try:
         return await node.ainvoke(data.context, find_llm(data.model).complete, **data.config)
     except Exception as e:
@@ -55,6 +65,16 @@ async def invoke(data: ChainInput, node: Node = Depends(get_node)):
 async def stream(data: ChainInput, node: Node = Depends(get_node)):
     @server_sent_events
     async def make_stream():
+        """
+        A generator function that streams server-sent events.
+
+        Parameters:
+            data (ChainInput): The input data containing the messages and model configuration.
+            node (Node): The execution context for the model invocation.
+
+        Yields:
+            Server-sent events as JSON strings, containing message parts, results, or errors.
+        """
         try:
             async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
                 if "parsed" in c:
