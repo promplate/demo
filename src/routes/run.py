@@ -45,7 +45,7 @@ class ChainInput(BaseModel):
 @run_router.post(f"{env.base}/invoke/{{template:path}}")
 async def invoke(data: ChainInput, node: Node = Depends(get_node)):
     try:
-        return await node.ainvoke(data.context, find_llm(data.model).complete, **data.config)
+        return await node.ainvoke(data.context, find_llm(data.model).complete, **data.config)  # return type: Awaitable[str]
     except Exception as e:
         print_exc(file=stderr)
         return PlainTextResponse(str(e), 500)
@@ -56,7 +56,7 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
     @server_sent_events
     async def make_stream():
         try:
-            async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
+            async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):  # return type: AsyncIterable[str]
                 if "parsed" in c:
                     yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
                 else:

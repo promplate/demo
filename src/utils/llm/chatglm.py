@@ -1,4 +1,4 @@
-from typing import cast
+from typing import cast, AsyncIterable
 
 import zhipuai
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
@@ -38,7 +38,7 @@ class ChatGLM(LLM):
 
     @staticmethod
     @patch.chat.agenerate
-    async def generate(prompt: str | list[Message], /, **config):
+    async def generate(prompt: str | list[Message], /, **config) -> AsyncIterable[str]:
         ChatGLM.validate(**config)
         messages = patch_prompt(prompt)
         config |= {"model": "chatglm_pro", "prompt": messages}
