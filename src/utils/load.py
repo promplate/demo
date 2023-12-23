@@ -58,8 +58,7 @@ def glob():
 Template = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))
 
 
-@validate_call
-def load_template(stem: Template) -> DotTemplate:
+def _load_template(stem: Template) -> DotTemplate:
     try:
         return DotTemplate.read(glob()[stem])
     except KeyError:
@@ -69,8 +68,13 @@ def load_template(stem: Template) -> DotTemplate:
 
 
 if not __debug__ and not TYPE_CHECKING:
-    load_template = cache(load_template)
+    _load_template = cache(_load_template)
     glob = cache(glob)
+
+
+@validate_call
+def load_template(stem: Template):
+    return _load_template(stem)
 
 
 class LazyLoader(dict):
@@ -88,7 +92,7 @@ class LazyLoader(dict):
             KeyError: If the prompt with the given key does not exist.
         """
         try:
-            return load_template(key)
+            return _load_template(key)
         except FileNotFoundError as e:
             raise KeyError(f"Prompt {key} not found") from e
 
