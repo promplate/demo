@@ -98,6 +98,7 @@ class LazyLoader(dict):
     loading all templates at startup.
     """
 
+
     path = root
 
     def __missing__(self, key):
