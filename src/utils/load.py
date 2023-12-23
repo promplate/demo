@@ -1,10 +1,9 @@
-from src.logic import Template
 from pathlib import Path
 from re import sub
 
-
 from promplate.prompt.utils import get_builtins
 from pydantic import validate_call
+from src.logic import Template
 
 from .cache import cache
 from .helpers import DotTemplate
