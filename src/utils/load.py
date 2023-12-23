@@ -1,25 +1,14 @@
 from pathlib import Path
 from re import sub
-from typing import TYPE_CHECKING, Annotated, Literal
+from typing import TYPE_CHECKING, Literal
 
 from promplate.prompt.utils import get_builtins
+from pydantic import validate_call
 
 from .cache import cache
 from .helpers import DotTemplate
 
 root = Path("src/templates")
-
-
-Component = str
-
-
-def load_template(stem: Component) -> DotTemplate:
-    try:
-        return DotTemplate.read(glob()[stem])
-    except KeyError:
-        if (root / stem).is_dir():
-            return getattr(components, stem)
-        raise
 
 
 def generate_pyi():
@@ -29,7 +18,6 @@ def generate_pyi():
 
         all_paths = f"Literal{list(glob())}"
 
-        target = sub(r"\nComponent\s*=\s*.*?\n", f"Component = {all_paths}", target)
         target = sub(r"\nTemplate\s*=\s*.*\n", f"Template = {all_paths}", target)
 
         source.with_suffix(".pyi").write_text(target)
@@ -41,6 +29,19 @@ def glob():
         for path in root.glob("**/*")
         if path.is_file() and path.suffix not in {".py", ".pyc"}
     }
+
+
+Template = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))
+
+
+@validate_call
+def load_template(stem: Template) -> DotTemplate:
+    try:
+        return DotTemplate.read(glob()[stem])
+    except KeyError:
+        if (root / stem).is_dir():
+            return getattr(components, stem)
+        raise
 
 
 if not __debug__ and not TYPE_CHECKING:
@@ -59,7 +60,7 @@ class LazyLoader(dict):
 
     if TYPE_CHECKING:
 
-        def __getitem__(self, _: Component) -> DotTemplate:
+        def __getitem__(self, _: Template) -> DotTemplate:
             ...
 
     def __getattr__(self, stem: str):
@@ -78,6 +79,3 @@ class LazyLoader(dict):
 
 
 components = LazyLoader(get_builtins())  # avoid shadowing builtins
-
-
-Template = Annotated[Literal.__getitem__(tuple(glob())), str]  # type: ignore
