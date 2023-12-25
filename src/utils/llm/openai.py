@@ -10,9 +10,13 @@ generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
 
 @link_llm("gpt")
 class OpenAI(AsyncChatOpenAI):
-    def generate(self, prompt: str, /, **config):  # type: ignore
+    def generate(self, prompt: str, /, **config):
         config = self._run_config | config
         return generate(prompt, **config)
+
+    def complete(self, prompt: str, /, **config):
+        config = self._run_config | config
+        return complete(prompt, **config)
 
     def bind(self, **run_config):  # type: ignore
         self._run_config.update(run_config)  # inplace
