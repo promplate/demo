@@ -53,6 +53,12 @@ def load_template(stem: Template):
     return _load_template(stem)
 
 
+if TYPE_CHECKING:
+
+    def load_template(stem: Template) -> DotTemplate:
+        ...
+
+
 class LazyLoader(dict):
     path = root
 
