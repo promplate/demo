@@ -13,6 +13,11 @@ zhipuai.api_key = env.zhipu_api_key
 
 
 def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
+    """
+    Takes a prompt, which can be a string or a list of Message objects,
+    and returns a list of SafeMessage objects. If the length of the messages
+    is not even, it adds an empty user message to the start of the list.
+    """
     messages = ensure_safe(prompt)
     return messages if len(messages) % 2 else [{"role": "user", "content": ""}, *messages]
 
