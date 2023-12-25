@@ -1,4 +1,5 @@
 from typing import cast
+from asyncio import stream
 
 import zhipuai
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
@@ -34,7 +35,7 @@ class ChatGLM(LLM):
     async def complete(prompt: str | list[Message], /, **config):
         ChatGLM.validate(**config)
         messages = patch_prompt(prompt)
-        return (await run_in_threadpool(zhipuai.model_api.invoke, model="chatglm_pro", prompt=messages, **config))["data"]["choices"][0]["content"]  # type: ignore
+        return str((await run_in_threadpool(zhipuai.model_api.invoke, model="chatglm_pro", prompt=messages, **config))["data"]["choices"][0]["content"])  # type: ignore
 
     @staticmethod
     @patch.chat.agenerate
@@ -46,7 +47,7 @@ class ChatGLM(LLM):
 
         first_token = True
 
-        async for event in iterate_in_threadpool(res.events()):
+        async for event in stream.iterate(iterate_in_threadpool(res.events())):
             if event.event in {"add", "finish"}:
                 if first_token:
                     first_token = False
