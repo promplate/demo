@@ -1,25 +1,20 @@
-from typing import cast
-
 import zhipuai
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
 from promplate.llm.base import LLM
-from promplate.prompt.chat import Message, ensure
+from promplate.prompt.chat import Message
 from promplate_trace.auto import patch
 from pydantic import Field, validate_call
 
 from ..config import env
+from .common import SafeMessage, ensure_safe
 from .dispatch import link_llm
 
 zhipuai.api_key = env.zhipu_api_key
 
 
-def patch_prompt(prompt: str | list[Message]):
-    messages = ensure(prompt)
-    for i in messages:
-        cast(dict, i).pop("name", None)
-        if i["role"] == "system":
-            i["role"] = "user"
-    return messages
+def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
+    messages = ensure_safe(prompt)
+    return messages if len(messages) % 2 else [{"role": "user", "content": ""}, *messages]
 
 
 @link_llm("chatglm")
@@ -44,14 +39,15 @@ class ChatGLM(LLM):
     @patch.chat.acomplete
     async def complete(prompt: str | list[Message], /, **config):
         ChatGLM.validate(**config)
-        messages = patch_prompt(prompt)
-        return (await run_in_threadpool(zhipuai.model_api.invoke, model="chatglm_pro", prompt=messages, **config))["data"]["choices"][0]["content"]  # type: ignore
+        messages = ensure_even(prompt)
+        config |= {"model": "chatglm_pro", "prompt": messages}
+        return (await run_in_threadpool(zhipuai.model_api.invoke, **config))["data"]["choices"][0]["content"]  # type: ignore
 
     @staticmethod
     @patch.chat.agenerate
     async def generate(prompt: str | list[Message], /, **config):
         ChatGLM.validate(**config)
-        messages = patch_prompt(prompt)
+        messages = ensure_even(prompt)
         config |= {"model": "chatglm_pro", "prompt": messages}
         res = zhipuai.model_api.sse_invoke(**config)
 
