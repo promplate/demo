@@ -1,10 +1,8 @@
-from httpx import AsyncClient
 from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
 from promplate_trace.auto import patch
 
+from .common import client
 from .dispatch import link_llm
-
-client = AsyncClient(http2=True)
 
 complete = patch.chat.acomplete(AsyncChatComplete(http_client=client))
 generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
