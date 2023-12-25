@@ -23,7 +23,15 @@ class Msg(BaseModel):
     name: Annotated[Literal.__getitem__(tuple(tool_map)), str] | None = None  # type: ignore
 
 
-Model = Literal["gpt-3.5-turbo-0301", "gpt-3.5-turbo-0613", "gpt-3.5-turbo-1106", "gpt-4-1106-preview", "chatglm_turbo"]
+Model = Literal[
+    "gpt-3.5-turbo-0301",
+    "gpt-3.5-turbo-0613",
+    "gpt-3.5-turbo-1106",
+    "gpt-4-1106-preview",
+    "chatglm_turbo",
+    "claude-instant-1.2",
+    "claude-2.1",
+]
 
 
 class ChainInput(BaseModel):
