@@ -3,6 +3,7 @@ from rich import print
 
 
 class Config(BaseSettings):
+    anthropic_api_key: str = ""
     openai_api_key: str = "*"
     openai_base_url: str = ""
     serper_api_key: str = ""
