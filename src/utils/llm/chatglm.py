@@ -1,3 +1,8 @@
+"""
+This file contains the ChatGLM class and associated functions for handling language model interactions.
+It includes the ensure_even function for preparing prompts, and utilities to validate and generate responses using the ChatGLM model.
+"""
+
 import zhipuai
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
 from promplate.llm.base import LLM
