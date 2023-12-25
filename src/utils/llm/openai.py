@@ -15,6 +15,16 @@ class OpenAI(AsyncChatOpenAI):
         return generate(prompt, **config)
 
     def complete(self, prompt: str, /, **config):
+        """
+        Completes a given prompt using the OpenAI model.
+        
+        Parameters:
+        prompt (str): The prompt to be completed.
+        config (dict): Configuration parameters for the model.
+        
+        Returns:
+        str: The completed prompt.
+        """
         config = self._run_config | config
         return complete(prompt, **config)
 
