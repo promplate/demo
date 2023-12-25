@@ -50,6 +50,15 @@ if not __debug__ and not TYPE_CHECKING:
 
 @validate_call
 def load_template(stem: Template):
+    """
+    Loads a template given its stem.
+    
+    Parameters:
+    stem (Template): The stem of the template to be loaded.
+    
+    Returns:
+    DotTemplate: The loaded template.
+    """
     return _load_template(stem)
 
 
