@@ -27,6 +27,15 @@ class ChatGLM(LLM):
     @staticmethod
     @validate_call
     def validate(temperature: float = Field(0.95, gt=0, le=1), top_p: float = Field(0.7, gt=0, lt=1), **_):
+        """
+        Validates the parameters for the ChatGLM model.
+
+        Parameters:
+        - temperature (float): Controls the randomness of the output. Values must be greater than 0 and less or equal to 1. Default is 0.95.
+        - top_p (float): Controls the nucleus sampling, i.e., discards the tail of probability distribution. Values must be greater than 0 and less than 1. Default is 0.7.
+
+        Other keyword arguments (if any) are ignored.
+        """
         pass
 
     @staticmethod
