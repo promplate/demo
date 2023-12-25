@@ -26,6 +26,7 @@ class TestOpenAI(unittest.TestCase):
         prompt = "Hello, how are you?"
         config = {"max_tokens": "fifty"}
         with self.assertRaises(TypeError):
+            pass
             self.openai.complete(prompt, **config)
 
 if __name__ == "__main__":
