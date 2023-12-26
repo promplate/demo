@@ -34,20 +34,28 @@ Model = Literal[
 ]
 
 
+run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
+
+
 class ChainInput(BaseModel):
-    messages: list[Msg]
+    messages: list[Msg] = []
     model: Model = "gpt-3.5-turbo-1106"
     temperature: float = Field(0.7, ge=0, le=1)
+    stop: str | list[str] = []  # openai
+    stop_sequences: list[str] = []  # anthropic
 
     @property
     def context(self):
-        return self.model_dump(include={"messages"})
+        return self.model_dump(exclude=run_config_fields)
 
     @property
     def config(self):
-        return self.model_dump(exclude={"messages"}, exclude_unset=True)
+        return self.model_dump(include=run_config_fields, exclude_unset=True)
 
-    model_config = {"json_schema_extra": {"example": {"messages": [{"content": "What's the date today?", "role": "user"}]}}}
+    model_config = {
+        "json_schema_extra": {"example": {"messages": [{"content": "What's the date today?", "role": "user"}]}},
+        "extra": "allow",
+    }
 
 
 @run_router.post(f"{env.base}/invoke/{{template:path}}")

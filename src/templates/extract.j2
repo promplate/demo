@@ -1,0 +1,22 @@
+{% if system %}
+<| system |>
+{{ system }}
+{% endif %}
+
+<| user |>
+Here are some {{ text_description or "unstructured text" }} below delimited by triple quotes:
+
+"""
+{{ text }}
+"""
+
+Extract information into the following schema:
+
+```
+{{ schema }}
+```
+
+You should respond a pure JSON string as described above.
+
+<| assistant |>
+```json
