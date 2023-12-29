@@ -17,6 +17,10 @@ class TestOctoAIComplete(unittest.TestCase):
         self.assertIsInstance(result, str)
 
 class TestOctoAIGenerate(unittest.TestCase):
+        result = self.octoai.bind(model="mixtral-8x7b-instruct-fp16")
+        self.assertEqual(result, self.octoai)
+
+class TestOctoAIGenerate(unittest.TestCase):
     def setUp(self):
         self.octoai = OctoAI().bind(model="mixtral-8x7b-instruct-fp16")
 
