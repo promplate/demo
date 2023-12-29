@@ -3,7 +3,7 @@ from sys import stderr
 from traceback import print_exc
 from typing import Annotated, Literal, cast
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from fastapi.responses import PlainTextResponse, StreamingResponse
 from promplate import Node
 from pydantic import BaseModel, Field
@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from ..logic import get_node
 from ..logic.tools import tool_map
 from ..utils.config import env
+from ..utils.http import forward_headers
 from ..utils.llm import find_llm
 from .sse import server_sent_events
 
@@ -87,10 +88,16 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
 
 @run_router.put(f"{env.base}/single/{{template}}")
-async def step_run(data: ChainInput, node: Node = Depends(get_node)):
+async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node)):
     async def make_stream():
         last = ""
-        async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
+
+        config = data.config
+
+        if data.model.startswith("gpt"):
+            config["extra_headers"] = forward_headers(r.headers)
+
+        async for c in node.astream(data.context, find_llm(data.model).generate, **config):
             if c.result != last:
                 yield cast(str, c.result).removeprefix(last)
                 last = c.result
