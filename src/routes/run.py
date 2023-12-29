@@ -31,6 +31,7 @@ Model = Literal[
     "chatglm_turbo",
     "claude-instant-1.2",
     "claude-2.1",
+    "mixtral-8x7b-instruct-fp16",
 ]
 
 
