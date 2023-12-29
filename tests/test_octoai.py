@@ -40,5 +40,6 @@ class TestOctoAIBind(unittest.TestCase):
         result = self.octoai.bind(model="mixtral-8x7b-instruct-fp16")
         self.assertEqual(result, self.octoai)
 
+
 if __name__ == "__main__":
     unittest.main()
