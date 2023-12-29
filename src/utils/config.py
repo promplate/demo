@@ -3,11 +3,15 @@ from rich import print
 
 
 class Config(BaseSettings):
+    # llm providers
     anthropic_api_key: str = ""
     openai_api_key: str = "*"
     openai_base_url: str = ""
-    serper_api_key: str = ""
+    octoai_api_key: str = ""
     zhipu_api_key: str = ""
+
+    # other services
+    serper_api_key: str = ""
 
     base_path: str = ""
 
