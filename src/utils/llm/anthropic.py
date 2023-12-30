@@ -41,6 +41,16 @@ async def complete(prompt: str | list[Message], /, **config):
 
 
 async def generate(prompt: str | list[Message], /, **config):
+    """
+    Create a message with the anthropic API and emit the content block delta from the stream of events.
+
+    Args:
+        prompt (str | list[Message]): The input prompt to send to the API, may consist of strings or structured messages.
+        config (dict): Configuration parameters for the API request.
+
+    Yields:
+        str: The content block delta from the stream of events.
+    """
     messages, system_message = split(prompt)
     async with await get_anthropic().beta.messages.create(
         messages=messages, system=system_message, max_tokens=4096, **config, stream=True
