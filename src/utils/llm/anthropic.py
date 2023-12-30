@@ -25,6 +25,16 @@ def get_anthropic():
 
 
 async def complete(prompt: str | list[Message], /, **config):
+    """
+    Create a message with the anthropic API and return the text of the response.
+
+    Args:
+        prompt (str | list[Message]): The input prompt to send to the API, may consist of strings or structured messages.
+        config (dict): Configuration parameters for the API request.
+
+    Returns:
+        str: The text of the response from the API.
+    """
     messages, system_message = split(prompt)
     res = await get_anthropic().beta.messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
     return res.content[0].text
