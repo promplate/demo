@@ -24,25 +24,34 @@ def get_anthropic():
     return AsyncAnthropic(http_client=client)
 
 
+async def complete(prompt: str | list[Message], /, **config):
+    messages, system_message = split(prompt)
+    res = await get_anthropic().beta.messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
+    return res.content[0].text
+
+
+async def generate(prompt: str | list[Message], /, **config):
+    messages, system_message = split(prompt)
+    async with await get_anthropic().beta.messages.create(
+        messages=messages, system=system_message, max_tokens=4096, **config, stream=True
+    ) as stream:
+        async for event in stream:
+            if event.type == "content_block_delta":
+                yield event.delta.text
+
+
 @link_llm("claude")
 class Anthropic(LLM):
-    @staticmethod
-    @patch.chat.acomplete
-    async def complete(prompt: str | list[Message], /, **config):
-        messages, system_message = split(prompt)
-        res = await get_anthropic().beta.messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
-        return res.content[0].text
-
-    @staticmethod
-    @patch.chat.agenerate
-    async def generate(prompt: str | list[Message], /, **config):
-        messages, system_message = split(prompt)
-        async with await get_anthropic().beta.messages.create(
-            messages=messages, system=system_message, max_tokens=4096, **config, stream=True
-        ) as stream:
-            async for event in stream:
-                if event.type == "content_block_delta":
-                    yield event.delta.text
+    complete = staticmethod(patch.chat.acomplete(complete))
+    generate = staticmethod(patch.chat.agenerate(generate))
 
 
 anthropic = Anthropic()
+
+
+class RawAnthropic(LLM):
+    complete = staticmethod(patch.text.acomplete(complete))
+    generate = staticmethod(patch.text.agenerate(generate))
+
+
+raw_anthropic = RawAnthropic()
