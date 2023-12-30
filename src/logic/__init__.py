@@ -5,7 +5,7 @@ from .main import main_loop
 from .translate import translate
 
 
-def get_node(template: Template):
+def get_node(template: 'Template'):
     match template:
         case "main":
             return main_loop
