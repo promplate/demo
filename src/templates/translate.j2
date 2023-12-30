@@ -1,0 +1,22 @@
+<| user |>
+Translate the user's input into {{ language }}, and output it in JSON format.
+
+Here is the schema:
+
+```ts
+{
+  original: string;
+  translated: string;
+}[]
+```
+
+You should response a JSON block containing translated text and related original texts. Piceces by piceces.
+
+<user-input>{{ text }}</user-input>
+
+Remember: split it into piceces, and each picece should contain less than 10 words.
+
+<| assistant |>
+```json
+[
+  {"original":"
