@@ -1,6 +1,9 @@
-from partial_json_parser import Allow, loads
+from typing import Literal
+
+from partial_json_parser import ARR
 from promplate import ChainContext, Node, parse_chat_markup
 from promplate_trace.auto import patch
+from promptools.extractors import extract_json
 
 from ..utils.llm.anthropic import raw_anthropic
 from ..utils.load import load_template
@@ -17,5 +20,5 @@ hint = parse_chat_markup(load_template("translate").text)[-1]["content"].removep
 
 @translate.mid_process
 def parse_json(context: ChainContext):
-    parsed = loads(hint + context.result, Allow.ARR)
+    parsed = extract_json(hint + context.result, [], list[dict[Literal["original", "translated"], str]], allow_partial=ARR)
     return {"parsed": parsed}
