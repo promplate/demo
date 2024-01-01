@@ -1,3 +1,7 @@
+"""
+This file contains the logic for translating text using a specific model. It includes functions for parsing JSON data and configuring the translation model.
+"""
+
 from typing import Literal
 
 from partial_json_parser import ARR
@@ -20,5 +24,14 @@ hint = parse_chat_markup(load_template("translate").text)[-1]["content"].removep
 
 @translate.mid_process
 def parse_json(context: ChainContext):
+    """
+    Parses JSON data from a given context.
+
+    Parameters:
+    context (ChainContext): The context from which to extract the JSON data.
+
+    Returns:
+    dict: A dictionary containing the parsed JSON data.
+    """
     parsed = extract_json(hint + context.result, [], list[dict[Literal["original", "translated"], str]], allow_partial=ARR)
     return {"parsed": parsed}
