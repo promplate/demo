@@ -1,6 +1,6 @@
 from pathlib import Path
 from re import sub
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Literal, TypeAlias
 
 from promplate.prompt.utils import get_builtins
 from pydantic import validate_call
@@ -18,7 +18,7 @@ def generate_pyi():
 
         all_paths = f"Literal{list(glob())}"
 
-        target = sub(r"\nTemplate\s*=\s*.*\n", f"Template = {all_paths}", target)
+        target = sub(r"\nTemplate:\sTypeAlias\s*=\s*.*\n", f"Template = {all_paths}", target)
 
         source.with_suffix(".pyi").write_text(target)
 
@@ -31,7 +31,7 @@ def glob():
     }
 
 
-Template = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))
+Template: TypeAlias = str if TYPE_CHECKING else Literal.__getitem__(tuple(glob()))  # type: ignore
 
 
 def _load_template(stem: Template) -> DotTemplate:
