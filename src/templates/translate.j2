@@ -1,21 +1,42 @@
+{# from json import dumps as json #}
+
 <| user |>
 Translate the user's input into {{ language }}, and output it in JSON format.
 
-Here is the schema:
-
+<response-schema>
 ```ts
 {
   original: string;
   translated: string;
 }[]
+</response-schema>
+
+You should response a JSON block containing translated text and related original texts. piece by piece.
+
+You ALWAYS follow these guidelines when writing your response:
+<guidelines>
+- Split the whole text into pieces, and each picece MUST be less than 10 words!!!! You can cut them by punctuation marks or spaces.
+- Try to use the most native expressions. Do not add anything yourself.
+- Produce valid JSON string! Be careful with escape characters!
+- Preserve all the `\n` and other punctuation marks in the `original` and `translated` fields. The position and number of punctuation marks or spaces in the translation must be **exactly the same** as the input.
+- `\n` can only be the end of a pieces. And `\n` must be treated as a place to cut.
+</guidelines>
+
+<| assistant |>
+OK! I got it, let's start.
+
+<| user |>
+<user-input>"你好。\n\n早上好！\n\t下午好"</user-input>
+<| assistant |>
+```json
+[
+  {"original":"你好。\n\n","translated":"Hi.\n\n"},
+  {"original":"早上好！\n","translated":"Good morning!\n"},
+  {"original":"\t下午好","translated":"\tGood afternoon"}
+]
 ```
-
-You should response a JSON block containing translated text and related original texts. Piceces by piceces.
-
-<user-input>{{ text }}</user-input>
-
-Remember: split it into piceces, and each picece should contain less than 10 words.
-
+<| user |>
+<user-input>{{ json(text, ensure_ascii=False) }}</user-input>
 <| assistant |>
 ```json
 [

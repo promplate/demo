@@ -7,7 +7,7 @@ from ..utils.load import load_template
 
 translate = patch.node(Node)(load_template("translate"), llm=raw_anthropic)
 
-translate.run_config["stop_sequences"] = ["```"]
+translate.run_config["stop_sequences"] = ["\n```"]
 translate.run_config["model"] = "claude-instant-1.2"
 translate.run_config["temperature"] = 0
 
@@ -17,5 +17,5 @@ hint = parse_chat_markup(load_template("translate").text)[-1]["content"].removep
 
 @translate.mid_process
 def parse_json(context: ChainContext):
-    parsed = loads(hint + context.result, Allow.COLLECTION)
+    parsed = loads(hint + context.result, Allow.ARR)
     return {"parsed": parsed}
