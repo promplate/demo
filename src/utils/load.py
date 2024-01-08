@@ -23,7 +23,7 @@ def generate_pyi():
         source.with_suffix(".pyi").write_text(target)
 
 
-def glob():
+def glob() -> dict["Template", Path]:
     return {
         path.as_posix().removeprefix(f"{root.as_posix()}/").removesuffix(path.suffix): path
         for path in root.glob("**/*")
@@ -49,14 +49,8 @@ if not __debug__ and not TYPE_CHECKING:
 
 
 @validate_call
-def load_template(stem: Template):
+def load_template(stem: Template) -> DotTemplate:
     return _load_template(stem)
-
-
-if TYPE_CHECKING:
-
-    def load_template(stem: Template) -> DotTemplate:
-        ...
 
 
 class LazyLoader(dict):
