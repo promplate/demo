@@ -13,7 +13,7 @@ from ..logic.tools import tool_map
 from ..utils.config import env
 from ..utils.http import forward_headers
 from ..utils.llm import find_llm
-from .sse import server_sent_events
+from .sse import non_duplicated_event_stream
 
 run_router = APIRouter(tags=["call"])
 
@@ -71,18 +71,18 @@ async def invoke(data: ChainInput, node: Node = Depends(get_node)):
 
 @run_router.post(f"{env.base}/stream/{{template:path}}")
 async def stream(data: ChainInput, node: Node = Depends(get_node)):
-    @server_sent_events
+    @non_duplicated_event_stream
     async def make_stream():
         try:
             async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
                 if "parsed" in c:
-                    yield "partial" if c.get("partial") else "whole", dumps(c["parsed"], ensure_ascii=False)
+                    yield dumps(c["parsed"], ensure_ascii=False), "partial" if c.get("partial") else "whole"
                 else:
-                    yield "result", dumps(c.result, ensure_ascii=False)
-            yield "finish", dumps(c.maps[0], ensure_ascii=False)  # type: ignore
+                    yield dumps(c.result, ensure_ascii=False), "result"
+            yield dumps(c.maps[0], ensure_ascii=False), "finish"  # type: ignore
         except Exception as e:
             print_exc(file=stderr)
-            yield "error", str(e)
+            yield str(e), "error"
 
     return StreamingResponse(make_stream(), media_type="text/event-stream")
 
