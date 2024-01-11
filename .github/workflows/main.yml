@@ -11,5 +11,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install pnpm
-        run: pnpm install
+      - name: Install npm
+        run: npm install -g pnpm
