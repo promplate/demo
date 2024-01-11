@@ -1,8 +1,5 @@
-    - name: Install pnpm
-      run: npm install -g pnpm
-    
-    - run: pnpm install
-      name: GitHub Actions
+    - name: Run pnpm install
+      run: pnpm install
 
 on:
   push:
