@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Setup Node.js
         uses: setup-node@v2
+      - uses: pnpm@next
       - name: Use Node.js 14
         run: setup-node/setup-node@v2
     - name: Run pnpm install
@@ -20,5 +21,7 @@ jobs:
           node-version: '14'
     - name: Install pnpm
         run: npm install -g pnpm
+      - name: Install pnpm
+        run: pnpm install
       - name: Install pnpm
         run: npm install -g pnpm
