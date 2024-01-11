@@ -2,7 +2,7 @@ from collections import deque
 from functools import wraps
 from typing import AsyncGenerator, Callable
 
-from promptools.utils.sse import as_event_stream
+from promptools.stream.sse import as_event_stream
 
 
 def non_duplicated_event_stream(generator: Callable[..., AsyncGenerator[tuple[str, str], None]]):
