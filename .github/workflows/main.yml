@@ -12,7 +12,9 @@ jobs:
 
     steps:
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: pnpm install
+        if: success()
 
       - name: Run pnpm install
         run: pnpm install
+        if: success()
