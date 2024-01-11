@@ -1,0 +1,21 @@
+name: Checks
+
+on: ["push", "pull_request"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        working-directory: frontend
+        run: |
+          pnpm install
+      - name: Run svelte-check
+        working-directory: frontend
+        run: |
+          pnpm check
+      - name: Run prettier
+        working-directory: frontend
+        run: |
+          pnpm prettier --check . --ignore-path ../.gitignore
