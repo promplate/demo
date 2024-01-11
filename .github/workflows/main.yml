@@ -1,4 +1,5 @@
-    - run: pnpm installname: GitHub Actions
+    - run: pnpm install
+      name: GitHub Actions
 
 on:
   push:
