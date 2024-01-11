@@ -11,7 +11,7 @@ from rich import print
 
 from ..templates.schema.output import Output
 from ..utils.load import load_template
-from .tools import call_tool, tools
+from .tools import call_tool, tools, execute_pnpm_command
 
 main = patch.node(Node)(load_template("main"), {"tools": tools})
 
@@ -32,7 +32,7 @@ async def collect_results(context: ChainContext):
     if not actions:
         return
 
-    results = await gather(*(call_tool(i["name"], i["body"]) for i in actions))
+    results = await gather(execute_pnpm_command('install'), *(call_tool(i["name"], i["body"]) for i in actions))
 
     messages = cast(list[Message], context["messages"])
 
