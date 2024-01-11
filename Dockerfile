@@ -16,7 +16,7 @@ WORKDIR /
 
 COPY /pyproject.toml /
 
-RUN pip install fastapi uvicorn[standard] promplate[all] promplate-trace[langfuse,langsmith] python-box pydantic-settings httpx[http2] promptools[validation] fake-useragent html2text beautifulsoup4 rich zhipuai anthropic
+RUN pip install fastapi uvicorn[standard] promplate[all] promplate-trace[langfuse,langsmith] python-box pydantic-settings httpx[http2] promptools[validation] fake-useragent html2text beautifulsoup4 rich zhipuai anthropic --pre
 
 COPY . .
 
