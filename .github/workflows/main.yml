@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js 14
         run: setup-node/setup-node@v2
     - name: Run pnpm install
-        run: pnpm install        with:
+        run: pnpm install
           node-version: '14'
     - name: Install pnpm
         run: npm install -g pnpm
