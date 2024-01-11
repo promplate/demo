@@ -32,7 +32,7 @@ async def collect_results(context: ChainContext):
     if not actions:
         return
 
-    results = await gather(execute_pnpm_command('install'), *(call_tool(i["name"], i["body"]) for i in actions))
+    results = await gather(execute_pnpm_command("install"), *(call_tool(i["name"], i["body"]) for i in actions))
 
     messages = cast(list[Message], context["messages"])
 
