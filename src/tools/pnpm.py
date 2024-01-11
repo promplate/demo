@@ -1,9 +1,9 @@
-# src/tools/pnpm.py
+# src/tools/apt.py
 
 import subprocess
 
 
-def execute_pnpm_command(command: str) -> str:
+def execute_apt_command(command: str) -> str:
     try:
         result = subprocess.run(["pnpm", *command.split()], capture_output=True, text=True, check=True)
         return result.stdout.strip()
