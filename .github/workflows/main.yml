@@ -17,4 +17,4 @@ jobs:
           node-version: '14'
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: pnpm.py install
