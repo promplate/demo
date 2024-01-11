@@ -4,8 +4,11 @@
 
 *.env
 
-pdm.lock
+*lock*
 .pdm-python
 
 __pycache__
 *.pyi
+
+node_modules
+dist
