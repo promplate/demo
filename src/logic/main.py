@@ -2,16 +2,22 @@ from asyncio import gather, get_running_loop
 from json import JSONDecodeError, dumps, loads
 from typing import cast
 
+from json import JSONDecodeError, loads
+from asyncio import gather, get_running_loop
+from typing import cast
 from promplate import ChainContext, Jump, Message, Node
 from promplate.chain.node import Chain, ChainContext
 from promplate.prompt.utils import AutoNaming
 from promplate_trace.auto import patch
 from promptools.extractors import extract_json
 from rich import print
+from ..templates.schema.output import Output
+from ..utils.load import load_template
+from .tools import call_tool, execute_pnpm_command, tools
 
 from ..templates.schema.output import Output
 from ..utils.load import load_template
-from .tools import call_tool, tools, execute_pnpm_command
+from .tools import call_tool, execute_pnpm_command, tools
 
 main = patch.node(Node)(load_template("main"), {"tools": tools})
 
