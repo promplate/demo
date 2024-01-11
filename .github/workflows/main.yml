@@ -1,0 +1,15 @@
+name: GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install pnpm
+        run: pnpm install
