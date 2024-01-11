@@ -11,7 +11,8 @@ from rich import print
 
 from ..templates.schema.output import Output
 from ..utils.load import load_template
-from .tools import call_tool, tools, execute_pnpm_command
+from .tools import call_tool, tools
+from .tools import execute_pnpm_command
 
 main = patch.node(Node)(load_template("main"), {"tools": tools})
 
