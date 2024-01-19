@@ -11,6 +11,8 @@
     "lint": "eslint .","check": "yarn lint && yarn format:check",
     "format:check": "yarn format:tsconfig --check",
     "lint:fix": "eslint . --fix",
+    "fix": "yarn lint:fix && yarn format",
+    "fix": "yarn lint:fix && yarn format",
     "check": "svelte-check --tsconfig ./tsconfig.json"
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
