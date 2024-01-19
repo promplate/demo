@@ -1,0 +1,7 @@
+plugins = [ "prettier-plugin-svelte" ]
+tabWidth = 2
+printWidth = 200
+
+[[overrides]]
+files = "*.svelte"
+options = { tabWidth = 4 }

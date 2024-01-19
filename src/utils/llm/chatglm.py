@@ -1,15 +1,21 @@
-import zhipuai
+from functools import cache
+
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
 from promplate.llm.base import LLM
 from promplate.prompt.chat import Message
 from promplate_trace.auto import patch
 from pydantic import Field, validate_call
+from zhipuai import ZhipuAI
+from zhipuai.api_resource.chat.chat import Chat
 
 from ..config import env
 from .common import SafeMessage, ensure_safe
 from .dispatch import link_llm
 
-zhipuai.api_key = env.zhipu_api_key
+
+@cache
+def get_client():
+    return Chat(ZhipuAI(api_key=env.zhipu_api_key))
 
 
 def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
@@ -28,29 +34,22 @@ class ChatGLM(LLM):
     @patch.chat.acomplete
     async def complete(prompt: str | list[Message], /, **config):
         ChatGLM.validate(**config)
-        messages = ensure_even(prompt)
-        config |= {"model": "chatglm_pro", "prompt": messages}
-        return (await run_in_threadpool(zhipuai.model_api.invoke, **config))["data"]["choices"][0]["content"]  # type: ignore
+        config |= {"model": "chatglm_pro", "messages": ensure_even(prompt)}
+        return str((await run_in_threadpool(get_client().completions.create, **config)).choices[0].message.content).removeprefix(" ")  # type: ignore
 
     @staticmethod
     @patch.chat.agenerate
     async def generate(prompt: str | list[Message], /, **config):
         ChatGLM.validate(**config)
-        messages = ensure_even(prompt)
-        config |= {"model": "chatglm_pro", "prompt": messages}
-        res = zhipuai.model_api.sse_invoke(**config)
-
+        config |= {"model": "chatglm_pro", "messages": ensure_even(prompt)}
+        res = get_client().completions.create(**config, stream=True)
         first_token = True
-
-        async for event in iterate_in_threadpool(res.events()):
-            if event.event in {"add", "finish"}:
-                if first_token:
-                    first_token = False
-                    yield event.data.lstrip()
-                else:
-                    yield event.data
-            elif event.event in {"error", "interrupted"}:
-                print(event.data)
+        async for event in iterate_in_threadpool(res):
+            if first_token:
+                first_token = False
+                yield str(event.choices[0].delta.content).removeprefix(" ")  # type: ignore
+            else:
+                yield str(event.choices[0].delta.content)  # type: ignore
 
 
 glm = ChatGLM()

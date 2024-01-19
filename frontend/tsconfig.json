@@ -9,11 +9,7 @@
     "checkJs": true,
     "isolatedModules": true
   },
-  "include": [
-    "app/**/*.ts",
-    "app/**/*.js",
-    "app/**/*.svelte"
-  ],
+  "include": ["**/*.ts", "**/*.js", "**/*.svelte"],
   "references": [
     {
       "path": "./tsconfig.node.json"
