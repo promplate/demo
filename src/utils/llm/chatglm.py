@@ -10,7 +10,7 @@ from zhipuai.api_resource.chat.chat import Chat
 
 from ..config import env
 from .common import SafeMessage, ensure_safe, ensure_safe_messages
-from .dispatch import link_llm, create_completions
+from .dispatch import link_llm, create_completions, generate_completions
 
 
 @cache
@@ -39,7 +39,7 @@ class ChatGLM(LLM):
 
     @staticmethod
     @patch.chat.agenerate
-    async def generate(prompt: str | list[Message], /, **config):
+    async def generate_completions(prompt: str | list[Message], /, **config):
         ChatGLM.validate(**config)
         config |= {"model": "chatglm_pro", "messages": ensure_even(prompt)}
         res = get_client().completions.create(**config, stream=True)
