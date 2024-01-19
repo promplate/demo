@@ -9,7 +9,7 @@ from zhipuai import ZhipuAI
 from zhipuai.api_resource.chat.chat import Chat
 
 from ..config import env
-from .common import SafeMessage, ensure_safe
+from .common import SafeMessage, ensure_safe, ensure_safe_messages
 from .dispatch import link_llm
 
 
@@ -19,7 +19,7 @@ def get_client():
 
 
 def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
-    messages = ensure_safe(prompt)
+    messages = ensure_safe, ensure_safe_messages(prompt)
     return messages if len(messages) % 2 else [{"role": "user", "content": ""}, *messages]
 
 
