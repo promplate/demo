@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "format:tsconfig": "prettier --write tsconfig.json",
+    "format": "yarn format:check",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
