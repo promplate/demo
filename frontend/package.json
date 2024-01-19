@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "format": "prettier --write . --ignore-path ../.gitignore",
     "lint": "eslint .",
+    "format:check": "yarn format:tsconfig --check",
     "lint:fix": "eslint . --fix",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
