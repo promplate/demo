@@ -12,6 +12,7 @@
     "format:check": "yarn format:tsconfig --check",
     "lint:fix": "eslint . --fix",
     "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.2",
