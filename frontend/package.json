@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "format": "prettier --write . --ignore-path ./.gitignore"
+    "format": "prettier --write . --ignore-path ./.gitignore",
+    "prettier-plugin-svelte": "^3.1.2"
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check": "svelte-check --tsconfig ./tsconfig.json"
