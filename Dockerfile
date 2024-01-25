@@ -8,9 +8,9 @@ RUN bun install
 
 COPY frontend .
 
-RUN bun run build --sourcemap
+RUN NODE_ENV=production bun run build
 
-FROM bitnami/python:3.12
+FROM bitnami/python:3.12 AS python
 
 WORKDIR /
 
