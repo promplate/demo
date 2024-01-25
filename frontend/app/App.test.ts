@@ -23,9 +23,12 @@ describe('App', () => {
     expect(contentElement).toBeInTheDocument();
   });
 
-  import { NewEntity, AnotherEntity } from './App.svelte';
+  import { NewEntity, AnotherEntity, NewFunction } from './App.svelte';
 
-  // Example test for a new function introduced in the business logic
+   // New unit test to cover the new business logic
+   it('covers new business logic', () => {
+   // Add unit test code to cover new business logic
+   });
   it('returns the correct result from a new function', () => {
     const { component } = render(App);
     const result = component.$$.ctx.newFunction();
