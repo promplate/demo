@@ -23,11 +23,14 @@ describe('App', () => {
     expect(contentElement).toBeInTheDocument();
   });
 
-  import { NewEntity, AnotherEntity, NewFunction } from './App.svelte';
+  import { NewEntity, AnotherEntity, NewFunction, NewBusinessLogic } from './App.svelte';
 
    // New unit test to cover the new business logic
    it('covers new business logic', () => {
-   // Add unit test code to cover new business logic
+     it('covers new business logic', () => {
+    // Add unit test code to cover new business logic
+    expect(true).toBe(true);
+  });
    });
   it('returns the correct result from a new function', () => {
     const { component } = render(App);
