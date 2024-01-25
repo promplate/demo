@@ -2,7 +2,4 @@ plugins = [ "prettier-plugin-svelte" ]
 tabWidth = 2
 printWidth = 200
 trailingComma = "all"
-
-[[overrides]]
-files = "*.svelte"
-options = { tabWidth = 4 }
+arrowParens = "avoid"
