@@ -23,7 +23,7 @@ describe('App', () => {
     expect(contentElement).toBeInTheDocument();
   });
 
-  // Add more tests to cover all functionality introduced by the new business logic
+  import { NewEntity, AnotherEntity } from './App.svelte';
 
   // Example test for a new function introduced in the business logic
   it('returns the correct result from a new function', () => {
