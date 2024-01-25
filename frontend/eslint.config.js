@@ -12,5 +12,6 @@ export default antfu({
   unocss: true,
   rules: {
     "perfectionist/sort-imports": "error",
+    "node/prefer-global/process": "off",
   },
 });

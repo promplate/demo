@@ -8,9 +8,9 @@ RUN bun install
 
 COPY frontend .
 
-RUN bun run build --sourcemap
+RUN NODE_ENV=production bun run build
 
-FROM pypy:3.10
+FROM pypy:3.10 AS pypy
 
 WORKDIR /
 
