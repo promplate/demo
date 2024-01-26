@@ -64,8 +64,7 @@ class LazyLoader(dict):
 
     if TYPE_CHECKING:
 
-        def __getitem__(self, _: Template) -> DotTemplate:
-            ...
+        def __getitem__(self, _: Template) -> DotTemplate: ...
 
     def __getattr__(self, stem: str):
         if (root / stem).is_dir():

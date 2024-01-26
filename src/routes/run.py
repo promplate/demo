@@ -29,6 +29,7 @@ Model = Literal[
     "gpt-3.5-turbo-0613",
     "gpt-3.5-turbo-1106",
     "gpt-4-1106-preview",
+    "gpt-4-0125-preview",
     "chatglm_turbo",
     "claude-instant-1.2",
     "claude-2.1",
@@ -48,7 +49,7 @@ class ChainInput(BaseModel):
 
     @property
     def context(self):
-        return self.model_dump(exclude=run_config_fields)
+        return self.model_dump(exclude=run_config_fields, exclude_unset=True)
 
     @property
     def config(self):
