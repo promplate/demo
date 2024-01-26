@@ -1,30 +1,23 @@
-FROM oven/bun:1 AS bun
-
-WORKDIR /frontend
-
+FROM oven/bun:1-alpine AS js
+WORKDIR /app
 COPY frontend/package.json /
-
 RUN bun install
-
 COPY frontend .
-
 RUN NODE_ENV=production bun run build
 
-FROM pypy:3.10 AS pypy
+FROM pypy:3.10 AS py
+WORKDIR /app
+COPY pyproject.toml .
+RUN pip install pdm && pdm install --prod && pdm venv activate > activate.sh
 
-WORKDIR /
-
-COPY /pyproject.toml /
-
-RUN pip install pdm && pdm install --prod && pdm venv activate > /activate.sh && \
-    pip freeze | xargs pip uninstall -y && rm -rf ~/.cache
-
+FROM pypy:3.10-slim AS base
+WORKDIR /app
+COPY --from=js /app/dist dist
+COPY --from=py /app .
 COPY . .
-
-COPY --from=bun /frontend/dist /frontend/dist
 
 ENV PORT 9040
 
 EXPOSE $PORT
 
-CMD /bin/bash -c "$(cat /activate.sh) && python3 -O -m uvicorn src:app --host 0.0.0.0 --port $PORT"
+CMD /bin/bash -c "$(cat activate.sh) && python3 -O -m uvicorn src:app --host 0.0.0.0 --port $PORT"
