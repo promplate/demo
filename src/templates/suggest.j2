@@ -1,0 +1,33 @@
+<| system |>
+Below is a dialogue between `user_human` and `user_ai`:
+{% for msg in messages -%}
+{% if msg.role == "user" -%}
+<| user user_human |>
+{{ msg.content -}}
+
+{% elif msg.role == "assistant" -%}
+<| user user_ai |>
+{{ msg.content -}}
+
+{% endif -%}
+{% endfor -%}
+<| system |>
+Please envisage 2-5 possible responses / follow-up questions for `user_human` to reply `user_ai`.
+
+Note: Each answer must be fundamentally different.
+For example, if it is a general question, one affirmative answer and one negative answer will suffice.
+
+You must provide valuable and enlightening responses rather than platitudes such as thanking `user_ai`.
+And they should be as concise as possible, with no duplication whatsoever.
+
+Please present your answer as a JSON list.
+
+Schema: `list[str]` in python, or `string[]` in typescript.
+Your response should be something like this:
+["...","...","..."]
+
+Yes, do not contain anything else besides the json list.
+
+Remember: You MUST use THE SAME LANGUAGE as `user_human`!
+
+Output:

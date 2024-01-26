@@ -47,7 +47,7 @@ class ChainInput(BaseModel):
 
     @property
     def context(self):
-        return self.model_dump(exclude=run_config_fields)
+        return self.model_dump(exclude=run_config_fields, exclude_unset=True)
 
     @property
     def config(self):
