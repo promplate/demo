@@ -12,7 +12,7 @@ RUN pip install pdm && pdm install --prod && pdm venv activate > activate.sh
 
 FROM pypy:3.10-slim AS base
 WORKDIR /app
-COPY --from=js /app/dist dist
+COPY --from=js /app/dist frontend/dist
 COPY --from=py /app .
 COPY . .
 
