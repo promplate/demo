@@ -3,3 +3,7 @@ tabWidth = 2
 printWidth = 200
 trailingComma = "all"
 arrowParens = "avoid"
+
+[[overrides]]
+files = ["tsconfig.json"]
+options = { parser = "jsonc" }

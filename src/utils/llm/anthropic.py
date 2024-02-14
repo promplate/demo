@@ -2,7 +2,7 @@ from typing import cast
 
 from anthropic import AsyncAnthropic
 from anthropic._types import NOT_GIVEN, NotGivenOr
-from anthropic.types.beta import MessageParam
+from anthropic.types import MessageParam
 from promplate.llm.base import LLM
 from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
@@ -26,13 +26,13 @@ def get_anthropic():
 
 async def complete(prompt: str | list[Message], /, **config):
     messages, system_message = split(prompt)
-    res = await get_anthropic().beta.messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
+    res = await get_anthropic().messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
     return res.content[0].text
 
 
 async def generate(prompt: str | list[Message], /, **config):
     messages, system_message = split(prompt)
-    async with await get_anthropic().beta.messages.create(
+    async with await get_anthropic().messages.create(
         messages=messages, system=system_message, max_tokens=4096, **config, stream=True
     ) as stream:
         async for event in stream:
