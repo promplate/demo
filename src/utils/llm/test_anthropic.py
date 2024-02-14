@@ -61,6 +61,4 @@ class TestAnthropic(unittest.TestCase):
         self.assertEqual(response, expected_response)
 
 
-if __name__ == "__main__":
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestAnthropic)
-    unittest.TextTestRunner().run(suite)
+unittest.main()
