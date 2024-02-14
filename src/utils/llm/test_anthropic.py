@@ -8,7 +8,7 @@ from src.utils.llm.anthropic import Anthropic, RawAnthropic
 
 
 class TestAnthropic(unittest.TestCase):
-    def test_anthropic_complete(self):
+    def test_anthropic_split_prompt(self):
         # Test the complete method of Anthropic class
         anthropic = Anthropic()
         prompt = "Hello, world!"
@@ -20,7 +20,7 @@ class TestAnthropic(unittest.TestCase):
         anthropic.complete.assert_called_once_with(prompt)
         self.assertEqual(response, expected_response)
 
-    def test_anthropic_generate(self):
+    def test_anthropic_complete_prompt(self):
         # Test the generate method of Anthropic class
         anthropic = Anthropic()
         prompt = "Hello, world!"
@@ -32,7 +32,7 @@ class TestAnthropic(unittest.TestCase):
         anthropic.generate.assert_called_once_with(prompt)
         self.assertEqual(response, expected_response)
 
-    def test_raw_anthropic_complete(self):
+    def test_raw_anthropic_split_prompt(self):
         # Test the complete method of RawAnthropic class
         raw_anthropic = RawAnthropic()
         prompt = "Hello, world!"
@@ -44,7 +44,7 @@ class TestAnthropic(unittest.TestCase):
         raw_anthropic.complete.assert_called_once_with(prompt)
         self.assertEqual(response, expected_response)
 
-    def test_raw_anthropic_generate(self):
+    def test_raw_anthropic_complete_prompt(self):
         # Test the generate method of RawAnthropic class
         raw_anthropic = RawAnthropic()
         prompt = "Hello, world!"
