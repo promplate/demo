@@ -24,6 +24,14 @@ def get_anthropic():
     return AsyncAnthropic(http_client=client)
 
 
+async def complete(prompt: str | list[Message], /, **config) -> str:
+    messages, system_message = split(prompt)
+    res = await get_anthropic().messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
+    return res.content[0].text
+
+
+async def generate(prompt: str | list[Message], /, **config):
+
 async def complete(prompt: str | list[Message], /, **config):
     messages, system_message = split(prompt)
     res = await get_anthropic().messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
@@ -47,6 +55,15 @@ class Anthropic(LLM):
 
 
 anthropic = Anthropic()
+
+
+class RawAnthropic(LLM):
+    complete = staticmethod(patch.text.acomplete(complete))
+anthropic = Anthropic()
+
+
+class RawAnthropic(LLM):
+    complete = staticmethod(patch.text.acomplete(complete))
 
 
 class RawAnthropic(LLM):
