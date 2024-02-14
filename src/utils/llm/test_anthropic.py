@@ -1,10 +1,10 @@
 import unittest
-from src.utils.llm import get_anthropic, complete, generate, raw_anthropic
+from src.utils.llm.anthropic import Anthropic, RawAnthropic
 from unittest.mock import MagicMock
 
 from src.utils.llm.anthropic import Anthropic, RawAnthropic
 
-from src.utils.llm import get_anthropic, complete, generate, raw_anthropic
+from src.utils.llm.anthropic import Anthropic, RawAnthropic
 
 
 class TestAnthropic(unittest.TestCase):
