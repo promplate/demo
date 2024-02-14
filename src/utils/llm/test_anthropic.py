@@ -19,6 +19,7 @@ class TestAnthropic(unittest.TestCase):
 
         anthropic.complete.assert_called_once_with(prompt)
         self.assertEqual(response, expected_response)
+        self.assertEqual(response, expected_response)
 
     def test_anthropic_complete_prompt(self):
         # Test the generate method of Anthropic class
@@ -30,6 +31,7 @@ class TestAnthropic(unittest.TestCase):
         response = anthropic.generate(prompt)
 
         anthropic.generate.assert_called_once_with(prompt)
+        self.assertEqual(response, expected_response)
         self.assertEqual(response, expected_response)
 
     def test_raw_anthropic_split_prompt(self):
@@ -43,6 +45,7 @@ class TestAnthropic(unittest.TestCase):
 
         raw_anthropic.complete.assert_called_once_with(prompt)
         self.assertEqual(response, expected_response)
+        self.assertEqual(response, expected_response)
 
     def test_raw_anthropic_complete_prompt(self):
         # Test the generate method of RawAnthropic class
@@ -54,6 +57,7 @@ class TestAnthropic(unittest.TestCase):
         response = raw_anthropic.generate(prompt)
 
         raw_anthropic.generate.assert_called_once_with(prompt)
+        self.assertEqual(response, expected_response)
         self.assertEqual(response, expected_response)
 
 
