@@ -34,6 +34,7 @@ Model = Literal[
     "claude-instant-1.2",
     "claude-2.1",
     "mixtral-8x7b-instruct-fp16",
+    "qwen-max",
 ]
 
 
