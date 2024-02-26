@@ -41,7 +41,20 @@ class Qwen(LLM):
 
     @staticmethod
     @patch.chat.agenerate
-    async def generate(messages: str | list[Message], /, **config):
+        async def generate(messages: str | list[Message], /, **config):
+        """
+        Generate text using the Qwen language model.
+        
+        Args:
+            messages (str | list[Message]): The input messages.
+            **config: Additional configuration options.
+        
+        Yields:
+            str: The generated text.
+        
+        Raises:
+            HTTPException: If there is an error generating the text.
+        """
         config |= {"stream": True, "incremental_output": True}
 
         generator = Generation.call(messages=cast(list, ensure(messages)), **config)
