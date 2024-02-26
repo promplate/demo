@@ -22,6 +22,7 @@ def split(prompt: str | list[Message]) -> tuple[list[MessageParam], NotGivenOr[s
 
 @cache
 def get_anthropic():
+    """Retrieve an instance of the AsyncAnthropic class with the configured HTTP client."""
     return AsyncAnthropic(http_client=client)
 
 
