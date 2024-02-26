@@ -1,23 +1,21 @@
 <| system |>
-Below is a dialogue between `user_human` and `user_ai`:
+Below is a dialogue between `USER_A` and `USER_B`:
 {% for msg in messages -%}
 {% if msg.role == "user" -%}
-<| user user_human |>
-{{ msg.content -}}
+USER_A: {{ repr(msg.content) -}}
 
 {% elif msg.role == "assistant" -%}
-<| user user_ai |>
-{{ msg.content -}}
+USER_B: {{ repr(msg.content) -}}
 
 {% endif -%}
 {% endfor -%}
-<| system |>
-Please envisage 2-5 possible responses / follow-up questions for `user_human` to reply `user_ai`.
+<| user |>
+Please envisage 2-5 possible responses / follow-up questions for `USER_A` to reply `USER_B`.
 
 Note: Each answer must be fundamentally different.
 For example, if it is a general question, one affirmative answer and one negative answer will suffice.
 
-You must provide valuable and enlightening responses rather than platitudes such as thanking `user_ai`.
+You must provide valuable and enlightening responses rather than platitudes like just thanking `USER_B`.
 And they should be as concise as possible, with no duplication whatsoever.
 
 Please present your answer as a JSON list.
@@ -28,6 +26,6 @@ Your response should be something like this:
 
 Yes, do not contain anything else besides the json list.
 
-Remember: You MUST use THE SAME LANGUAGE as `user_human`!
+Remember: You MUST use THE SAME LANGUAGE as `USER_A`!
 
 Output:

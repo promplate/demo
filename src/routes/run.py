@@ -28,6 +28,7 @@ Model = Literal[
     "gpt-3.5-turbo-0301",
     "gpt-3.5-turbo-0613",
     "gpt-3.5-turbo-1106",
+    "gpt-3.5-turbo-0125",
     "gpt-4-1106-preview",
     "gpt-4-0125-preview",
     "chatglm_turbo",
@@ -42,7 +43,7 @@ run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
 
 class ChainInput(BaseModel):
     messages: list[Msg] = []
-    model: Model = "gpt-3.5-turbo-1106"
+    model: Model = "gpt-3.5-turbo-0125"
     temperature: float = Field(0.7, ge=0, le=1)
     stop: str | list[str] = []  # openai
     stop_sequences: list[str] = []  # anthropic
