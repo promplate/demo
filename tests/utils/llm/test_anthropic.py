@@ -1,7 +1,7 @@
 from unittest.mock import Mock
 
 import pytest
-from utils.llm.anthropic import complete, generate, split
+from src.utils.llm.anthropic import complete, generate, split
 
 
 # Test split function
@@ -31,6 +31,13 @@ def test_split_without_system_message():
 # Test complete function
 @pytest.mark.asyncio
 async def test_complete():
+    # Test new_functionality_1
+    assert False  # Add new test cases here
+
+
+# Test new_functionality_2
+async def test_new_functionality_2():
+    assert False  # Add new test cases here
     prompt = "User prompt"
     expected_completion_text = "Completion text"
     
