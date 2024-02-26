@@ -15,7 +15,20 @@ from src.utils.llm.dispatch import link_llm
 class Qwen(LLM):
     @staticmethod
     @patch.chat.acomplete
-    async def complete(prompt: str | list[Message], /, **config):
+    async def complete(prompt: str | list[Message], /, **config): 
+        """
+        Complete the given prompt using the Qwen language model.
+
+        Args:
+            prompt (str | list[Message]): The prompt to complete.
+            **config: Additional configuration options.
+
+        Returns:
+            str: The completed text.
+
+        Raises:
+            HTTPException: If there is an error completing the prompt.
+        """
         res = cast(
             GenerationResponse,
             await run_in_threadpool(Generation.call, messages=cast(list, ensure(prompt)), **config),
