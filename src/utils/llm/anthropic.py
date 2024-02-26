@@ -33,6 +33,7 @@ async def complete(prompt: str | list[Message], /, **config):
 
 
 async def generate(prompt: str | list[Message], /, **config):
+    """Generate a prompt by sending messages to the Anthropic API. Returns the generated prompt text."""
     messages, system_message = split(prompt)
     async with await get_anthropic().messages.create(
         messages=messages, system=system_message, max_tokens=4096, **config, stream=True
