@@ -13,6 +13,7 @@ from .dispatch import link_llm
 
 
 def split(prompt: str | list[Message]) -> tuple[list[MessageParam], NotGivenOr[str]]:
+    """Split a prompt into messages and system message if present. Returns a tuple containing the messages and the system message. If no system message is present, the second element of the tuple is set to NOT_GIVEN."""
     messages = ensure(prompt)
     if messages[0]["role"] == "system":
         return cast(list[MessageParam], ensure_safe(messages[1:])), messages[0]["content"]
