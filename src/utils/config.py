@@ -1,8 +1,10 @@
 from pydantic_settings import BaseSettings
 from rich import print
+from typing import Any, Dict
 
 
 class Config(BaseSettings):
+    """Config class for managing environmental settings."""
     # llm providers
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
