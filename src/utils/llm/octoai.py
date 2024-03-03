@@ -1,19 +1,31 @@
-from promplate import Message
-from promplate.llm.base import AsyncComplete, AsyncGenerate
-from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
-from promplate_trace.auto import patch
-
-from ..config import env
-from .common import client
-from .dispatch import link_llm
-
-OCTOAI_BASE_URL = "https://text.octoai.run/v1"
-
-complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
-generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
+new line(s) to replace
 
 
 @link_llm("mixtral")
+# Add unit tests for the `complete` method of the `OctoAI` class
+def test_complete():
+    # Test case 1
+    prompt = "Hello"
+    expected_result = "Hello, World!"
+    assert octoai.complete(prompt) == expected_result
+
+    # Test case 2
+    prompt = "Goodbye"
+    expected_result = "Goodbye, World!"
+    assert octoai.complete(prompt) == expected_result
+
+
+# Add unit tests for the `generate` method of the `OctoAI` class
+def test_generate():
+    # Test case 1
+    prompt = "Hello"
+    expected_result = ["Hello", "World!"]
+    assert list(octoai.generate(prompt)) == expected_result
+
+    # Test case 2
+    prompt = "Goodbye"
+    expected_result = ["Goodbye", "World!"]
+    assert list(octoai.generate(prompt)) == expected_result
 @link_llm("nous-hermes")
 class OctoAI(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
