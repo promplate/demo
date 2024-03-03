@@ -14,6 +14,7 @@ generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=OCTOAI_
 
 
 @link_llm("mixtral")
+@link_llm("nous-hermes")
 class OctoAI(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
@@ -36,7 +37,7 @@ class OctoAI(AsyncChatOpenAI):
         return self
 
 
-octoai = OctoAI().bind(model="mixtral-8x7b-instruct-fp16")
+octoai = OctoAI().bind(model="nous-hermes-2-mixtral-8x7b-dpo")
 
 
 octoai.complete = patch.chat.acomplete(octoai.complete)  # type: ignore

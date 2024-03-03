@@ -8,7 +8,7 @@ RUN NODE_ENV=production bun run build
 FROM bitnami/python:3.12 AS py
 WORKDIR /
 COPY /pyproject.toml /
-RUN pip install fastapi uvicorn[standard] promplate[all] promplate-trace[langfuse,langsmith] python-box pydantic-settings httpx[http2] promptools[validation,stream] fake-useragent html2text beautifulsoup4 rich zhipuai anthropic
+RUN pip install fastapi uvicorn[standard] promplate[all] promplate-trace[langfuse,langsmith] python-box pydantic-settings httpx[http2] promptools[validation,stream] fake-useragent html2text beautifulsoup4 rich zhipuai anthropic dashscope
 COPY . .
 COPY --from=js /app/dist frontend/dist
 
