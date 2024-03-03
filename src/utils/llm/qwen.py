@@ -8,7 +8,7 @@ from promplate.llm.base import LLM
 from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
 
-from src.utils.llm.dispatch import link_llm
+from .dispatch import link_llm
 
 
 @link_llm("qwen")

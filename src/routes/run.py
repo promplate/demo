@@ -34,7 +34,11 @@ Model = Literal[
     "claude-instant-1.2",
     "claude-2.1",
     "mixtral-8x7b-instruct-fp16",
+    "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-max",
+    "abab5.5s-chat",
+    "abab5.5-chat",
+    "abab6-chat",
 ]
 
 
