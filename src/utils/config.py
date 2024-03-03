@@ -6,6 +6,7 @@ class Config(BaseSettings):
     # llm providers
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
+    minimax_api_key: str = ""
     openai_api_key: str = "*"
     openai_base_url: str = ""
     octoai_api_key: str = ""
