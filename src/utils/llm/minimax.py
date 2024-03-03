@@ -15,6 +15,7 @@ headers = {"authorization": f"Bearer {env.minimax_api_key}", "content-type": "ap
 
 @link_llm("abab")
 class MiniMax(LLM):
+    """MiniMax Class for implementing the minimax algorithm."""
     @staticmethod
     @patch.chat.acomplete
     async def complete(prompt: str | list[Message], /, **config):
