@@ -1,6 +1,6 @@
 <| system |>
 Below is a dialogue between `USER_A` and `USER_B`:
-{% for msg in messages -%}
+{% for msg in messages[-4:] -%}
 {% if msg.role == "user" -%}
 USER_A: {{ repr(msg.content) -}}
 
@@ -10,7 +10,7 @@ USER_B: {{ repr(msg.content) -}}
 {% endif -%}
 {% endfor -%}
 <| user |>
-Please envisage 2-5 possible responses / follow-up questions for `USER_A` to reply `USER_B`.
+Please envisage 2-5 possible responses / follow-up questions for `USER_A` to reply `USER_B`, each in 2 - 8 words.
 
 Note: Each answer must be fundamentally different.
 For example, if it is a general question, one affirmative answer and one negative answer will suffice.
@@ -26,6 +26,6 @@ Your response should be something like this:
 
 Yes, do not contain anything else besides the json list.
 
-Remember: You MUST use THE SAME LANGUAGE as `USER_A`!
+Remember: You MUST use THE SAME LANGUAGE as `USER_A`, and Imitate its tone!
 
 Output:
