@@ -18,7 +18,16 @@ class OpenAI(AsyncChatOpenAI):
         config = self._run_config | config
         return complete(prompt, **config)
 
-    def bind(self, **run_config):  # type: ignore
+    def bind(self, **run_config):
+        """
+        Binds the run configuration to the OpenAI model.
+
+        Args:
+            run_config: A dictionary of run configuration parameters.
+
+        Returns:
+            None
+        """
         self._run_config.update(run_config)  # inplace
         return self
 
