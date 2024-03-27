@@ -7,14 +7,15 @@ from ..config import env
 from .common import client
 from .dispatch import link_llm
 
-OCTOAI_BASE_URL = "https://text.octoai.run/v1"
+GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 
-complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
-generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
+complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=GROQ_BASE_URL, api_key=env.groq_api_key)
+generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=GROQ_BASE_URL, api_key=env.groq_api_key)
 
 
-@link_llm("nous-hermes")
-class OctoAI(AsyncChatOpenAI):
+@link_llm("gemma")
+@link_llm("mixtral")
+class Groq(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
         return (await complete(prompt, **config)).removeprefix(" ")
@@ -36,8 +37,8 @@ class OctoAI(AsyncChatOpenAI):
         return self
 
 
-octoai = OctoAI().bind(model="nous-hermes-2-mixtral-8x7b-dpo")
+groq = Groq().bind(model="mixtral-8x7b-32768")
 
 
-octoai.complete = patch.chat.acomplete(octoai.complete)  # type: ignore
-octoai.generate = patch.chat.agenerate(octoai.generate)  # type: ignore
+groq.complete = patch.chat.acomplete(groq.complete)  # type: ignore
+groq.generate = patch.chat.agenerate(groq.generate)  # type: ignore
