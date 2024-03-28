@@ -33,6 +33,8 @@ Model = Literal[
     "gpt-4-0125-preview",
     "chatglm_turbo",
     "claude-3-haiku-20240307",
+    "gemma-7b-it",
+    "mixtral-8x7b-32768",
     "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-turbo",
     "abab5.5s-chat",
