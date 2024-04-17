@@ -103,6 +103,11 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(data: ChainInput, node: Node = Depends(get_node)):
+    for msg in data.messages:
+        for string in env.banned_substrings:
+            if string in msg.content:
+                return PlainTextResponse(env.banned_response)
+
     async def make_stream():
         last = ""
         async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
