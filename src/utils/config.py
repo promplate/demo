@@ -18,6 +18,9 @@ class Config(BaseSettings):
 
     base_path: str = ""
 
+    banned_substrings: list[str] = []
+    banned_response: str = "Sorry, I can't help with that."
+
     @property
     def base(self):
         return f"/{self.base_path}" if self.base_path else ""

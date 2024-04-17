@@ -31,9 +31,11 @@ Model = Literal[
     "gpt-3.5-turbo-0125",
     "gpt-4-1106-preview",
     "gpt-4-0125-preview",
+    "gpt-4-turbo-2024-04-09",
     "chatglm_turbo",
     "claude-3-haiku-20240307",
     "gemma-7b-it",
+    "llama2-70b-4096",
     "mixtral-8x7b-32768",
     "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-turbo",
@@ -96,6 +98,11 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node)):
+    for msg in data.messages:
+        for string in env.banned_substrings:
+            if string in msg.content:
+                return PlainTextResponse(env.banned_response)
+
     async def make_stream():
         last = ""
 
