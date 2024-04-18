@@ -17,7 +17,7 @@ async function getProxies() {
 export default async () => {
   return defineConfig({
     plugins: [unocss(), svelte()],
-    server: { proxy: await getProxies() },
+    server: { proxy: await getProxies().catch(() => ({})) },
     build: {
       rollupOptions: {
         output: {
