@@ -14,7 +14,7 @@ generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=GROQ_BA
 
 
 @link_llm("gemma")
-@link_llm("llama2")
+@link_llm("llama")
 @link_llm("mixtral")
 class Groq(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
