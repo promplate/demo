@@ -12,7 +12,7 @@ from ..logic import get_node
 from ..logic.tools import tool_map
 from ..utils.config import env
 from ..utils.http import forward_headers
-from ..utils.llm import find_llm
+from ..utils.llm import find_llm, groq, openai
 from .sse import non_duplicated_event_stream
 
 run_router = APIRouter(tags=["call"])
@@ -110,7 +110,7 @@ async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node))
 
         config = data.config
 
-        if data.model.startswith("gpt"):
+        if find_llm(data.model) in (openai, groq):
             config["extra_headers"] = forward_headers(r.headers)
 
         async for c in node.astream(data.context, find_llm(data.model).generate, **config):

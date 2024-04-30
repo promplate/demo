@@ -12,6 +12,7 @@ class Config(BaseSettings):
     octoai_api_key: str = ""
     zhipu_api_key: str = ""
     groq_api_key: str = ""
+    groq_base_url: str = "https://api.groq.com/openai/v1"
 
     # other services
     serper_api_key: str = ""
