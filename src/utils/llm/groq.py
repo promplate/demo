@@ -7,10 +7,8 @@ from ..config import env
 from .common import client
 from .dispatch import link_llm
 
-GROQ_BASE_URL = "https://api.groq.com/openai/v1"
-
-complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=GROQ_BASE_URL, api_key=env.groq_api_key)
-generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=GROQ_BASE_URL, api_key=env.groq_api_key)
+complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
+generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
 
 
 @link_llm("gemma")
