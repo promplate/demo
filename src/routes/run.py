@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 from ..logic import get_node
 from ..logic.tools import tool_map
 from ..utils.config import env
-from ..utils.llm import find_llm
+from ..utils.llm import Model, find_llm
 from .sse import non_duplicated_event_stream
 
 run_router = APIRouter(tags=["call"])
@@ -21,35 +21,6 @@ class Msg(BaseModel):
     content: str
     role: Literal["user", "assistant", "system"]
     name: Annotated[Literal.__getitem__(tuple(tool_map)), str] | None = None  # type: ignore
-
-
-Model = Literal[
-    "gpt-3.5-turbo-0301",
-    "gpt-3.5-turbo-0613",
-    "gpt-3.5-turbo-1106",
-    "gpt-3.5-turbo-0125",
-    "gpt-4-1106-preview",
-    "gpt-4-0125-preview",
-    "gpt-4-turbo-2024-04-09",
-    "chatglm_turbo",
-    "claude-instant-1.2",
-    "claude-2.1",
-    "claude-3-opus-20240229",
-    "claude-3-sonnet-20240229",
-    "claude-3-haiku-20240307",
-    "gemma-7b-it",
-    "llama3-8b-8192",
-    "llama3-70b-8192",
-    "llama2-70b-4096",
-    "mixtral-8x7b-32768",
-    "nous-hermes-2-mixtral-8x7b-dpo",
-    "qwen-turbo",
-    "qwen-plus",
-    "qwen-max",
-    "abab5.5s-chat",
-    "abab5.5-chat",
-    "abab6-chat",
-]
 
 
 run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
