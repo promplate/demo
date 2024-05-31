@@ -8,7 +8,7 @@ RUN NODE_ENV=production bun run build
 FROM pypy:3.10 AS py
 WORKDIR /app
 COPY pyproject.toml .
-RUN pip install pdm && pdm install --prod && pdm venv activate > activate.sh
+RUN pip install uv && uv venv && uv pip install -r pyproject.toml --compile-bytecode
 
 FROM pypy:3.10-slim AS base
 WORKDIR /app
@@ -20,4 +20,4 @@ ENV PORT 9040
 
 EXPOSE $PORT
 
-CMD /bin/bash -c "$(cat activate.sh) && python3 -O -m uvicorn src:app --host 0.0.0.0 --port $PORT"
+CMD /bin/bash -c "source .venv/bin/activate && python3 -O -m uvicorn src:app --host 0.0.0.0 --port $PORT"

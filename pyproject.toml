@@ -1,4 +1,6 @@
 [project]
+name = "promplate-demo"
+version = "1"
 authors = [{ name = "Muspi Merol", email = "me@promplate.dev" }]
 requires-python = ">=3.10,<3.13"
 readme = "README.md"
