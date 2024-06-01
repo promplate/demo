@@ -23,6 +23,9 @@ dependencies = [
     "dashscope~=1.19.0",
 ]
 
+[tool.pdm]
+distribution = false
+
 [tool.pdm.dev-dependencies]
 dev = [
     "isort~=5.13.2",
