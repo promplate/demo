@@ -3,23 +3,25 @@ name: Formatting and Type Checks
 on: ["push", "pull_request"]
 
 jobs:
-  check:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.12 and PDM
-        uses: pdm-project/setup-pdm@v3
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install dependencies
+        env: { UV_SYSTEM_PYTHON: true }
         run: |
-          pdm install
-      - name: Run isort check
+          pip install uv && uv pip install pdm
+          pdm export --pyproject -d | uv pip install -r -
+      - name: Check formatting
         run: |
-          pdm run isort . --check --diff
-      - name: Run black check
+          isort . --check --diff
+      - name: Check imports order
         run: |
-          pdm run black . --check --diff
-      - name: Run pyright check
+          black . --check --diff
+      - name: Check typing
         run: |
-          pdm run npx pyright
+          npx pyright

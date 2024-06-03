@@ -1,4 +1,6 @@
 [project]
+name = "promplate-demo"
+version = "1"
 authors = [{ name = "Muspi Merol", email = "me@promplate.dev" }]
 requires-python = ">=3.10,<3.13"
 readme = "README.md"
@@ -20,6 +22,9 @@ dependencies = [
     "anthropic~=0.25.8",
     "dashscope~=1.19.0",
 ]
+
+[tool.pdm]
+distribution = false
 
 [tool.pdm.dev-dependencies]
 dev = [
