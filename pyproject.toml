@@ -7,20 +7,20 @@ readme = "README.md"
 license = { text = "MIT" }
 dependencies = [
     "fastapi-slim~=0.111.0",
-    "uvicorn[standard]~=0.29.0",
-    "promplate[all]~=0.3.4.4",
-    "promplate-trace[langfuse,langsmith]==0.3.0dev2",
+    "uvicorn[standard]~=0.30.1",
+    "promplate[all]~=0.3.4.7",
+    "promplate-trace[langfuse,langsmith]==0.3.0dev5",
     "python-box~=7.1.1",
-    "pydantic-settings~=2.2.1",
+    "pydantic-settings~=2.3.1",
     "httpx[http2]~=0.27.0",
     "promptools[stream,validation]~=0.1.3.3",
     "fake-useragent~=1.5.1",
     "html2text~=2024.2.26",
     "beautifulsoup4~=4.12.3",
     "rich~=13.7.1",
-    "zhipuai~=2.0.1",
-    "anthropic~=0.25.8",
-    "dashscope~=1.19.0",
+    "zhipuai~=2.1.0.20240521",
+    "anthropic~=0.28.0",
+    "dashscope~=1.19.2",
 ]
 
 [tool.pdm]

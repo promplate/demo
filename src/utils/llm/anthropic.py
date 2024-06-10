@@ -37,7 +37,7 @@ async def generate(prompt: str | list[Message], /, **config):
     ) as stream:
         async for event in stream:
             if event.type == "content_block_delta":
-                yield event.delta.text
+                yield getattr(event.delta, "text", "")
 
 
 @link_llm("claude")
