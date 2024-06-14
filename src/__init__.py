@@ -6,6 +6,7 @@ from starlette.staticfiles import StaticFiles
 
 from .routes.prompts import prompts_router
 from .routes.run import run_router
+from .utils.config import env
 from .utils.load import generate_pyi
 from .utils.time import now
 
@@ -21,3 +22,12 @@ async def greet():
 
 
 app.mount("/", StaticFiles(directory="frontend/dist", html=True, check_dir=False))
+
+if env.logfire_token:
+    import logfire
+
+    logfire.configure()
+    logfire.info("app started", **env.model_dump())
+    logfire.instrument_openai()
+    logfire.instrument_anthropic()
+    logfire.instrument_fastapi(app)
