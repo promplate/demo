@@ -7,15 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
       - name: Install dependencies
         working-directory: frontend
         run: |
-          yarn install
+          bun install
       - name: Run svelte-check
         working-directory: frontend
         run: |
-          yarn check
+          bun check
       - name: Run prettier
         working-directory: frontend
         run: |
-          yarn prettier --check . --ignore-path ../.gitignore
+          bun prettier --check . --ignore-path ../.gitignore

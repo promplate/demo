@@ -1,23 +1,25 @@
-from dotenv import load_dotenv
-from fastapi import FastAPI
-from fastapi.responses import PlainTextResponse
-from starlette.middleware.cors import CORSMiddleware
-from starlette.staticfiles import StaticFiles
+from contextlib import suppress
 
-from .routes.prompts import prompts_router
-from .routes.run import run_router
+with suppress(ModuleNotFoundError):
+    from dotenv import load_dotenv
+
+    load_dotenv(override=True)
+
+from .utils.config import env
+
+if env.logfire_token:
+    import logfire
+
+    logfire.configure()
+    logfire.info("app started", **env.model_dump())
+    logfire.instrument_httpx()
+    logfire.instrument_openai()
+    logfire.instrument_anthropic()
+
+    from .entry import app
+
+    logfire.instrument_fastapi(app)
+
 from .utils.load import generate_pyi
-from .utils.time import now
 
-app = FastAPI(title="Promplate Demo", description="<https://github.com/promplate/demo>", on_startup=[generate_pyi, load_dotenv])
-app.add_middleware(CORSMiddleware, allow_origins="*", allow_credentials=True, allow_methods="*", allow_headers="*")
-app.include_router(prompts_router, prefix="/prompts")
-app.include_router(run_router)
-
-
-@app.get("/heartbeat", response_model=str, response_class=PlainTextResponse)
-async def greet():
-    return f"hi from {now()}"
-
-
-app.mount("/", StaticFiles(directory="frontend/dist", html=True, check_dir=False))
+generate_pyi()

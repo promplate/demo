@@ -20,4 +20,4 @@ ENV PORT 9040
 
 EXPOSE $PORT
 
-CMD /bin/bash -c "source .venv/bin/activate && python3 -O -m uvicorn src:app --host 0.0.0.0 --port $PORT"
+CMD /bin/bash -c "source .venv/bin/activate && python3 -O -m uvicorn src.entry:app --host 0.0.0.0 --port $PORT"

@@ -16,6 +16,7 @@ class Config(BaseSettings):
 
     # other services
     serper_api_key: str = ""
+    logfire_token: str = ""
 
     base_path: str = ""
 
