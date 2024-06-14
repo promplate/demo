@@ -5,7 +5,7 @@
   import { tweened } from "svelte/motion";
 
   const length = 20;
-  let i = tweened(length * 1.3, { easing: sineInOut, duration: 700 });
+  const i = tweened(length * 1.3, { easing: sineInOut, duration: 700 });
 
   onMount(() => ($i = 0));
 </script>
