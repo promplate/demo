@@ -27,8 +27,7 @@ def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
 class ChatGLM(LLM):
     @staticmethod
     @validate_call
-    def validate(temperature: float = Field(0.95, gt=0, le=1), top_p: float = Field(0.7, gt=0, lt=1), **_):
-        pass
+    def validate(temperature: float = Field(0.95, gt=0, le=1), top_p: float = Field(0.7, gt=0, lt=1), **_): ...
 
     @staticmethod
     @patch.chat.acomplete

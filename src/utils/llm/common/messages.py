@@ -1,10 +1,7 @@
 from typing import Literal, cast
 
-from httpx import AsyncClient
 from promplate.prompt.chat import Message, ensure
 from typing_extensions import TypedDict
-
-client = AsyncClient(http2=True)
 
 
 class SafeMessage(TypedDict):

@@ -23,8 +23,4 @@ class OpenAI(AsyncChatOpenAI):
         return self
 
 
-openai = OpenAI().bind(
-    model="gpt-3.5-turbo-0125",
-    temperature=0.7,
-    # response_format={"type": "json_object"},
-)
+openai = OpenAI().bind(model="gpt-3.5-turbo-0125", temperature=0.7)
