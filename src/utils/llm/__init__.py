@@ -8,6 +8,7 @@ from .minimax import minimax
 from .octoai import octoai
 from .openai import openai
 from .qwen import qwen
+from .siliconflow import siliconflow
 
 Model = Literal[
     "gpt-3.5-turbo-0301",
@@ -33,4 +34,20 @@ Model = Literal[
     "abab5.5s-chat",
     "abab5.5-chat",
     "abab6-chat",
+    "Qwen/Qwen2-7B-Instruct",
+    "Qwen/Qwen2-1.5B-Instruct",
+    "Qwen/Qwen1.5-7B-Chat",
+    "Qwen/Qwen2-72B-Instruct",
+    "Qwen/Qwen2-57B-A14B-Instruct",
+    "Qwen/Qwen1.5-110B-Chat",
+    "Qwen/Qwen1.5-32B-Chat",
+    "Qwen/Qwen1.5-14B-Chat",
+    "THUDM/glm-4-9b-chat",
+    "THUDM/chatglm3-6b",
+    "01-ai/Yi-1.5-9B-Chat-16K",
+    "01-ai/Yi-1.5-6B-Chat",
+    "01-ai/Yi-1.5-34B-Chat-16K",
+    "deepseek-ai/DeepSeek-Coder-V2-Instruct",
+    "deepseek-ai/DeepSeek-V2-Chat",
+    "deepseek-ai/deepseek-llm-67b-chat",
 ]

@@ -1,5 +1,4 @@
 from promplate import Message
-from promplate.llm.base import AsyncComplete, AsyncGenerate
 from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
 from promplate_trace.auto import patch
 
@@ -9,8 +8,8 @@ from .dispatch import link_llm
 
 OCTOAI_BASE_URL = "https://text.octoai.run/v1"
 
-complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
-generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
+complete = AsyncChatComplete(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
+generate = AsyncChatGenerate(http_client=client, base_url=OCTOAI_BASE_URL, api_key=env.octoai_api_key)
 
 
 @link_llm("nous-hermes")
@@ -22,14 +21,8 @@ class OctoAI(AsyncChatOpenAI):
     async def generate(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
 
-        first_token = True
-
         async for token in generate(prompt, **config):
-            if token and first_token:
-                first_token = False
-                yield token.removeprefix(" ")
-            else:
-                yield token
+            yield token
 
     def bind(self, **run_config):  # type: ignore
         self._run_config.update(run_config)  # inplace

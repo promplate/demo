@@ -6,14 +6,15 @@ from ..config import env
 from .common import client
 from .dispatch import link_llm
 
-complete = AsyncChatComplete(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
-generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
+complete = AsyncChatComplete(http_client=client, base_url=env.siliconflow_base_url, api_key=env.siliconflow_api_key)
+generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_url, api_key=env.siliconflow_api_key)
 
 
-@link_llm("gemma")
-@link_llm("llama")
-@link_llm("mixtral")
-class Groq(AsyncChatOpenAI):
+@link_llm("Qwen/")
+@link_llm("01-ai/")
+@link_llm("THUDM/")
+@link_llm("deepseek-ai/")
+class Siliconflow(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
         return (await complete(prompt, **config)).removeprefix(" ")
@@ -29,8 +30,8 @@ class Groq(AsyncChatOpenAI):
         return self
 
 
-groq = Groq().bind(model="mixtral-8x7b-32768")
+siliconflow = Siliconflow()
 
 
-groq.complete = patch.chat.acomplete(groq.complete)  # type: ignore
-groq.generate = patch.chat.agenerate(groq.generate)  # type: ignore
+siliconflow.complete = patch.chat.acomplete(siliconflow.complete)  # type: ignore
+siliconflow.generate = patch.chat.agenerate(siliconflow.generate)  # type: ignore
