@@ -4,6 +4,8 @@ from rich import print
 
 class Config(BaseSettings):
     # llm providers
+    siliconflow_api_key: str = ""
+    siliconflow_base_url: str = "https://api.siliconflow.cn/v1/"
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
     minimax_api_key: str = ""
