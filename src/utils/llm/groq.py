@@ -1,5 +1,4 @@
 from promplate import Message
-from promplate.llm.base import AsyncComplete, AsyncGenerate
 from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
 from promplate_trace.auto import patch
 
@@ -7,8 +6,8 @@ from ..config import env
 from .common import client
 from .dispatch import link_llm
 
-complete: AsyncComplete = AsyncChatComplete(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
-generate: AsyncGenerate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
+complete = AsyncChatComplete(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
+generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
 
 
 @link_llm("gemma")
@@ -22,14 +21,8 @@ class Groq(AsyncChatOpenAI):
     async def generate(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
 
-        first_token = True
-
         async for token in generate(prompt, **config):
-            if token and first_token:
-                first_token = False
-                yield token.removeprefix(" ")
-            else:
-                yield token
+            yield token
 
     def bind(self, **run_config):  # type: ignore
         self._run_config.update(run_config)  # inplace
