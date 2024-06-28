@@ -4,7 +4,7 @@ There is only 1 parameters:
 
 - `code: str`: the python code to `exec()`
 
-For example, if you want to caculate 0.409 \* 2023, you can make a call like this:
+For example, if you want to calculate 0.409 \* 2023, you can make a call like this:
 
 ```json
 {

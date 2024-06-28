@@ -14,7 +14,7 @@ ua = UserAgent(min_percentage=0.5)
 
 
 class Browser(AbstractTool):
-    """Fetch an url. The only paremeter `url`. URLs on the page can be used for reference. If you want to know any realworld fact, you should search Google."""
+    """Fetch an url. The only parameter `url`. URLs on the page can be used for reference. If you want to know any realworld fact, you should search Google."""
 
     name = "fetch"
 
