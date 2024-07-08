@@ -24,6 +24,7 @@ Model = Literal[
     "claude-3-sonnet-20240229",
     "claude-3-opus-20240229",
     "gemma-7b-it",
+    "gemma2-9b-it",
     "llama3-8b-8192",
     "llama3-70b-8192",
     "llama2-70b-4096",

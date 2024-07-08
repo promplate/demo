@@ -4,7 +4,7 @@ from traceback import print_exc
 from typing import Annotated, Literal, cast
 
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import PlainTextResponse, StreamingResponse
+from fastapi.responses import PlainTextResponse
 from promplate import Node
 from pydantic import BaseModel, Field
 
@@ -13,6 +13,7 @@ from ..logic.tools import tool_map
 from ..utils.config import env
 from ..utils.http import forward_headers
 from ..utils.llm import Model, find_llm, groq, openai
+from ..utils.response import make_response
 from .sse import non_duplicated_event_stream
 
 run_router = APIRouter(tags=["call"])
@@ -72,7 +73,7 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
             print_exc(file=stderr)
             yield str(e), "error"
 
-    return StreamingResponse(make_stream(), media_type="text/event-stream")
+    return await make_response(make_stream(), "text/event-stream")
 
 
 @run_router.put(f"{env.base}/single/{{template}}")
@@ -95,4 +96,4 @@ async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node))
                 yield cast(str, c.result).removeprefix(last)
                 last = c.result
 
-    return StreamingResponse(make_stream(), media_type="text/plain")
+    return await make_response(make_stream())
