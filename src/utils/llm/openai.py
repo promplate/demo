@@ -23,4 +23,4 @@ class OpenAI(AsyncChatOpenAI):
         return self
 
 
-openai = OpenAI().bind(model="gpt-3.5-turbo-0125", temperature=0.7)
+openai = OpenAI().bind(model="gpt-4o-mini-2024-07-18", temperature=0.7)

@@ -29,7 +29,7 @@ run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
 
 class ChainInput(BaseModel):
     messages: list[Msg] = []
-    model: Model = "gpt-3.5-turbo-0125"
+    model: Model = "gpt-4o-mini-2024-07-18"
     temperature: float = Field(0.7, ge=0, le=1)
     stop: str | list[str] = []  # openai
     stop_sequences: list[str] = []  # anthropic
