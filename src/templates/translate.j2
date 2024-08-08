@@ -1,7 +1,7 @@
 {# from json import dumps as json #}
 
 <| user |>
-Translate the user's input into {{ language }}, and output it in JSON format.
+Translate the user's input into the specified language, and output it in JSON format.
 
 <response-schema>
 ```ts
@@ -9,6 +9,7 @@ Translate the user's input into {{ language }}, and output it in JSON format.
   original: string;
   translated: string;
 }[]
+```
 </response-schema>
 
 You should response a JSON block containing translated text and related original texts. piece by piece.
@@ -27,6 +28,7 @@ OK! I got it, let's start.
 
 <| user |>
 <user-input>"你好。\n\n早上好！\n\t下午好"</user-input>
+<target-language>en</target-language>
 <| assistant |>
 ```json
 [
@@ -37,3 +39,4 @@ OK! I got it, let's start.
 ```
 <| user |>
 <user-input>{{ json(text, ensure_ascii=False) }}</user-input>
+<target-language>{{ language }}</target-language>
