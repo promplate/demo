@@ -5,12 +5,12 @@ RUN bun install
 COPY frontend .
 RUN NODE_ENV=production bun run build
 
-FROM pypy:3.10 AS py
+FROM python:3.12-slim AS py
 WORKDIR /app
 COPY pyproject.toml .
 RUN pip install uv && uv venv && uv pip install -r pyproject.toml --compile-bytecode
 
-FROM pypy:3.10-slim AS base
+FROM python:3.12-slim AS base
 WORKDIR /app
 COPY --from=js /app/dist frontend/dist
 COPY --from=py /app .
