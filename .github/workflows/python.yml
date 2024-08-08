@@ -14,8 +14,8 @@ jobs:
       - name: Install dependencies
         env: { UV_SYSTEM_PYTHON: true }
         run: |
-          pip install uv && uv pip install pdm
-          pdm export --pyproject -d | uv pip install -r -
+          pip install uv --disable-pip-version-check
+          uv tool run pdm export --pyproject -d | uv pip install -r -
       - name: Check formatting
         run: |
           isort . --check --diff

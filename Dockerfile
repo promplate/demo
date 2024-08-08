@@ -8,7 +8,7 @@ RUN NODE_ENV=production bun run build
 FROM python:3.12-slim AS py
 WORKDIR /app
 COPY pyproject.toml .
-RUN pip install uv && uv venv && uv pip install -r pyproject.toml --compile-bytecode
+RUN pip install uv --disable-pip-version-check && uv venv && uv pip install -r pyproject.toml --compile-bytecode
 
 FROM python:3.12-slim AS base
 WORKDIR /app
