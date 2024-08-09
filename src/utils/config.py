@@ -25,6 +25,8 @@ class Config(BaseSettings):
     banned_substrings: list[str] = []
     banned_response: str = "Sorry, I can't help with that."
 
+    openai_compatible_api: bool = True
+
     @property
     def base(self):
         return f"/{self.base_path}" if self.base_path else ""
