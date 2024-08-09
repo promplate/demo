@@ -28,6 +28,10 @@ async def get_models():
 class ChatInput(ChainInput):
     stream: bool = False
 
+    @property
+    def config(self):
+        return self.model_dump(exclude_unset=True)
+
 
 @openai_router.post("/chat/completions")
 async def chat_completions(data: ChatInput):
