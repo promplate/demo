@@ -11,8 +11,17 @@ def format_chunk(id, content, model, stop=False):
     return {"id": id, "choices": [choice], "model": model, "object": "chat.completion.chunk"}
 
 
+def format_response(content, model: str):
+    return {
+        "id": f"chatcmpl-{int(time())}",
+        "choices": [{"index": 0, "message": {"role": "assistant", "content": content}, "finish_reason": "stop"}],
+        "model": model,
+        "object": "chat.completion",
+    }
+
+
 async def stream_output(stream: AsyncIterable[str], model: str):
-    response_id = int(time())
+    response_id = f"chatcmpl-{int(time())}"
 
     async for delta in stream:
         yield f"data: {dumps(format_chunk(response_id, delta, model))}\n\n"

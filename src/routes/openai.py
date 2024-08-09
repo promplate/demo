@@ -4,7 +4,7 @@ from fastapi import APIRouter
 
 from ..utils.llm import Model
 from ..utils.llm.dispatch import find_llm
-from ..utils.openai_api import stream_output
+from ..utils.openai_api import format_response, stream_output
 from ..utils.response import make_response
 from .run import ChainInput
 
@@ -25,9 +25,20 @@ async def get_models():
     }
 
 
+class ChatInput(ChainInput):
+    stream: bool = False
+
+
 @openai_router.post("/chat/completions")
-async def chat_completions(data: ChainInput):
+async def chat_completions(data: ChatInput):
     llm = find_llm(data.model)
+
+    if not data.stream:
+        return format_response(
+            await llm.complete(data.messages, **data.config),
+            data.model,
+        )
+
     return await make_response(
         stream_output(
             cast(AsyncIterable[str], llm.generate(data.messages, **data.config)),
