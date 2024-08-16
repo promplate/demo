@@ -1,6 +1,7 @@
 from typing import AsyncIterable, cast
 
 from fastapi import APIRouter
+from promplate import Message
 
 from ..utils.llm import Model
 from ..utils.llm.dispatch import find_llm
@@ -27,6 +28,7 @@ async def get_models():
 
 class ChatInput(ChainInput):
     stream: bool = False
+    messages: list[Message]  # type: ignore
 
     @property
     def config(self):
