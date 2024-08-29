@@ -12,7 +12,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.21.1",
+    "@antfu/eslint-config": "^3.0.0",
     "@promplate/pattern": "^0.0.1",
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "@tsconfig/svelte": "^5.0.4",
