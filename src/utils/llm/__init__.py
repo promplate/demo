@@ -1,6 +1,7 @@
 from typing import Literal
 
 from .anthropic import anthropic
+from .cerebras import cerebras
 from .chatglm import glm
 from .dispatch import find_llm
 from .groq import groq
@@ -36,7 +37,8 @@ Model = Literal[
     "llama-3.1-8b-instant",
     "llama-3.1-70b-versatile",
     "llama-3.1-405b-reasoning",
-    "llama2-70b-4096",
+    "llama3.1-8b",
+    "llama3.1-70b",
     "mixtral-8x7b-32768",
     "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-turbo",
@@ -46,12 +48,12 @@ Model = Literal[
     "abab6-chat",
     "Qwen/Qwen2-7B-Instruct",
     "Qwen/Qwen2-1.5B-Instruct",
-    "Qwen/Qwen1.5-7B-Chat",
     "Qwen/Qwen2-72B-Instruct",
     "Qwen/Qwen2-57B-A14B-Instruct",
-    "Qwen/Qwen1.5-110B-Chat",
-    "Qwen/Qwen1.5-32B-Chat",
-    "Qwen/Qwen1.5-14B-Chat",
+    "Qwen/Qwen2.5-Coder-7B-Instruct",
+    "Qwen/Qwen2.5-14B-Instruct",
+    "Qwen/Qwen2.5-32B-Instruct",
+    "Qwen/Qwen2.5-72B-Instruct",
     "THUDM/glm-4-9b-chat",
     "THUDM/chatglm3-6b",
     "01-ai/Yi-1.5-9B-Chat-16K",
@@ -59,5 +61,8 @@ Model = Literal[
     "01-ai/Yi-1.5-34B-Chat-16K",
     "deepseek-ai/DeepSeek-Coder-V2-Instruct",
     "deepseek-ai/DeepSeek-V2-Chat",
+    "deepseek-ai/DeepSeek-V2.5",
     "deepseek-ai/deepseek-llm-67b-chat",
+    "internlm/internlm2_5-7b-chat",
+    "internlm/internlm2_5-20b-chat",
 ]
