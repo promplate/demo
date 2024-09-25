@@ -8,6 +8,8 @@ class Config(BaseSettings):
     siliconflow_base_url: str = "https://api.siliconflow.cn/v1/"
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
+    cerebras_api_key: str = ""
+    cerebras_base_url: str = "https://api.cerebras.ai/v1"
     minimax_api_key: str = ""
     openai_api_key: str = "*"
     openai_base_url: str = ""
