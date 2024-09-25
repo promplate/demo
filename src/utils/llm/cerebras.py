@@ -19,6 +19,11 @@ class Cerebras(AsyncChatOpenAI):
     async def generate(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
 
+        if config.get("response_format") == {"type": "json_object"}:
+            # streaming json is not supported
+            yield await complete(prompt, **config)
+            return
+
         async for token in generate(prompt, **config):
             yield token
 
