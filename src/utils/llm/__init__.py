@@ -1,6 +1,7 @@
 from typing import Literal
 
 from .anthropic import anthropic
+from .cerebras import cerebras
 from .chatglm import glm
 from .dispatch import find_llm
 from .groq import groq
@@ -38,7 +39,8 @@ Model = Literal[
     "llama-3.1-8b-instant",
     "llama-3.1-70b-versatile",
     "llama-3.1-405b-reasoning",
-    "llama2-70b-4096",
+    "llama3.1-8b",
+    "llama3.1-70b",
     "mixtral-8x7b-32768",
     "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-turbo",

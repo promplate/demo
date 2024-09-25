@@ -6,15 +6,12 @@ from ..config import env
 from .common import client
 from .dispatch import link_llm
 
-complete = AsyncChatComplete(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
-generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api_key=env.groq_api_key)
+complete = AsyncChatComplete(http_client=client, base_url=env.cerebras_base_url, api_key=env.cerebras_api_key)
+generate = AsyncChatGenerate(http_client=client, base_url=env.cerebras_base_url, api_key=env.cerebras_api_key)
 
 
-@link_llm("gemma")
-@link_llm("llama3-")
-@link_llm("llama-3.1")
-@link_llm("mixtral")
-class Groq(AsyncChatOpenAI):
+@link_llm("llama3.1")
+class Cerebras(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
         return (await complete(prompt, **config)).removeprefix(" ")
@@ -30,8 +27,8 @@ class Groq(AsyncChatOpenAI):
         return self
 
 
-groq = Groq().bind(model="mixtral-8x7b-32768")
+cerebras = Cerebras()
 
 
-groq.complete = patch.chat.acomplete(groq.complete)  # type: ignore
-groq.generate = patch.chat.agenerate(groq.generate)  # type: ignore
+cerebras.complete = patch.chat.acomplete(cerebras.complete)  # type: ignore
+cerebras.generate = patch.chat.agenerate(cerebras.generate)  # type: ignore
