@@ -17,7 +17,7 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_u
 class Siliconflow(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
-        return (await complete(prompt, **config)).removeprefix(" ")
+        return await complete(prompt, **config)
 
     async def generate(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
