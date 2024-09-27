@@ -8,6 +8,8 @@ from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
 from promplate_trace.utils import cache
 
+from src.utils import prefill
+
 from .common import client, ensure_safe
 from .dispatch import link_llm
 
@@ -24,12 +26,14 @@ def get_anthropic():
     return AsyncAnthropic(http_client=client)
 
 
+@prefill.patch_async_complete
 async def complete(prompt: str | list[Message], /, **config):
     messages, system_message = split(prompt)
     res = await get_anthropic().messages.create(messages=messages, system=system_message, max_tokens=4096, **config)
     return res.content[0].text
 
 
+@prefill.patch_async_generate
 async def generate(prompt: str | list[Message], /, **config):
     messages, system_message = split(prompt)
     async with await get_anthropic().messages.create(

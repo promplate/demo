@@ -1,7 +1,9 @@
 from promplate import Message
 from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
+from promplate.prompt.chat import ensure
 from promplate_trace.auto import patch
 
+from .. import prefill
 from ..config import env
 from .common import client
 from .dispatch import link_llm
@@ -13,6 +15,7 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api
 @link_llm("gemma")
 @link_llm("llama3-")
 @link_llm("llama-3.1")
+@link_llm("llama-3.2")
 @link_llm("mixtral")
 class Groq(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
@@ -38,5 +41,5 @@ class Groq(AsyncChatOpenAI):
 groq = Groq().bind(model="mixtral-8x7b-32768")
 
 
-groq.complete = patch.chat.acomplete(groq.complete)  # type: ignore
-groq.generate = patch.chat.agenerate(groq.generate)  # type: ignore
+groq.complete = prefill.patch_async_complete(patch.chat.acomplete(groq.complete))  # type: ignore
+groq.generate = prefill.patch_async_generate(patch.chat.agenerate(groq.generate))  # type: ignore
