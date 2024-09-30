@@ -7,7 +7,7 @@ readme = "README.md"
 license = { text = "MIT" }
 dependencies = [
     "fastapi~=0.115.0",
-    "uvicorn[standard]~=0.30.1",
+    "uvicorn[standard]~=0.31.0",
     "promplate[all]~=0.3.4.7",
     "promplate-trace[langfuse,langsmith]==0.3.0dev5",
     "python-box~=7.2.0",
