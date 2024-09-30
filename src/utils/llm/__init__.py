@@ -1,6 +1,7 @@
 from typing import Literal
 
 from .anthropic import anthropic
+from .azure import azure
 from .cerebras import cerebras
 from .chatglm import glm
 from .dispatch import find_llm
@@ -26,6 +27,32 @@ Model = Literal[
     "gpt-4-0125-preview",
     "gpt-4-turbo",
     "gpt-4-turbo-2024-04-09",
+    "azure:gpt-4o",
+    "azure:gpt-4o-mini",
+    "Mistral-Nemo",
+    "Mistral-large",
+    "Mistral-large-2407",
+    "Mistral-small",
+    "Meta-Llama-3.1-405B-Instruct",
+    "Meta-Llama-3.1-70B-Instruct",
+    "Meta-Llama-3.1-8B-Instruct",
+    "Meta-Llama-3-70B-Instruct",
+    "Meta-Llama-3-8B-Instruct",
+    "Cohere-command-r-plus",
+    "Cohere-command-r-plus-08-2024",
+    "Cohere-command-r",
+    "Cohere-command-r-08-2024",
+    "AI21-Jamba-1.5-Large",
+    "AI21-Jamba-1.5-Mini",
+    "AI21-Jamba-Instruct",
+    "Phi-3.5-MoE-instruct",
+    "Phi-3.5-mini-instruct",
+    "Phi-3-medium-128k-instruct",
+    "Phi-3-medium-4k-instruct",
+    "Phi-3-mini-128k-instruct",
+    "Phi-3-mini-4k-instruct",
+    "Phi-3-small-128k-instruct",
+    "Phi-3-small-8k-instruct",
     "chatglm_turbo",
     "claude-instant-1.2",
     "claude-2.1",
