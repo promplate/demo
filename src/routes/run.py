@@ -30,7 +30,7 @@ run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
 
 class ChainInput(BaseModel):
     messages: list[Msg] = []
-    model: Model = "gpt-4o-mini-2024-07-18"
+    model: Model = "gpt-4o-mini"
     temperature: float = Field(0.7, ge=0, le=2)
     stop: str | list[str] = []  # openai
     stop_sequences: list[str] = []  # anthropic
@@ -78,6 +78,9 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node)):
+    if data.model.startswith("gpt-3.5-turbo"):
+        data.model = "gpt-4o-mini"
+
     for msg in data.messages:
         for string in env.banned_substrings:
             if string in msg.content:
