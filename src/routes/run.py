@@ -84,6 +84,7 @@ async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node))
     for msg in data.messages:
         for string in env.banned_substrings:
             if string in msg.content:
+                print(await node.arender(data.context))
                 return PlainTextResponse(env.banned_response)
 
     async def make_stream():
