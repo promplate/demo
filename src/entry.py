@@ -15,8 +15,8 @@ app.include_router(run_router)
 if env.openai_compatible_api:
     from .routes.openai import openai_router
 
-    app.include_router(openai_router)
-    app.include_router(openai_router, prefix="/v1")
+    app.include_router(openai_router, include_in_schema=False)
+    app.include_router(openai_router, prefix="/v1", include_in_schema=False)
 
 
 @app.get("/heartbeat", response_model=str, response_class=PlainTextResponse)
