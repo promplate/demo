@@ -19,6 +19,8 @@ class Config(BaseSettings):
     zhipu_api_key: str = ""
     groq_api_key: str = ""
     groq_base_url: str = "https://api.groq.com/openai/v1"
+    yi_api_key: str = ""
+    yi_base_url: str = "https://api.lingyiwanwu.com/v1"
 
     # other services
     serper_api_key: str = ""

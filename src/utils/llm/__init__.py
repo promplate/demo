@@ -11,6 +11,7 @@ from .octoai import octoai
 from .openai import openai
 from .qwen import qwen
 from .siliconflow import siliconflow
+from .yi import yi
 
 Model = Literal[
     "gpt-3.5-turbo",
@@ -101,4 +102,5 @@ Model = Literal[
     "deepseek-ai/deepseek-llm-67b-chat",
     "internlm/internlm2_5-7b-chat",
     "internlm/internlm2_5-20b-chat",
+    "yi-lightning",
 ]
