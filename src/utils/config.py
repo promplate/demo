@@ -4,10 +4,14 @@ from rich import print
 
 class Config(BaseSettings):
     # llm providers
+    github_models_api_key: str = ""
+    github_models_base_url: str = "https://models.inference.ai.azure.com"
     siliconflow_api_key: str = ""
     siliconflow_base_url: str = "https://api.siliconflow.cn/v1/"
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
+    cerebras_api_key: str = ""
+    cerebras_base_url: str = "https://api.cerebras.ai/v1"
     minimax_api_key: str = ""
     openai_api_key: str = "*"
     openai_base_url: str = ""
@@ -15,6 +19,8 @@ class Config(BaseSettings):
     zhipu_api_key: str = ""
     groq_api_key: str = ""
     groq_base_url: str = "https://api.groq.com/openai/v1"
+    yi_api_key: str = ""
+    yi_base_url: str = "https://api.lingyiwanwu.com/v1"
 
     # other services
     serper_api_key: str = ""

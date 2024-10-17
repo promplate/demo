@@ -3,25 +3,19 @@ from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChat
 from promplate_trace.auto import patch
 
 from ..config import env
-from .common import client, trim_start
+from .common import client
 from .dispatch import link_llm
 
-complete = AsyncChatComplete(http_client=client, base_url=env.siliconflow_base_url, api_key=env.siliconflow_api_key)
-generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_url, api_key=env.siliconflow_api_key)
+complete = AsyncChatComplete(http_client=client, base_url=env.yi_base_url, api_key=env.yi_api_key)
+generate = AsyncChatGenerate(http_client=client, base_url=env.yi_base_url, api_key=env.yi_api_key)
 
 
-@link_llm("Qwen/")
-@link_llm("01-ai/")
-@link_llm("THUDM/")
-@link_llm("deepseek-ai/")
-@link_llm("internlm/")
-class Siliconflow(AsyncChatOpenAI):
-    @trim_start
+@link_llm("yi")
+class Yi(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
         return await complete(prompt, **config)
 
-    @trim_start
     async def generate(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
 
@@ -33,8 +27,8 @@ class Siliconflow(AsyncChatOpenAI):
         return self
 
 
-siliconflow = Siliconflow()
+yi = Yi()
 
 
-siliconflow.complete = patch.chat.acomplete(siliconflow.complete)  # type: ignore
-siliconflow.generate = patch.chat.agenerate(siliconflow.generate)  # type: ignore
+yi.complete = patch.chat.acomplete(yi.complete)  # type: ignore
+yi.generate = patch.chat.agenerate(yi.generate)  # type: ignore
