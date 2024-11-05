@@ -11,6 +11,7 @@ from .octoai import octoai
 from .openai import openai
 from .qwen import qwen
 from .siliconflow import siliconflow
+from .xai import xai
 from .yi import yi
 
 Model = Literal[
@@ -100,4 +101,5 @@ Model = Literal[
     "internlm/internlm2_5-7b-chat",
     "internlm/internlm2_5-20b-chat",
     "yi-lightning",
+    "grok-beta",
 ]

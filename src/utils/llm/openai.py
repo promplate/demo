@@ -18,7 +18,7 @@ class OpenAI(AsyncChatOpenAI):
         config = self._run_config | config
         return complete(prompt, **config)
 
-    def bind(self, **run_config):  # type: ignore
+    def bind(self, **run_config):
         self._run_config.update(run_config)  # inplace
         return self
 

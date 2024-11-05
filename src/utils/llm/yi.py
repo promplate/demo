@@ -22,7 +22,7 @@ class Yi(AsyncChatOpenAI):
         async for token in generate(prompt, **config):
             yield token
 
-    def bind(self, **run_config):  # type: ignore
+    def bind(self, **run_config):
         self._run_config.update(run_config)  # inplace
         return self
 
