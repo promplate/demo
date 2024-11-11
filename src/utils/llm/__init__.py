@@ -14,6 +14,9 @@ from .siliconflow import siliconflow
 from .xai import xai
 from .yi import yi
 
+openai_compatible_providers = {openai, xai, groq, azure, siliconflow, cerebras, yi}
+
+
 Model = Literal[
     "gpt-3.5-turbo",
     "gpt-3.5-turbo-0301",

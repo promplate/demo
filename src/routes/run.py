@@ -12,7 +12,7 @@ from ..logic import get_node
 from ..logic.tools import tool_map
 from ..utils.config import env
 from ..utils.http import forward_headers
-from ..utils.llm import Model, find_llm, groq, openai
+from ..utils.llm import Model, find_llm, openai_compatible_providers
 from ..utils.response import make_response
 from .sse import non_duplicated_event_stream
 
@@ -49,21 +49,30 @@ class ChainInput(BaseModel):
     }
 
 
+def mix_config(r: Request, data: ChainInput):
+    config = data.config
+
+    if find_llm(data.model) in openai_compatible_providers:
+        config["extra_headers"] = forward_headers(r.headers)
+
+    return config
+
+
 @run_router.post(f"{env.base}/invoke/{{template:path}}")
-async def invoke(data: ChainInput, node: Node = Depends(get_node)):
+async def invoke(data: ChainInput, node: Node = Depends(get_node), config: dict = Depends(mix_config)):
     try:
-        return await node.ainvoke(data.context, find_llm(data.model).complete, **data.config)
+        return await node.ainvoke(data.context, find_llm(data.model).complete, **config)
     except Exception as e:
         print_exc(file=stderr)
         return PlainTextResponse(str(e), 500)
 
 
 @run_router.post(f"{env.base}/stream/{{template:path}}")
-async def stream(data: ChainInput, node: Node = Depends(get_node)):
+async def stream(data: ChainInput, node: Node = Depends(get_node), config: dict = Depends(mix_config)):
     @non_duplicated_event_stream
     async def make_stream():
         try:
-            async for c in node.astream(data.context, find_llm(data.model).generate, **data.config):
+            async for c in node.astream(data.context, find_llm(data.model).generate, **config):
                 if "parsed" in c:
                     yield dumps(c["parsed"], ensure_ascii=False), "partial" if c.get("partial") else "whole"
                 else:
@@ -77,7 +86,7 @@ async def stream(data: ChainInput, node: Node = Depends(get_node)):
 
 
 @run_router.put(f"{env.base}/single/{{template}}")
-async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node)):
+async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node), config: dict = Depends(mix_config)):
     if data.model.startswith("gpt-3.5-turbo"):
         data.model = "gpt-4o-mini"
 
@@ -89,11 +98,6 @@ async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node))
 
     async def make_stream():
         last = ""
-
-        config = data.config
-
-        if find_llm(data.model) in (openai, groq):
-            config["extra_headers"] = forward_headers(r.headers)
 
         async for c in node.astream(data.context, find_llm(data.model).generate, **config):
             if c.result != last:
