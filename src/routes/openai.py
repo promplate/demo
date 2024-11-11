@@ -32,7 +32,7 @@ class ChatInput(ChainInput):
 
     @property
     def config(self):
-        return self.model_dump(exclude_unset=True)
+        return self.model_dump(exclude_unset=True, exclude={"messages"})
 
 
 @openai_router.post("/chat/completions")
