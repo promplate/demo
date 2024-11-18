@@ -14,7 +14,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^3.0.0",
     "@promplate/pattern": "^0.0.1",
-    "@sveltejs/vite-plugin-svelte": "^3.1.1",
+    "@sveltejs/vite-plugin-svelte": "^4.0.1",
     "@tsconfig/svelte": "^5.0.4",
     "@unocss/eslint-plugin": "^0.61.0",
     "@unocss/extractor-svelte": "^0.61.0",
