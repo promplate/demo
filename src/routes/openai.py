@@ -33,7 +33,7 @@ class ChatInput(ChainInput):
 
     @property
     def config(self):
-        return self.model_dump(exclude_unset=True)
+        return self.model_dump(exclude_unset=True, exclude={"messages"})
 
 
 def mix_config(r: Request, data: ChatInput):
