@@ -4,13 +4,13 @@ from json import JSONDecodeError
 from typing import cast
 
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
+from fake_useragent.fake import FakeUserAgent
 from html2text import html2text
 from httpx import AsyncClient, HTTPError
 
 from .base import AbstractTool
 
-ua = UserAgent(min_percentage=0.5)
+ua = FakeUserAgent(min_percentage=0.5)
 
 
 class Browser(AbstractTool):
