@@ -13,7 +13,9 @@ generate = patch.chat.agenerate(
 )
 
 
+@link_llm("azure:o1")
 @link_llm("azure:gpt")
+@link_llm("Ministral")
 @link_llm("Mistral")
 @link_llm("Meta")
 @link_llm("Cohere")
