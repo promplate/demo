@@ -4,12 +4,14 @@ from .anthropic import anthropic
 from .azure import azure
 from .cerebras import cerebras
 from .chatglm import glm
+from .deepseek import deepseek
 from .dispatch import find_llm
 from .groq import groq
 from .minimax import minimax
 from .octoai import octoai
 from .openai import openai
 from .qwen import qwen
+from .sambanova import sambanova
 from .siliconflow import siliconflow
 from .xai import xai
 from .yi import yi
@@ -28,16 +30,22 @@ Model = Literal[
     "gpt-4o",
     "gpt-4o-2024-05-13",
     "gpt-4o-2024-08-06",
+    "gpt-4o-2024-11-20",
     "gpt-4-1106-preview",
     "gpt-4-0125-preview",
     "gpt-4-turbo",
     "gpt-4-turbo-2024-04-09",
     "azure:gpt-4o",
     "azure:gpt-4o-mini",
+    "azure:o1",
+    "azure:o1-mini",
+    "azure:o1-preview",
     "Mistral-Nemo",
     "Mistral-large",
     "Mistral-large-2407",
+    "Mistral-large-2411",
     "Mistral-small",
+    "Ministral-3B",
     "Meta-Llama-3.1-405B-Instruct",
     "Meta-Llama-3.1-70B-Instruct",
     "Meta-Llama-3.1-8B-Instruct",
@@ -49,7 +57,6 @@ Model = Literal[
     "Cohere-command-r-08-2024",
     "AI21-Jamba-1.5-Large",
     "AI21-Jamba-1.5-Mini",
-    "AI21-Jamba-Instruct",
     "Phi-3.5-MoE-instruct",
     "Phi-3.5-mini-instruct",
     "Phi-3-medium-128k-instruct",
@@ -68,13 +75,17 @@ Model = Literal[
     "llama3-70b-8192",
     "llama-3.1-8b-instant",
     "llama-3.1-70b-versatile",
+    "llama-3.1-70b-specdec",
     "llama-3.1-405b-reasoning",
-    "llama-3.2-1b-text-preview",
-    "llama-3.2-3b-text-preview",
-    "llama-3.2-11b-text-preview",
-    "llama-3.2-90b-text-preview",
+    "llama-3.2-1b-preview",
+    "llama-3.2-3b-preview",
+    "llama-3.2-11b-vision-preview",
+    "llama-3.2-90b-vision-preview",
+    "llama-3.3-70b-versatile",
+    "llama-3.3-70b-specdec",
     "llama3.1-8b",
     "llama3.1-70b",
+    "llama-3.3-70b",
     "mixtral-8x7b-32768",
     "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-turbo",
@@ -82,6 +93,7 @@ Model = Literal[
     "abab5.5s-chat",
     "abab5.5-chat",
     "abab6-chat",
+    "Qwen/QwQ-32B-Preview",
     "Qwen/Qwen2-7B-Instruct",
     "Qwen/Qwen2-1.5B-Instruct",
     "Qwen/Qwen2-72B-Instruct",
@@ -92,6 +104,7 @@ Model = Literal[
     "Qwen/Qwen2.5-14B-Instruct",
     "Qwen/Qwen2.5-32B-Instruct",
     "Qwen/Qwen2.5-72B-Instruct",
+    "Qwen/Qwen2.5-72B-Instruct-128K",
     "THUDM/glm-4-9b-chat",
     "THUDM/chatglm3-6b",
     "01-ai/Yi-1.5-9B-Chat-16K",
@@ -105,4 +118,9 @@ Model = Literal[
     "internlm/internlm2_5-20b-chat",
     "yi-lightning",
     "grok-beta",
+    "grok-2-1212",
+    "Qwen2.5-Coder-32B-Instruct",
+    "Qwen2.5-72B-Instruct",
+    "QwQ-32B-Preview",
+    "deepseek-chat",
 ]
