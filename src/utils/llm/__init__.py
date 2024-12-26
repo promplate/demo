@@ -10,6 +10,7 @@ from .minimax import minimax
 from .octoai import octoai
 from .openai import openai
 from .qwen import qwen
+from .sambanova import sambanova
 from .siliconflow import siliconflow
 from .xai import xai
 from .yi import yi
@@ -117,4 +118,7 @@ Model = Literal[
     "yi-lightning",
     "grok-beta",
     "grok-2-1212",
+    "Qwen2.5-Coder-32B-Instruct",
+    "Qwen2.5-72B-Instruct",
+    "QwQ-32B-Preview",
 ]

@@ -8,6 +8,8 @@ class Config(BaseSettings):
     github_models_base_url: str = "https://models.inference.ai.azure.com"
     siliconflow_api_key: str = ""
     siliconflow_base_url: str = "https://api.siliconflow.cn/v1/"
+    sambanova_api_key: str = ""
+    sambanova_base_url: str = "https://api.sambanova.ai/v1"
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
     cerebras_api_key: str = ""
