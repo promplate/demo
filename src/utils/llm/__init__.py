@@ -4,6 +4,7 @@ from .anthropic import anthropic
 from .azure import azure
 from .cerebras import cerebras
 from .chatglm import glm
+from .deepseek import deepseek
 from .dispatch import find_llm
 from .groq import groq
 from .minimax import minimax
@@ -121,4 +122,5 @@ Model = Literal[
     "Qwen2.5-Coder-32B-Instruct",
     "Qwen2.5-72B-Instruct",
     "QwQ-32B-Preview",
+    "deepseek-chat",
 ]

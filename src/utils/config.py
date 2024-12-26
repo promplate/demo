@@ -10,6 +10,8 @@ class Config(BaseSettings):
     siliconflow_base_url: str = "https://api.siliconflow.cn/v1/"
     sambanova_api_key: str = ""
     sambanova_base_url: str = "https://api.sambanova.ai/v1"
+    deepseek_api_key: str = ""
+    deepseek_base_url: str = "https://api.deepseek.com/v1"
     anthropic_api_key: str = ""
     dashscope_api_key: str = ""
     cerebras_api_key: str = ""
