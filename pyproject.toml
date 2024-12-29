@@ -27,7 +27,7 @@ dependencies = [
 [tool.pdm]
 distribution = false
 
-[tool.pdm.dev-dependencies]
+[dependency-groups]
 dev = [
     "isort~=5.13.2",
     "black~=24.4.2",
