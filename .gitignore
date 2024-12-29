@@ -8,7 +8,7 @@
 .pdm-python
 
 __pycache__
-*.pyi
+src/utils/load.pyi
 
 node_modules
 dist

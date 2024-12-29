@@ -1,18 +1,27 @@
 from asyncio import gather, get_running_loop
-from json import JSONDecodeError, dumps, loads
+from json import dumps
 from typing import cast
 
-from promplate import Chain, ChainContext, Jump, Message, Node
+from promplate import Chain, ChainContext, Jump, Message
 from promplate.prompt.utils import AutoNaming
 from promplate_trace.auto import patch
 from promptools.extractors import extract_json
+from pydantic import TypeAdapter, ValidationError
 from rich import print
 
 from ..templates.schema.output import Output
+from ..utils.functional import compose
 from ..utils.load import load_template
+from ..utils.node import Node
 from .tools import call_tool, tools
 
-main = patch.node(Node)(load_template("main"), {"tools": tools})
+
+class TypedContext(ChainContext):
+    partial = True
+    parsed: Output = {}
+
+
+main = Node(load_template("main"), TypedContext({"tools": tools}))
 
 
 @patch.chain
@@ -23,19 +32,24 @@ class Loop(Chain, AutoNaming):
 main_loop = Loop(main)
 
 
+_validator = TypeAdapter(Output)
+serialize = compose(_validator.dump_json, bytes.decode)
+loads = _validator.validate_json
+
+
 @main.end_process
-async def collect_results(context: ChainContext):
-    parsed = cast(dict, context["parsed"] or {"content": [{"text": context.result}]})
+async def collect_results(context: TypedContext):
+    parsed = context.parsed or {"content": [{"text": context.result}]}
     actions = parsed.get("actions", [])
 
     if not actions:
         return
 
-    results = await gather(*(call_tool(i["name"], i["body"]) for i in actions))
+    results = await gather(*(call_tool(i["name"], i.get("body", {})) for i in actions))
 
     messages = cast(list[Message], context["messages"])
 
-    messages.append({"role": "assistant", "content": dumps(parsed, ensure_ascii=False)})
+    messages.append({"role": "assistant", "content": serialize(parsed)})
 
     messages.extend(
         [
@@ -54,24 +68,27 @@ async def collect_results(context: ChainContext):
 
 
 @main.mid_process
-def parse_json(context: ChainContext):
+def parse_json(context: TypedContext):
     try:
-        context["parsed"] = loads(context.result)
+        context.parsed = loads(context.result)
         context.pop("partial", None)
-        print("parsed json:", context["parsed"])
-    except JSONDecodeError:
+        context.partial = False
+        print("parsed json:", context.parsed)
+        raise Jump(out_of=main)
+    except ValidationError:
+        context["partial"] = True
         try:
-            context["parsed"] = extract_json(context.result, context.get("parsed", {}), Output)
+            context.parsed = extract_json(context.result, context.parsed, Output)
         except SyntaxError:
             context["parsed"] = {"content": [{"text": context.result}]}
-
-        context["partial"] = True
+    finally:
+        context["parsed"] = context.parsed
 
 
 @main.mid_process
-async def run_tools(context: ChainContext):
-    if actions := cast(dict, context["parsed"]).get("actions", []):
+async def run_tools(context: TypedContext):
+    if actions := cast(dict, context.parsed).get("actions", []):
         loop = get_running_loop()
-        for action in actions[slice(None, -1 if context.get("partial") else None)]:
+        for action in actions[slice(None, -1 if context.partial else None)]:
             loop.create_task(call_tool(action["name"], action["body"]))
             print(f"start <{action['name']}> with {action['body']}")
