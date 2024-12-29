@@ -1,0 +1,3 @@
+from typing import Callable
+
+def compose[**P1, T1, T2](f1: Callable[P1, T1], f2: Callable[[T1], T2]) -> Callable[P1, T2]: ...
