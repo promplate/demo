@@ -74,7 +74,6 @@ def parse_json(context: TypedContext):
         context.pop("partial", None)
         context.partial = False
         print("parsed json:", context.parsed)
-        raise Jump(out_of=main)
     except ValidationError:
         context["partial"] = True
         try:
