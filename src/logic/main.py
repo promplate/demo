@@ -1,4 +1,4 @@
-from asyncio import gather, get_running_loop
+from asyncio import ensure_future, gather
 from json import dumps
 from typing import cast
 
@@ -87,8 +87,7 @@ def parse_json(context: TypedContext):
 
 @main.mid_process
 async def run_tools(context: TypedContext):
-    if actions := cast(dict, context.parsed).get("actions", []):
-        loop = get_running_loop()
-        for action in actions[slice(None, -1 if context.partial else None)]:
-            loop.create_task(call_tool(action["name"], action["body"]))
-            print(f"start <{action['name']}> with {action['body']}")
+    if actions := context.parsed.get("actions"):
+        for action in actions[:-1] if context.partial else actions:
+            ensure_future(call_tool(action["name"], body := action.get("body", {})))
+            print(f"start <{action['name']}> with {body}")
