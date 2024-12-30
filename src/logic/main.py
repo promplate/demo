@@ -1,4 +1,5 @@
-from asyncio import gather, get_running_loop
+from asyncio import Task, ensure_future, gather
+from functools import cached_property
 from json import dumps
 from typing import cast
 
@@ -19,6 +20,18 @@ from .tools import call_tool, tools
 class TypedContext(ChainContext):
     partial = True
     parsed: Output = {}
+
+    @cached_property
+    def _tasks(self) -> list[Task]:
+        return []
+
+    def call_tools(self):
+        actions = self.parsed.get("actions", [])
+        for action in actions[len(self._tasks) : len(actions) - self.partial]:
+            task = ensure_future(call_tool(action["name"], body := action.get("body", {})))
+            self._tasks.append(task)
+            print(f"start <{action['name']}> with {body}")
+        return self._tasks
 
 
 main = Node(load_template("main"), TypedContext({"tools": tools}))
@@ -45,7 +58,7 @@ async def collect_results(context: TypedContext):
     if not actions:
         return
 
-    results = await gather(*(call_tool(i["name"], i.get("body", {})) for i in actions))
+    results = await gather(*context.call_tools())
 
     messages = cast(list[Message], context["messages"])
 
@@ -74,7 +87,6 @@ def parse_json(context: TypedContext):
         context.pop("partial", None)
         context.partial = False
         print("parsed json:", context.parsed)
-        raise Jump(out_of=main)
     except ValidationError:
         context["partial"] = True
         try:
@@ -84,11 +96,4 @@ def parse_json(context: TypedContext):
     finally:
         context["parsed"] = context.parsed
 
-
-@main.mid_process
-async def run_tools(context: TypedContext):
-    if actions := cast(dict, context.parsed).get("actions", []):
-        loop = get_running_loop()
-        for action in actions[slice(None, -1 if context.partial else None)]:
-            loop.create_task(call_tool(action["name"], action["body"]))
-            print(f"start <{action['name']}> with {action['body']}")
+    context.call_tools()
