@@ -3,22 +3,21 @@ WORKDIR /app
 COPY frontend/package.json /
 RUN bun install
 COPY frontend .
-RUN NODE_ENV=production bun run build
+RUN NODE_ENV=production bun run -b build
 
-FROM python:3.13-slim AS py
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS py
 WORKDIR /app
 COPY pyproject.toml .
-RUN pip install uv --disable-pip-version-check --root-user-action ignore && uv venv && uv sync --compile-bytecode
+RUN uv sync --compile-bytecode
 
-FROM python:3.13-slim AS base
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS base
 WORKDIR /app
 COPY --from=js /app/dist frontend/dist
 COPY --from=py /app .
 COPY . .
 
 ENV PORT=9040
-ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE $PORT
 
-CMD python3 -O -m uvicorn src.entry:app --host 0.0.0.0 --port $PORT
+CMD .venv/bin/python -O -m uvicorn src.entry:app --host 0.0.0.0 --port $PORT

@@ -8,14 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: pyproject.toml
       - name: Install dependencies
-        env: { UV_SYSTEM_PYTHON: true }
         run: |
-          pip install uv --disable-pip-version-check
-          uv tool run pdm export --pyproject -d | uv pip install -r -
+          uv export --no-hashes | uv pip install -r - basedpyright
       - name: Check formatting
         run: |
           isort . --check --diff
@@ -24,4 +24,4 @@ jobs:
           black . --check --diff
       - name: Check typing
         run: |
-          npx pyright
+          basedpyright
