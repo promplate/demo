@@ -8,7 +8,7 @@ license = { text = "MIT" }
 dependencies = [
     "fastapi~=0.115.0",
     "uvicorn[standard]~=0.34.0",
-    "promplate[all]~=0.3.4.7",
+    "promplate[all]~=0.3.5.0",
     "promplate-trace[langfuse,langsmith]==0.3.0dev5",
     "python-box~=7.3.0",
     "pydantic-settings~=2.7.0",
