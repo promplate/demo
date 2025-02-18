@@ -4,7 +4,7 @@ import { defineConfig, presetAttributify, presetUno, presetWebFonts, transformer
 const config = defineConfig({
   extractors: [extractorSvelte()],
   transformers: [transformerDirectives(), transformerVariantGroup()],
-  presets: [presetAttributify(), presetUno(), presetWebFonts({ provider: "bunny", fonts: { mono: "Fira Code" } })],
+  presets: [presetAttributify(), presetUno({ preflight: "on-demand" }), presetWebFonts({ provider: "bunny", fonts: { mono: "Fira Code" } })],
 });
 
 export default config;
