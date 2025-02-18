@@ -30,7 +30,7 @@ distribution = false
 [dependency-groups]
 dev = [
     "isort~=6.0.0",
-    "black~=24.10.0",
+    "black~=25.1.0",
 ]
 
 [tool.pdm.scripts]
