@@ -29,7 +29,7 @@ distribution = false
 
 [dependency-groups]
 dev = [
-    "isort~=5.13.2",
+    "isort~=6.0.0",
     "black~=24.10.0",
 ]
 
