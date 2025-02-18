@@ -18,7 +18,7 @@
     "@tsconfig/svelte": "^5.0.4",
     "@unocss/eslint-plugin": "^65.0.0",
     "@unocss/extractor-svelte": "^65.0.0",
-    "@unocss/reset": "^65.0.0",
+    "@unocss/reset": "^66.0.0",
     "eslint": "^9.4.0",
     "eslint-plugin-format": "^1.0.1",
     "eslint-plugin-svelte": "^2.45.1",
