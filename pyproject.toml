@@ -21,7 +21,7 @@ dependencies = [
     "zhipuai~=2.1.5.20241203",
     "anthropic~=0.46.0",
     "dashscope~=1.22.0",
-    "logfire[fastapi,system-metrics,httpx]~=3.5.0",
+    "logfire[fastapi,system-metrics,httpx]~=3.6.0",
 ]
 
 [tool.pdm]
