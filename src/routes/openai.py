@@ -1,7 +1,8 @@
-from typing import AsyncIterable, cast
+from typing import AsyncIterable, Literal, cast, get_args
 
 from fastapi import APIRouter
 from promplate import Message
+from typing_extensions import TypedDict
 
 from ..utils.llm import Model
 from ..utils.llm.dispatch import find_llm
@@ -12,8 +13,18 @@ from .run import ChainInput
 openai_router = APIRouter(tags=["openai"])
 
 
+class ModelItem(TypedDict):
+    id: Model
+    object: Literal["model"]
+
+
+class ModelList(TypedDict):
+    object: Literal["list"]
+    data: list[ModelItem]
+
+
 @openai_router.get("/models")
-async def get_models():
+async def get_models() -> ModelList:
     return {
         "object": "list",
         "data": [
@@ -21,7 +32,7 @@ async def get_models():
                 "id": name,
                 "object": "model",
             }
-            for name in Model.__args__
+            for name in get_args(Model)
         ],
     }
 
