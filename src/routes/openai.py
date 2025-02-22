@@ -1,7 +1,9 @@
 from typing import AsyncIterable, Literal, cast, get_args
 
 from fastapi import APIRouter
+from openai.types.chat import ChatCompletionContentPartTextParam
 from promplate import Message
+from pydantic import field_serializer
 from typing_extensions import TypedDict
 
 from ..utils.llm import Model
@@ -37,9 +39,21 @@ async def get_models() -> ModelList:
     }
 
 
+class CompatibleMessage(Message):
+    content: str | list[ChatCompletionContentPartTextParam]  # type: ignore
+
+
 class ChatInput(ChainInput):
     stream: bool = False
-    messages: list[Message]  # type: ignore
+    messages: list[CompatibleMessage]  # type: ignore
+
+    @field_serializer("messages")
+    def serialize_messages(self, value: CompatibleMessage):
+        content = value["content"]
+        if isinstance(content, str):
+            return value
+        value["content"] = "".join(i["text"] for i in content)
+        return value
 
     @property
     def config(self):
