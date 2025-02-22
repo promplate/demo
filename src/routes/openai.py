@@ -1,7 +1,10 @@
-from typing import AsyncIterable, cast
+from typing import AsyncIterable, Literal, cast, get_args
 
 from fastapi import APIRouter, Depends, Request
+from openai.types.chat import ChatCompletionContentPartTextParam
 from promplate import Message
+from pydantic import field_validator
+from typing_extensions import TypedDict
 
 from ..utils.http import forward_headers
 from ..utils.llm import Model, openai_compatible_providers
@@ -13,8 +16,18 @@ from .run import ChainInput
 openai_router = APIRouter(tags=["openai"])
 
 
+class ModelItem(TypedDict):
+    id: Model
+    object: Literal["model"]
+
+
+class ModelList(TypedDict):
+    object: Literal["list"]
+    data: list[ModelItem]
+
+
 @openai_router.get("/models")
-async def get_models():
+async def get_models() -> ModelList:
     return {
         "object": "list",
         "data": [
@@ -22,14 +35,27 @@ async def get_models():
                 "id": name,
                 "object": "model",
             }
-            for name in Model.__args__
+            for name in get_args(Model)
         ],
     }
 
 
+class CompatibleMessage(Message):
+    content: str | list[ChatCompletionContentPartTextParam]  # type: ignore
+
+
 class ChatInput(ChainInput):
     stream: bool = False
-    messages: list[Message]  # type: ignore
+    messages: list[CompatibleMessage]  # type: ignore
+
+    @field_validator("messages", mode="after")
+    def serialize_messages(cls, value: list[CompatibleMessage]):
+        for msg in value:
+            content = msg["content"]
+            if isinstance(content, str):
+                continue
+            msg["content"] = "".join(i["text"] for i in content)
+        return value
 
     @property
     def config(self):
