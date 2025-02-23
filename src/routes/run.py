@@ -89,6 +89,8 @@ async def stream(data: ChainInput, node: Node = Depends(get_node), config: dict 
 async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node), config: dict = Depends(mix_config)):
     if data.model.startswith("gpt-3.5-turbo"):
         data.model = "gpt-4o-mini"
+    if data.model == "llama-3.3-70b-versatile":
+        data.model = "llama-3.3-70b"
 
     for msg in data.messages:
         for string in env.banned_substrings:
