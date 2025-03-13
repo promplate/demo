@@ -74,6 +74,7 @@ Model = Literal[
     "claude-3-sonnet-20240229",
     "qwen-2.5-32b",
     "qwen-2.5-coder-32b",
+    "qwen-qwq-32b",
     "deepseek-r1-distill-qwen-32b",
     "deepseek-r1-distill-llama-70b",
     "deepseek-r1-distill-llama-70b-specdec",
