@@ -7,7 +7,7 @@ from .dispatch import link_llm
 
 
 @link_llm("deepseek")
-class Deepseek(AsyncChatOpenAI):
+class DeepSeek(AsyncChatOpenAI):
     complete = staticmethod(
         patch.chat.acomplete(AsyncChatComplete(http_client=client, base_url=env.deepseek_base_url, api_key=env.deepseek_api_key))
     )
@@ -16,4 +16,4 @@ class Deepseek(AsyncChatOpenAI):
     )
 
 
-deepseek = Deepseek()
+deepseek = DeepSeek()
