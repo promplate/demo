@@ -6,6 +6,7 @@ from .cerebras import cerebras
 from .chatglm import glm
 from .deepseek import deepseek
 from .dispatch import find_llm
+from .google import google
 from .groq import groq
 from .minimax import minimax
 from .octoai import octoai
@@ -146,4 +147,8 @@ Model = Literal[
     "DeepSeek-R1-Distill-Llama-70B",
     "deepseek-chat",
     "deepseek-reasoner",
+    "gemma-3-27b-it",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
+    "gemini-2.0-flash-thinking-exp",
 ]
