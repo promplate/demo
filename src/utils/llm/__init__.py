@@ -6,6 +6,7 @@ from .cerebras import cerebras
 from .chatglm import glm
 from .deepseek import deepseek
 from .dispatch import find_llm
+from .google import google
 from .groq import groq
 from .minimax import minimax
 from .octoai import octoai
@@ -46,6 +47,7 @@ Model = Literal[
     "Mistral-large-2407",
     "Mistral-large-2411",
     "Mistral-small",
+    "Mistral-small-2503",
     "Codestral-2501",
     "Ministral-3B",
     "Meta-Llama-3.1-405B-Instruct",
@@ -69,11 +71,13 @@ Model = Literal[
     "Phi-3-small-128k-instruct",
     "Phi-3-small-8k-instruct",
     "DeepSeek-R1",
+    "DeepSeek-V3",
     "chatglm_turbo",
     "claude-3-haiku-20240307",
     "claude-3-sonnet-20240229",
     "qwen-2.5-32b",
     "qwen-2.5-coder-32b",
+    "qwen-qwq-32b",
     "deepseek-r1-distill-qwen-32b",
     "deepseek-r1-distill-llama-70b",
     "deepseek-r1-distill-llama-70b-specdec",
@@ -102,6 +106,7 @@ Model = Literal[
     "abab5.5-chat",
     "abab6-chat",
     "Qwen/QwQ-32B-Preview",
+    "Qwen/QwQ-32B",
     "Qwen/Qwen2.5-Coder-7B-Instruct",
     "Qwen/Qwen2.5-7B-Instruct",
     "Qwen/Qwen2.5-14B-Instruct",
@@ -123,8 +128,6 @@ Model = Literal[
     "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
     "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
     "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
-    "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
-    "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
     "internlm/internlm2_5-7b-chat",
     "internlm/internlm2_5-20b-chat",
     "yi-lightning",
@@ -133,6 +136,7 @@ Model = Literal[
     "Qwen2.5-Coder-32B-Instruct",
     "Qwen2.5-72B-Instruct",
     "QwQ-32B-Preview",
+    "QwQ-32B",
     "Llama-3.1-Tulu-3-405B",
     "Llama-3.2-11B-Vision-Instruct",
     "Llama-3.2-90B-Vision-Instruct",
@@ -141,4 +145,9 @@ Model = Literal[
     "Meta-Llama-3.3-70B-Instruct",
     "DeepSeek-R1-Distill-Llama-70B",
     "deepseek-chat",
+    "deepseek-reasoner",
+    "gemma-3-27b-it",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
+    "gemini-2.0-flash-thinking-exp",
 ]
