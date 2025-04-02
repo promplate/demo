@@ -144,6 +144,7 @@ Model = Literal[
     "Meta-Llama-3.2-1B-Instruct",
     "Meta-Llama-3.2-3B-Instruct",
     "Meta-Llama-3.3-70B-Instruct",
+    "DeepSeek-V3-0324",
     "DeepSeek-R1-Distill-Llama-70B",
     "deepseek-chat",
     "deepseek-reasoner",
