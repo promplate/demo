@@ -9,7 +9,6 @@ from .dispatch import find_llm
 from .google import google
 from .groq import groq
 from .minimax import minimax
-from .octoai import octoai
 from .openai import openai
 from .qwen import qwen
 from .sambanova import sambanova
@@ -99,7 +98,6 @@ Model = Literal[
     "llama3.1-70b",
     "llama-3.3-70b",
     "mixtral-8x7b-32768",
-    "nous-hermes-2-mixtral-8x7b-dpo",
     "qwen-turbo",
     "qwen-plus",
     "qwen-max",
