@@ -94,6 +94,8 @@ Model = Literal[
     "llama-3.2-90b-vision-preview",
     "llama-3.3-70b-versatile",
     "llama-3.3-70b-specdec",
+    "meta-llama/llama-4-scout-17b-16e-instruct",
+    "meta-llama/llama-4-maverick-17b-128e-instruct",
     "llama3.1-8b",
     "llama3.1-70b",
     "llama-3.3-70b",

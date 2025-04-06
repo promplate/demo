@@ -17,6 +17,7 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api
 @link_llm("llama-3.1")
 @link_llm("llama-3.2")
 @link_llm("llama-3.3-70b-")
+@link_llm("meta-llama/llama-4")
 @link_llm("mixtral")
 @link_llm("qwen-2.5")
 @link_llm("qwen-qwq")
