@@ -7,19 +7,19 @@ from promplate import Chain, ChainContext, Jump, Message
 from promplate.prompt.utils import AutoNaming
 from promplate_trace.auto import patch
 from promptools.extractors import extract_json
-from pydantic import TypeAdapter, ValidationError
+from pydantic import TypeAdapter
 from rich import print
 
 from ..templates.schema.output import Output
 from ..utils.functional import compose
 from ..utils.load import load_template
-from ..utils.node import Node
+from ..utils.node import KeyAsAttr, Node
 from .tools import call_tool, tools
 
 
 class TypedContext(ChainContext):
-    partial = True
-    parsed: Output = {}
+    partial = KeyAsAttr(True)
+    parsed = KeyAsAttr(Output())
 
     @cached_property
     def _tasks(self) -> list[Task]:
@@ -82,18 +82,15 @@ async def collect_results(context: TypedContext):
 
 @main.mid_process
 def parse_json(context: TypedContext):
-    try:
-        context.parsed = loads(context.result)
-        context.pop("partial", None)
+    if parsed := extract_json(context.result, expect=Output, allow_partial=0):
+        context.parsed = parsed
         context.partial = False
         print("parsed json:", context.parsed)
-    except ValidationError:
-        context["partial"] = True
+    else:
+        context.partial = True
         try:
             context.parsed = extract_json(context.result, context.parsed, Output)
         except SyntaxError:
             context["parsed"] = {"content": [{"text": context.result}]}
-    finally:
-        context["parsed"] = context.parsed
 
     context.call_tools()

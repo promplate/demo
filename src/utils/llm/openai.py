@@ -8,6 +8,7 @@ complete = patch.chat.acomplete(AsyncChatComplete(http_client=client))
 generate = patch.chat.agenerate(AsyncChatGenerate(http_client=client))
 
 
+@link_llm("o")
 @link_llm("gpt")
 class OpenAI(AsyncChatOpenAI):
     def generate(self, prompt: str, /, **config):

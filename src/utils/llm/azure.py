@@ -13,8 +13,7 @@ generate = patch.chat.agenerate(
 )
 
 
-@link_llm("azure:o1")
-@link_llm("azure:o3")
+@link_llm("azure:o")
 @link_llm("azure:gpt")
 @link_llm("Ministral")
 @link_llm("Codestral")
@@ -24,6 +23,7 @@ generate = patch.chat.agenerate(
 @link_llm("AI21")
 @link_llm("Phi")
 @link_llm("DeepSeek")
+@link_llm("MAI")
 class AzureOpenAI(AsyncChatOpenAI):
     @staticmethod
     async def generate(prompt, **kwargs):

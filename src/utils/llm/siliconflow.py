@@ -11,7 +11,6 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_u
 
 
 @link_llm("Qwen/")
-@link_llm("01-ai/")
 @link_llm("THUDM/")
 @link_llm("deepseek-ai/")
 @link_llm("internlm/")
