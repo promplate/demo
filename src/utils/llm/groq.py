@@ -15,11 +15,8 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api
 @link_llm("gemma")
 @link_llm("llama3-")
 @link_llm("llama-3.1")
-@link_llm("llama-3.2")
 @link_llm("llama-3.3-70b-")
 @link_llm("meta-llama/llama-4")
-@link_llm("mixtral")
-@link_llm("qwen-2.5")
 @link_llm("qwen-qwq")
 @link_llm("deepseek-r1-distill")
 class Groq(AsyncChatOpenAI):
@@ -43,7 +40,7 @@ class Groq(AsyncChatOpenAI):
         return self
 
 
-groq = Groq().bind(model="mixtral-8x7b-32768")
+groq = Groq()
 
 
 groq.complete = prefill.patch_async_complete(patch.chat.acomplete(groq.complete))  # type: ignore
