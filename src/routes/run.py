@@ -87,8 +87,8 @@ async def stream(data: ChainInput, node: Node = Depends(get_node), config: dict 
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(r: Request, data: ChainInput, node: Node = Depends(get_node), config: dict = Depends(mix_config)):
-    if data.model.startswith("gpt-3.5-turbo"):
-        data.model = "gpt-4o-mini"
+    if data.model.startswith("gpt-"):
+        data.model = "gpt-4.1-nano"
     if data.model == "llama-3.3-70b-versatile":
         data.model = "llama-3.3-70b"
 
