@@ -21,6 +21,8 @@ class Config(BaseSettings):
     openai_base_url: str = ""
     octoai_api_key: str = ""
     zhipu_api_key: str = ""
+    gemini_api_key: str = ""
+    gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai"
     groq_api_key: str = ""
     groq_base_url: str = "https://api.groq.com/openai/v1"
     xai_api_key: str = ""
