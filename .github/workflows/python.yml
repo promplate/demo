@@ -11,8 +11,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           python-version: "3.12"
-          enable-cache: true
-          cache-dependency-glob: pyproject.toml
+          activate-environment: true
       - name: Install dependencies
         run: |
           uv export --no-hashes | uv pip install -r - basedpyright
