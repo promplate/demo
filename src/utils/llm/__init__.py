@@ -148,6 +148,7 @@ Model = Literal[
     "grok-3-mini-fast-beta",
     "Qwen2.5-Coder-32B-Instruct",
     "Qwen2.5-72B-Instruct",
+    "Qwen3-32B",
     "QwQ-32B-Preview",
     "QwQ-32B",
     "Llama-3.1-Tulu-3-405B",
