@@ -28,8 +28,15 @@ class Msg(BaseModel):
 run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
 
 
-def validate_model(model: str, handler):
-    return f"Pro/{handler(model[4:])}" if model.startswith("Pro/") else handler(model)
+def validate_model(model: Model, handler):
+    model = cast(Model, f"Pro/{handler(model[4:])}" if model.startswith("Pro/") else handler(model))
+    if model.startswith("gpt-"):
+        return "gpt-4.1-nano"
+    if model == "llama-3.3-70b-versatile":
+        return "llama-3.3-70b"
+    if model == "deepseek-ai/DeepSeek-V3":
+        return cast(Model, "Pro/deepseek-ai/DeepSeek-V3")
+    return model
 
 
 class ChainInput(BaseModel):
@@ -91,13 +98,6 @@ async def stream(data: ChainInput, node: Node = Depends(get_node), config: dict 
 
 @run_router.put(f"{env.base}/single/{{template}}")
 async def step_run(data: ChainInput, node: Node = Depends(get_node), config: dict = Depends(mix_config)):
-    if data.model.startswith("gpt-"):
-        data.model = "gpt-4.1-nano"
-    if data.model == "llama-3.3-70b-versatile":
-        data.model = "llama-3.3-70b"
-    if data.model == "deepseek-ai/DeepSeek-V3":
-        data.model = cast(Model, "Pro/deepseek-ai/DeepSeek-V3")
-
     for msg in data.messages:
         for string in env.banned_substrings:
             if string in msg.content:
