@@ -6,7 +6,7 @@ from typing import Annotated, Literal, cast
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import PlainTextResponse
 from promplate import Node
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, WrapValidator
 
 from ..logic import get_node
 from ..logic.tools import tool_map
@@ -28,9 +28,13 @@ class Msg(BaseModel):
 run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
 
 
+def validate_model(model: str, handler):
+    return f"Pro/{handler(model[4:])}" if model.startswith("Pro/") else handler(model)
+
+
 class ChainInput(BaseModel):
     messages: list[Msg] = []
-    model: Model = "gpt-4o-mini"
+    model: Annotated[Model, WrapValidator(validate_model)] = "gpt-4o-mini"
     temperature: float = Field(0.7, ge=0, le=2)
     stop: str | list[str] = []  # openai
     stop_sequences: list[str] = []  # anthropic
@@ -91,6 +95,8 @@ async def step_run(data: ChainInput, node: Node = Depends(get_node), config: dic
         data.model = "gpt-4.1-nano"
     if data.model == "llama-3.3-70b-versatile":
         data.model = "llama-3.3-70b"
+    if data.model == "deepseek-ai/DeepSeek-V3":
+        data.model = cast(Model, "Pro/deepseek-ai/DeepSeek-V3")
 
     for msg in data.messages:
         for string in env.banned_substrings:

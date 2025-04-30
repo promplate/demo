@@ -14,6 +14,7 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_u
 @link_llm("THUDM/")
 @link_llm("deepseek-ai/")
 @link_llm("internlm/")
+@link_llm("Pro/")
 class Siliconflow(AsyncChatOpenAI):
     @trim_start
     async def complete(self, prompt: str | list[Message], /, **config):
