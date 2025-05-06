@@ -48,6 +48,6 @@ class Config(BaseSettings):
     model_config = {"env_file": ".env", "extra": "allow"}
 
 
-env = Config()  # type: ignore
+env = Config()
 
 print(env)

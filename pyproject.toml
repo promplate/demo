@@ -48,3 +48,4 @@ line-length = 130
 exclude = ["**/*.pyi"]
 include = ["src"]
 typeCheckingMode = "standard"
+reportUnnecessaryTypeIgnoreComment = "error"
