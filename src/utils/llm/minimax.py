@@ -1,6 +1,5 @@
 from json import loads
 
-from promplate.llm.base import LLM
 from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
 
@@ -14,7 +13,7 @@ headers = {"authorization": f"Bearer {env.minimax_api_key}", "content-type": "ap
 
 
 @link_llm("abab")
-class MiniMax(LLM):
+class MiniMax:
     @staticmethod
     @patch.chat.acomplete
     async def complete(prompt: str | list[Message], /, **config):
