@@ -10,7 +10,7 @@ T = TypeVar("T", bound=LLM)
 
 def link_llm(*prefixes: str):
     def decorator(llm_class: type[T]) -> type[T]:
-        class Wrapper(llm_class):  # type: ignore
+        class Wrapper(llm_class):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, **kwargs)
                 for prefix in prefixes:

@@ -16,16 +16,16 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_u
 @link_llm("internlm/")
 @link_llm("Pro/")
 class Siliconflow(AsyncChatOpenAI):
+    def patch_config(self, **config):
+        return self._run_config | config
+
     @trim_start
     async def complete(self, prompt: str | list[Message], /, **config):
-        config = self._run_config | config
-        return await complete(prompt, **config)
+        return await complete(prompt, **self.patch_config(**config))
 
     @trim_start
     async def generate(self, prompt: str | list[Message], /, **config):
-        config = self._run_config | config
-
-        async for token in generate(prompt, **config):
+        async for token in generate(prompt, **self.patch_config(**config)):
             yield token
 
     def bind(self, **run_config):

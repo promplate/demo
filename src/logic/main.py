@@ -39,7 +39,7 @@ main = Node(load_template("main"), TypedContext({"tools": tools}))
 
 @patch.chain
 class Loop(Chain, AutoNaming):
-    __str__ = Node.__str__  # type: ignore
+    __str__ = Node.__str__
 
 
 main_loop = Loop(main)

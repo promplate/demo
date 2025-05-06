@@ -59,7 +59,7 @@ class ChatInput(ChainInput):
 
     @property
     def config(self):
-        return self.model_dump(exclude_unset=True, exclude={"messages"})
+        return self.model_dump(exclude_unset=True, exclude={"messages", "stream"})
 
 
 def mix_config(r: Request, data: ChatInput):
