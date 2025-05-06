@@ -17,7 +17,15 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.siliconflow_base_u
 @link_llm("Pro/")
 class Siliconflow(AsyncChatOpenAI):
     def patch_config(self, **config):
-        return self._run_config | config
+        return (
+            self._run_config
+            | config
+            | (
+                {"extra_body": config.get("extra_body", {}) | {"enable_thinking": False}}
+                if config["model"].startswith("Qwen/Qwen3")
+                else {}
+            )
+        )
 
     @trim_start
     async def complete(self, prompt: str | list[Message], /, **config):
