@@ -1,6 +1,5 @@
 from promplate import Message
 from promplate.llm.openai import AsyncChatComplete, AsyncChatGenerate, AsyncChatOpenAI
-from promplate.prompt.chat import ensure
 from promplate_trace.auto import patch
 
 from .. import prefill
