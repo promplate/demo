@@ -25,7 +25,6 @@ class Siliconflow(AsyncChatOpenAI):
     @trim_start
     async def generate(self, prompt: str | list[Message], /, **config):
         async for token in generate(prompt, **self.patch_config(**config)):
-            print(token, end="")
             yield token
 
     def bind(self, **run_config):
