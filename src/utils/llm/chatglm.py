@@ -1,7 +1,6 @@
 from functools import cache
 
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
-from promplate.llm.base import LLM
 from promplate.prompt.chat import Message
 from promplate_trace.auto import patch
 from pydantic import Field, validate_call
@@ -24,7 +23,7 @@ def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
 
 
 @link_llm("chatglm")
-class ChatGLM(LLM):
+class ChatGLM:
     @staticmethod
     @validate_call
     def validate(temperature: float = Field(0.95, gt=0, le=1), top_p: float = Field(0.7, gt=0, lt=1), **_): ...

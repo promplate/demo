@@ -4,7 +4,6 @@ from dashscope import Generation
 from dashscope.api_entities.dashscope_response import GenerationResponse
 from fastapi import HTTPException
 from fastapi.concurrency import iterate_in_threadpool, run_in_threadpool
-from promplate.llm.base import LLM
 from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
 
@@ -12,7 +11,7 @@ from .dispatch import link_llm
 
 
 @link_llm("qwen")
-class Qwen(LLM):
+class Qwen:
     @staticmethod
     @patch.chat.acomplete
     async def complete(prompt: str | list[Message], /, **config):

@@ -2,7 +2,6 @@ from typing import cast
 
 from anthropic import NOT_GIVEN, AsyncAnthropic, NotGiven
 from anthropic.types import MessageParam
-from promplate.llm.base import LLM
 from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
 from promplate_trace.utils import cache
@@ -44,7 +43,7 @@ async def generate(prompt: str | list[Message], /, **config):
 
 
 @link_llm("claude")
-class Anthropic(LLM):
+class Anthropic:
     complete = staticmethod(patch.chat.acomplete(complete))
     generate = staticmethod(patch.chat.agenerate(generate))
 
@@ -52,7 +51,7 @@ class Anthropic(LLM):
 anthropic = Anthropic()
 
 
-class RawAnthropic(LLM):
+class RawAnthropic:
     complete = staticmethod(patch.text.acomplete(complete))
     generate = staticmethod(patch.text.agenerate(generate))
 
