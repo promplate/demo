@@ -15,7 +15,6 @@ if env.logfire_token:
     logfire.info("app started", **env.model_dump())
     logfire.instrument_httpx()
     logfire.instrument_openai()
-    logfire.instrument_anthropic()
 
     from .entry import app
 

@@ -26,8 +26,7 @@ def link_llm(*prefixes: str):
     return decorator
 
 
-def find_llm(name: str):
-    for prefix in sorted(prefix2llm, key=len, reverse=True):  # longest prefix first
-        if name.startswith(prefix):
-            return prefix2llm[prefix]
-    raise NotImplementedError(name)
+def find_llm(_: str):
+    from .openai import openai
+
+    return openai

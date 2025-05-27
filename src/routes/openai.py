@@ -77,13 +77,13 @@ async def chat_completions(data: ChatInput, config: dict = Depends(mix_config)):
 
     if not data.stream:
         return format_response(
-            await llm.complete(data.messages, **config),
+            await llm.complete(data.messages, **config),  # type: ignore
             data.model,
         )
 
     return await make_response(
         stream_output(
-            cast(AsyncIterable[str], llm.generate(data.messages, **config)),
+            cast(AsyncIterable[str], llm.generate(data.messages, **config)),  # type: ignore
             data.model,
         ),
         "text/event-stream",

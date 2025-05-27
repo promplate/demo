@@ -18,9 +18,6 @@ dependencies = [
     "html2text~=2025.4.15",
     "beautifulsoup4~=4.13.1",
     "rich~=14.0.0",
-    "zhipuai~=2.1.5.20241203",
-    "anthropic~=0.52.0",
-    "dashscope~=1.23.0",
     "logfire[fastapi,system-metrics,httpx]~=3.16.0",
 ]
 
