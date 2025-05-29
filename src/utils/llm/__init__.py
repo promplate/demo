@@ -10,6 +10,7 @@ from .google import google
 from .groq import groq
 from .minimax import minimax
 from .openai import openai
+from .openrouter import openrouter
 from .qwen import qwen
 from .sambanova import sambanova
 from .siliconflow import siliconflow
@@ -170,4 +171,6 @@ Model = Literal[
     "gemini-2.0-flash",
     "gemini-2.0-flash-lite",
     "gemini-2.0-flash-thinking-exp",
+    "microsoft/mai-ds-r1:free",
+    "deepseek/deepseek-r1-0528:free",
 ]
