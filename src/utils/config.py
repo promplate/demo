@@ -6,6 +6,8 @@ class Config(BaseSettings):
     # llm providers
     github_models_api_key: str = ""
     github_models_base_url: str = "https://models.inference.ai.azure.com"
+    openrouter_api_key: str = ""
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
     siliconflow_api_key: str = ""
     siliconflow_base_url: str = "https://api.siliconflow.cn/v1/"
     sambanova_api_key: str = ""
@@ -50,4 +52,4 @@ class Config(BaseSettings):
 
 env = Config()
 
-print(env)
+# print(env)
