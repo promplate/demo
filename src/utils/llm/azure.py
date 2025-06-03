@@ -24,6 +24,7 @@ generate = patch.chat.agenerate(
 @link_llm("Phi")
 @link_llm("DeepSeek")
 @link_llm("MAI")
+@link_llm("Grok")
 class AzureOpenAI(AsyncChatOpenAI):
     @staticmethod
     async def generate(prompt, **kwargs):
