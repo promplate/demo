@@ -92,6 +92,8 @@ Model = Literal[
     "MAI-DS-R1",
     "DeepSeek-R1",
     "DeepSeek-V3",
+    "Grok-3",
+    "Grok-3-Mini",
     "chatglm_turbo",
     "claude-instant-1.2",
     "claude-2.1",
