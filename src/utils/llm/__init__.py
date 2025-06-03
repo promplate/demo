@@ -176,4 +176,5 @@ Model = Literal[
     "gemini-2.0-flash-thinking-exp",
     "microsoft/mai-ds-r1:free",
     "deepseek/deepseek-r1-0528:free",
+    "deepseek/deepseek-chat-v3-0324:free",
 ]
