@@ -66,6 +66,7 @@ Model = Literal[
     "Mistral-large-2411",
     "Mistral-small",
     "Mistral-small-2503",
+    "Mistral-medium-2505",
     "Codestral-2501",
     "Ministral-3B",
     "Meta-Llama-3.1-405B-Instruct",
