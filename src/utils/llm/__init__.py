@@ -69,6 +69,7 @@ Model = Literal[
     "Mistral-large-2411",
     "Mistral-small",
     "Mistral-small-2503",
+    "Mistral-medium-2505",
     "Codestral-2501",
     "Ministral-3B",
     "Meta-Llama-3.1-405B-Instruct",
@@ -175,4 +176,7 @@ Model = Literal[
     "gemini-2.0-flash-thinking-exp",
     "microsoft/mai-ds-r1:free",
     "deepseek/deepseek-r1-0528:free",
+    "deepseek/deepseek-chat-v3-0324:free",
+    "meta-llama/llama-4-scout:free",
+    "meta-llama/llama-4-maverick:free",
 ]
