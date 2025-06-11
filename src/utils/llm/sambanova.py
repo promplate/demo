@@ -10,10 +10,11 @@ from .dispatch import link_llm
 @link_llm("Qwen3")
 @link_llm("QwQ")
 @link_llm("Llama-3")
+@link_llm("Llama-4")
 @link_llm("Meta-Llama-3.2")
 @link_llm("Meta-Llama-3.3")
 @link_llm("DeepSeek-V3-")
-@link_llm("DeepSeek-R1-Distill")
+@link_llm("DeepSeek-R1-")
 class SambaNova(AsyncChatOpenAI):
     complete = staticmethod(
         patch.chat.acomplete(
