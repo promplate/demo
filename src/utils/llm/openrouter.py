@@ -1,4 +1,3 @@
-from promplate import Message
 from promplate.llm.openai import AsyncChatOpenAI
 from promplate_trace.auto import patch
 

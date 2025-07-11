@@ -52,4 +52,4 @@ class Config(BaseSettings):
 
 env = Config()
 
-# print(env)
+print(env)
