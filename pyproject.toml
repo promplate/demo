@@ -31,6 +31,7 @@ distribution = false
 dev = [
     "isort~=6.0.0",
     "black~=25.1.0",
+    "dotenv.pth~=1.0",
 ]
 
 [tool.pdm.scripts]
