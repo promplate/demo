@@ -22,6 +22,7 @@ llm = AsyncChatOpenAI(
 @link_llm("deepseek/deepseek-chat-v3-0324:free")
 @link_llm("meta-llama/llama-4-scout:free")
 @link_llm("meta-llama/llama-4-maverick:free")
+@link_llm("moonshotai/kimi-k2:free")
 class OpenRouter(AsyncChatOpenAI):
     complete = staticmethod(patch.chat.acomplete(llm.complete))
     generate = staticmethod(patch.chat.agenerate(llm.generate))
