@@ -47,9 +47,9 @@ class Config(BaseSettings):
     def base(self):
         return f"/{self.base_path}" if self.base_path else ""
 
-    model_config = {"env_file": ".env", "extra": "allow"}
+    model_config = {"extra": "allow"}
 
 
 env = Config()
 
-# print(env)
+print(env)

@@ -13,7 +13,8 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.cerebras_base_url,
 @link_llm("llama3.1")
 @link_llm("llama-3.3")
 @link_llm("llama-4")
-@link_llm("qwen-3-32b")
+@link_llm("qwen-3")
+@link_llm("qwen-3")
 class Cerebras(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
