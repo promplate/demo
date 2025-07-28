@@ -19,7 +19,7 @@ dependencies = [
     "beautifulsoup4~=4.13.1",
     "rich~=14.1.0",
     "zhipuai~=2.1.5.20241203",
-    "anthropic~=0.59.0",
+    "anthropic~=0.60.0",
     "dashscope~=1.24.0",
     "logfire[fastapi,system-metrics,httpx]~=4.0.0",
 ]
