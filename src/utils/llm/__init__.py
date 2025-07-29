@@ -3,7 +3,6 @@ from typing import Literal
 from .anthropic import anthropic
 from .azure import azure
 from .cerebras import cerebras
-from .chatglm import glm
 from .deepseek import deepseek
 from .dispatch import find_llm
 from .google import google
@@ -19,6 +18,7 @@ from .yi import yi
 
 openai_compatible_providers = {openai, xai, groq, azure, siliconflow, cerebras, yi}
 
+from .zai import zai
 
 Model = Literal[
     "gpt-3.5-turbo",
@@ -98,7 +98,9 @@ Model = Literal[
     "DeepSeek-V3",
     "Grok-3",
     "Grok-3-Mini",
-    "chatglm_turbo",
+    "glm-4.5",
+    "glm-4.5-air",
+    "glm-4.5-flash",
     "claude-3-haiku-20240307",
     "claude-3-sonnet-20240229",
     "qwen-qwq-32b",
@@ -110,11 +112,14 @@ Model = Literal[
     "llama-3.3-70b-versatile",
     "meta-llama/llama-4-scout-17b-16e-instruct",
     "meta-llama/llama-4-maverick-17b-128e-instruct",
+    "moonshotai/kimi-k2-instruct",
     "llama3.1-8b",
     "llama-3.3-70b",
     "llama-4-scout-17b-16e-instruct",
     "llama-4-maverick-17b-128e-instruct",
     "qwen-3-32b",
+    "qwen-3-235b-a22b",
+    "qwen-3-235b-a22b-instruct-2507",
     "qwen-turbo",
     "qwen-plus",
     "abab5.5s-chat",
@@ -182,4 +187,5 @@ Model = Literal[
     "deepseek/deepseek-chat-v3-0324:free",
     "meta-llama/llama-4-scout:free",
     "meta-llama/llama-4-maverick:free",
+    "moonshotai/kimi-k2:free",
 ]
