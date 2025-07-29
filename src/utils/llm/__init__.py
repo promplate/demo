@@ -3,7 +3,6 @@ from typing import Literal
 from .anthropic import anthropic
 from .azure import azure
 from .cerebras import cerebras
-from .chatglm import glm
 from .deepseek import deepseek
 from .dispatch import find_llm
 from .google import google
@@ -16,6 +15,7 @@ from .sambanova import sambanova
 from .siliconflow import siliconflow
 from .xai import xai
 from .yi import yi
+from .zai import zai
 
 Model = Literal[
     "gpt-3.5-turbo",
@@ -95,7 +95,9 @@ Model = Literal[
     "DeepSeek-V3",
     "Grok-3",
     "Grok-3-Mini",
-    "chatglm_turbo",
+    "glm-4.5",
+    "glm-4.5-air",
+    "glm-4.5-flash",
     "claude-instant-1.2",
     "claude-2.1",
     "claude-3-opus-20240229",
