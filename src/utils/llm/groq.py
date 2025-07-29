@@ -18,6 +18,7 @@ generate = AsyncChatGenerate(http_client=client, base_url=env.groq_base_url, api
 @link_llm("meta-llama/llama-4")
 @link_llm("qwen-qwq")
 @link_llm("deepseek-r1-distill")
+@link_llm("moonshotai/kimi-k2-instruct")
 class Groq(AsyncChatOpenAI):
     async def complete(self, prompt: str | list[Message], /, **config):
         config = self._run_config | config
