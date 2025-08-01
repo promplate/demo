@@ -27,7 +27,12 @@ class Cerebras(AsyncChatOpenAI):
             yield await complete(prompt, **config)
             return
 
+        need_patch = "thinking" in config.get("model", "")  # apply this fix when the model's name contains "thinking"
+
         async for token in generate(prompt, **config):
+            if need_patch and token and not token.startswith("<think>"):
+                yield "<think>\n"
+                need_patch = False
             yield token
 
     def bind(self, **run_config):
