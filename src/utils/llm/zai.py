@@ -37,11 +37,13 @@ class ZhipuAI:
         res = sdk.chat.completions.create(**config, stream=True)
         first_token = True
         async for event in iterate_in_threadpool(res):
-            if first_token:
-                first_token = False
-                yield str(event.choices[0].delta.content).removeprefix(" ")  # type: ignore
-            else:
-                yield str(event.choices[0].delta.content)  # type: ignore
+            if content := event.choices[0].delta.content:  # type: ignore
+                content = str(content)
+                if first_token:
+                    first_token = False
+                    yield content.removeprefix(" ")
+                else:
+                    yield content
 
 
 zai = ZhipuAI()
