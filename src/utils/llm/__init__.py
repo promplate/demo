@@ -120,6 +120,7 @@ Model = Literal[
     "qwen-3-32b",
     "qwen-3-235b-a22b-thinking-2507",
     "qwen-3-235b-a22b-instruct-2507",
+    "qwen-3-coder-480b",
     "qwen-turbo",
     "qwen-plus",
     "qwen-max",
