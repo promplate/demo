@@ -40,6 +40,8 @@ def validate_model(model: Model, handler) -> Model:
         return "Grok-3-Mini"
     if model == "deepseek-ai/DeepSeek-V3":
         return cast(Model, "Pro/deepseek-ai/DeepSeek-V3")
+    if model == "qwen-3-235b-a22b":
+        return "qwen-3-235b-a22b-instruct-2507"
     return model
 
 
