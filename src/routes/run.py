@@ -30,8 +30,8 @@ run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
 
 def validate_model(model: Model, handler) -> Model:
     model = cast(Model, f"Pro/{handler(model[4:])}" if model.startswith("Pro/") else handler(model))
-    if model.startswith("gpt-"):
-        return "gpt-4.1-nano"
+    if model.startswith("gpt-") and not model.startswith("gpt-oss"):
+        return "azure:gpt-4.1-nano"
     if model == "llama-3.3-70b-versatile":
         return "llama-3.3-70b"
     if model.startswith("grok-3"):
