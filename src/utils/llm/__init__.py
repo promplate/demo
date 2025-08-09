@@ -15,10 +15,10 @@ from .sambanova import sambanova
 from .siliconflow import siliconflow
 from .xai import xai
 from .yi import yi
+from .zai import zai
 
 openai_compatible_providers = {openai, xai, groq, azure, siliconflow, cerebras, yi}
 
-from .zai import zai
 
 Model = Literal[
     "gpt-3.5-turbo",
