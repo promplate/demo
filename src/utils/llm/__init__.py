@@ -195,7 +195,7 @@ Model = Literal[
     "microsoft/mai-ds-r1:free",
     "deepseek/deepseek-r1-0528:free",
     "deepseek/deepseek-chat-v3-0324:free",
-    "meta-llama/llama-4-scout:free",
-    "meta-llama/llama-4-maverick:free",
     "moonshotai/kimi-k2:free",
+    "z-ai/glm-4.5-air:free",
+    "qwen/qwen3-coder:free",
 ]
