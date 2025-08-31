@@ -1,4 +1,3 @@
-from collections import deque
 from functools import wraps
 from typing import AsyncGenerator, Callable
 
@@ -8,10 +7,10 @@ from promptools.stream.sse import as_event_stream
 def non_duplicated_event_stream(generator: Callable[..., AsyncGenerator[tuple[str, str], None]]):
     @wraps(generator)
     async def wrapper(*args, **kwargs):
-        last3 = deque(maxlen=3)
+        last = {}
         async for event in as_event_stream(generator(*args, **kwargs)):
-            if event not in last3:
+            if last.get(event.event) != event:
                 yield str(event)
-                last3.append(event)
+                last[event.event] = event
 
     return wrapper
