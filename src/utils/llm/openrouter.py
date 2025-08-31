@@ -20,6 +20,7 @@ llm = AsyncChatOpenAI(
 @link_llm("microsoft/mai-ds-r1:free")
 @link_llm("deepseek/deepseek-r1-0528:free")
 @link_llm("deepseek/deepseek-chat-v3-0324:free")
+@link_llm("deepseek/deepseek-chat-v3.1:free")
 @link_llm("moonshotai/kimi-k2:free")
 @link_llm("z-ai/glm-4.5-air:free")
 @link_llm("qwen/qwen3-coder:free")
