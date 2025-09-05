@@ -5,6 +5,7 @@ if env.logfire_token:
 
     logfire.configure()
     logfire.info("app started", **env.model_dump())
+    logfire.instrument_print()
     logfire.instrument_httpx()
     logfire.instrument_openai()
     logfire.instrument_anthropic()
