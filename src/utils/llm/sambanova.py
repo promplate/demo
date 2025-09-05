@@ -13,6 +13,7 @@ from .dispatch import link_llm
 @link_llm("Llama-4")
 @link_llm("Meta-Llama-3.2")
 @link_llm("Meta-Llama-3.3")
+@link_llm("DeepSeek-V3.1")
 @link_llm("DeepSeek-V3-")
 @link_llm("DeepSeek-R1-")
 class SambaNova(AsyncChatOpenAI):
