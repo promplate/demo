@@ -121,6 +121,7 @@ Model = Literal[
     "meta-llama/llama-4-scout-17b-16e-instruct",
     "meta-llama/llama-4-maverick-17b-128e-instruct",
     "moonshotai/kimi-k2-instruct",
+    "moonshotai/kimi-k2-instruct-0905",
     "llama3.1-8b",
     "llama-3.3-70b",
     "llama-4-scout-17b-16e-instruct",
@@ -193,6 +194,9 @@ Model = Literal[
     "gemini-2.0-flash",
     "gemini-2.0-flash-lite",
     "gemini-2.0-flash-thinking-exp",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-pro",
     "microsoft/mai-ds-r1:free",
     "deepseek/deepseek-r1-0528:free",
     "deepseek/deepseek-chat-v3-0324:free",
@@ -200,4 +204,5 @@ Model = Literal[
     "moonshotai/kimi-k2:free",
     "z-ai/glm-4.5-air:free",
     "qwen/qwen3-coder:free",
+    "x-ai/grok-4-fast:free",
 ]
