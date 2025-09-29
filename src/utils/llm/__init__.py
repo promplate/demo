@@ -186,6 +186,7 @@ Model = Literal[
     "Llama-4-Scout-17B-16E-Instruct",
     "Llama-4-Maverick-17B-128E-Instruct",
     "DeepSeek-V3.1",
+    "DeepSeek-V3.1-Terminus",
     "DeepSeek-V3-0324",
     "DeepSeek-R1-0528",
     "DeepSeek-R1-Distill-Llama-70B",
