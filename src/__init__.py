@@ -1,10 +1,16 @@
+from os import getenv
+
 from .utils.config import env
+
+
+def get_sha(default: str):
+    return getenv("RENDER_GIT_COMMIT") or getenv("RAILWAY_GIT_COMMIT_SHA") or default
+
 
 if env.logfire_token:
     import logfire
-    from langfuse.environment import get_common_release_envs
 
-    logfire.configure(code_source=logfire.CodeSource("https://github.com/promplate/demo", get_common_release_envs() or "deploy"))
+    logfire.configure(code_source=logfire.CodeSource("https://github.com/promplate/demo", get_sha("deploy")))
     logfire.info("app started", **env.model_dump())
     logfire.instrument_openai()
     logfire.instrument_anthropic()
