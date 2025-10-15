@@ -6,10 +6,9 @@ if env.logfire_token:
 
     logfire.configure(code_source=logfire.CodeSource("https://github.com/promplate/demo", get_common_release_envs() or "deploy"))
     logfire.info("app started", **env.model_dump())
-    logfire.instrument_print()
-    logfire.instrument_httpx()
     logfire.instrument_openai()
     logfire.instrument_anthropic()
+    logfire.instrument_system_metrics()
 
     from .entry import app
 
