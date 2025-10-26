@@ -19,6 +19,7 @@ class Config(BaseSettings):
     cerebras_api_key: str = ""
     cerebras_base_url: str = "https://api.cerebras.ai/v1"
     minimax_api_key: str = ""
+    minimax_base_url: str = "https://api.minimaxi.com/v1"
     openai_api_key: str = "*"
     openai_base_url: str = ""
     octoai_api_key: str = ""
