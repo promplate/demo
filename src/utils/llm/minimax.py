@@ -13,6 +13,7 @@ headers = {"authorization": f"Bearer {env.minimax_api_key}", "content-type": "ap
 
 
 @link_llm("abab")
+@link_llm("MiniMax")
 class MiniMax:
     @staticmethod
     @patch.chat.acomplete

@@ -137,6 +137,8 @@ Model = Literal[
     "abab5.5s-chat",
     "abab5.5-chat",
     "abab6-chat",
+    "MiniMax-M1",
+    "MiniMax-M2",
     "Qwen/QwQ-32B-Preview",
     "Qwen/QwQ-32B",
     "Qwen/Qwen2.5-Coder-7B-Instruct",
