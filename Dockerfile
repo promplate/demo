@@ -11,7 +11,7 @@ COPY pyproject.toml .
 RUN uv sync --compile-bytecode
 
 FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS base
-RUN apt-get update && apt-get install -y curl && curl -L https://github.com/cli/cli/releases/download/v2.82.1/gh_2.82.1_linux_amd64.tar.gz | tar -xz && cp gh_*/bin/gh /usr/local/bin/ && rm -rf gh_*
+RUN apt-get update && apt-get install -y curl && curl -s https://api.github.com/repos/cli/cli/releases/latest | python -c "import json, sys; data = json.load(sys.stdin); tag = data['tag_name']; version = tag[1:]; print(f'https://github.com/cli/cli/releases/download/{tag}/gh_{version}_linux_amd64.tar.gz')" | xargs curl -L | tar -xz && cp gh_*/bin/gh /usr/local/bin/ && rm -rf gh_*
 WORKDIR /app
 COPY --from=js /app/dist frontend/dist
 COPY --from=py /app .
