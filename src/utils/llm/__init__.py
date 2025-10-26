@@ -163,6 +163,7 @@ Model = Literal[
     "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
     "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
     "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+    "deepseek-ai/DeepSeek-V3.2-Exp",
     "internlm/internlm2_5-7b-chat",
     "internlm/internlm2_5-20b-chat",
     "yi-lightning",
