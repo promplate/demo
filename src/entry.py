@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
+from gh_mcp.impl import mcp
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
 
@@ -8,7 +9,9 @@ from .routes.run import run_router
 from .utils.config import env
 from .utils.time import now
 
-app = FastAPI(title="Promplate Demo", description="<https://github.com/promplate/demo>")
+mcp = mcp.http_app("/mcp", stateless_http=True, json_response=True)
+app = FastAPI(title="Promplate Demo", description="<https://github.com/promplate/demo>", lifespan=mcp.lifespan)
+app.mount("/", mcp)
 app.add_middleware(CORSMiddleware, allow_origins="*", allow_credentials=True, allow_methods="*", allow_headers="*")
 app.include_router(prompts_router, prefix="/prompts")
 app.include_router(run_router)

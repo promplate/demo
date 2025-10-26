@@ -2,7 +2,7 @@
 name = "promplate-demo"
 version = "1"
 authors = [{ name = "Muspi Merol", email = "me@promplate.dev" }]
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.12,<3.15"
 readme = "README.md"
 license = { text = "MIT" }
 dependencies = [
@@ -22,6 +22,7 @@ dependencies = [
     "anthropic~=0.65.0",
     "dashscope~=1.24.0",
     "logfire[fastapi,system-metrics]~=4.14.1",
+    "gh-mcp",
 ]
 
 [tool.pdm]
