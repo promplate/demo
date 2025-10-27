@@ -11,7 +11,13 @@ COPY pyproject.toml .
 RUN uv sync --compile-bytecode
 
 FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS base
-RUN apt-get update && apt-get install -y curl && curl -s https://api.github.com/repos/cli/cli/releases/latest | python -c "import json, sys; data = json.load(sys.stdin); tag = data['tag_name']; version = tag[1:]; print(f'https://github.com/cli/cli/releases/download/{tag}/gh_{version}_linux_amd64.tar.gz')" | xargs curl -L | tar -xz && cp gh_*/bin/gh /usr/local/bin/ && rm -rf gh_*
+RUN apt-get update && apt-get install -y curl gpg wget && \
+    mkdir -p -m 755 /etc/apt/keyrings && \
+    wget -nv -O- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null && \
+    chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg && \
+    mkdir -p -m 755 /etc/apt/sources.list.d && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
+    apt-get update && apt-get install -y gh
 WORKDIR /app
 COPY --from=js /app/dist frontend/dist
 COPY --from=py /app .
