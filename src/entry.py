@@ -11,7 +11,6 @@ from .utils.time import now
 
 mcp = mcp.http_app("/mcp", stateless_http=True, json_response=True)
 app = FastAPI(title="Promplate Demo", description="<https://github.com/promplate/demo>", lifespan=mcp.lifespan)
-app.mount("/", mcp)
 app.add_middleware(CORSMiddleware, allow_origins="*", allow_credentials=True, allow_methods="*", allow_headers="*")
 app.include_router(prompts_router, prefix="/prompts")
 app.include_router(run_router)
@@ -27,4 +26,5 @@ async def greet():
     return f"hi from {now()}"
 
 
+app.mount("/", mcp)
 app.mount("/", StaticFiles(directory="frontend/dist", html=True, check_dir=False))
