@@ -80,7 +80,7 @@ async def step_run(data: ChainInput, node: Node = Depends(get_node)):
     for msg in data.messages:
         for string in env.banned_substrings:
             if string in msg.content:
-                return PlainTextResponse(env.banned_response)
+                return PlainTextResponse(env.banned_response, media_type="text/markdown")
 
     async def make_stream():
         last = ""
@@ -89,4 +89,8 @@ async def step_run(data: ChainInput, node: Node = Depends(get_node)):
                 yield cast(str, c.result).removeprefix(last)
                 last = c.result
 
-    return await make_response(make_stream())
+    if (data.config.get("response_format") or {}).get("type", "text") == "text":
+        media_type = "text/markdown"
+    else:
+        media_type = "application/json"
+    return await make_response(make_stream(), media_type)
