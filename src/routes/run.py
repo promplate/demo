@@ -24,7 +24,7 @@ class Msg(BaseModel):
     name: Annotated[Literal.__getitem__(tuple(tool_map)), str] | None = None  # type: ignore
 
 
-run_config_fields = {"model", "temperature", "stop", "stop_sequences"}
+run_config_fields = {"model", "temperature", "stop", "stop_sequences", "response_format", "presence_penalty", "frequency_penalty"}
 
 
 class ChainInput(BaseModel):
