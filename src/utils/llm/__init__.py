@@ -209,5 +209,5 @@ Model = Literal[
     "moonshotai/kimi-k2:free",
     "z-ai/glm-4.5-air:free",
     "qwen/qwen3-coder:free",
-    "x-ai/grok-4-fast:free",
+    "openrouter/polaris-alpha",
 ]
