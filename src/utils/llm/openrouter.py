@@ -24,6 +24,9 @@ llm = AsyncChatOpenAI(
 @link_llm("moonshotai/kimi-k2:free")
 @link_llm("z-ai/glm-4.5-air:free")
 @link_llm("qwen/qwen3-coder:free")
+@link_llm("kwaipilot/kat-coder-pro:free")
+@link_llm("alibaba/tongyi-deepresearch-30b-a3b:free")
+@link_llm("meituan/longcat-flash-chat:free")
 @link_llm("openrouter/")
 class OpenRouter(AsyncChatOpenAI):
     complete = staticmethod(patch.chat.acomplete(llm.complete))

@@ -209,5 +209,7 @@ Model = Literal[
     "moonshotai/kimi-k2:free",
     "z-ai/glm-4.5-air:free",
     "qwen/qwen3-coder:free",
-    "openrouter/polaris-alpha",
+    "kwaipilot/kat-coder-pro:free",
+    "alibaba/tongyi-deepresearch-30b-a3b:free",
+    "meituan/longcat-flash-chat:free",
 ]
