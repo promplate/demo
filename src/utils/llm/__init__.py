@@ -129,7 +129,7 @@ Model = Literal[
     "qwen-3-32b",
     "qwen-3-235b-a22b-thinking-2507",
     "qwen-3-235b-a22b-instruct-2507",
-    "qwen-3-coder-480b",
+    "zai-glm-4.6",
     "gpt-oss-120b",
     "qwen-turbo",
     "qwen-plus",
@@ -208,5 +208,7 @@ Model = Literal[
     "moonshotai/kimi-k2:free",
     "z-ai/glm-4.5-air:free",
     "qwen/qwen3-coder:free",
-    "x-ai/grok-4-fast:free",
+    "kwaipilot/kat-coder-pro:free",
+    "alibaba/tongyi-deepresearch-30b-a3b:free",
+    "meituan/longcat-flash-chat:free",
 ]
