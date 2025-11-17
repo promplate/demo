@@ -6,12 +6,8 @@ from .common import client
 from .dispatch import link_llm
 
 
-@link_llm("Qwen2.5")
 @link_llm("Qwen3")
-@link_llm("QwQ")
-@link_llm("Llama-3")
 @link_llm("Llama-4")
-@link_llm("Meta-Llama-3.2")
 @link_llm("Meta-Llama-3.3")
 @link_llm("DeepSeek-V3.1")
 @link_llm("DeepSeek-V3-")
