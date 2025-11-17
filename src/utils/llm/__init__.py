@@ -190,4 +190,6 @@ Model = Literal[
     "kwaipilot/kat-coder-pro:free",
     "alibaba/tongyi-deepresearch-30b-a3b:free",
     "meituan/longcat-flash-chat:free",
+    "openrouter/sherlock-dash-alpha",
+    "openrouter/sherlock-think-alpha",
 ]
