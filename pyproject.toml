@@ -21,8 +21,8 @@ dependencies = [
     "zai-sdk~=0.0.1",
     "anthropic~=0.65.0",
     "dashscope~=1.25.0",
-    "logfire[fastapi,system-metrics]~=4.14.1",
     "gh-mcp",
+    "logfire[fastapi,system-metrics]~=4.15.0",
 ]
 
 [tool.pdm]
@@ -30,8 +30,8 @@ distribution = false
 
 [dependency-groups]
 dev = [
-    "isort~=6.0.0",
-    "black~=25.1.0",
+    "isort~=7.0.0",
+    "black~=25.11.0",
     "dotenv.pth~=1.0",
 ]
 
