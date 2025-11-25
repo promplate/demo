@@ -191,4 +191,5 @@ Model = Literal[
     "alibaba/tongyi-deepresearch-30b-a3b:free",
     "meituan/longcat-flash-chat:free",
     "x-ai/grok-4.1-fast:free",
+    "openrouter/bert-nebulon-alpha",
 ]
