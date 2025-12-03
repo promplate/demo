@@ -11,7 +11,7 @@ llm = AsyncChatOpenAI(
     api_key=env.openrouter_api_key,
     default_headers={
         # Site information for rankings on openrouter.ai
-        "HTTP-Referer": "https://promplate.dev",
+        "HTTP-Referer": "https://github.com/promplate",
         "X-Title": "Promplate",
     },
 )
