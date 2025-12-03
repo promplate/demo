@@ -190,6 +190,9 @@ Model = Literal[
     "kwaipilot/kat-coder-pro:free",
     "alibaba/tongyi-deepresearch-30b-a3b:free",
     "meituan/longcat-flash-chat:free",
-    "x-ai/grok-4.1-fast:free",
+    "allenai/olmo-3-32b-think:free",
+    "arcee-ai/trinity-mini:free",
+    "tngtech/tng-r1t-chimera:free",
+    "amazon/nova-2-lite-v1:free",
     "openrouter/bert-nebulon-alpha",
 ]
