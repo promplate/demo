@@ -5,12 +5,12 @@ RUN bun install
 COPY frontend .
 RUN NODE_ENV=production bun run -b build
 
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS py
+FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS py
 WORKDIR /app
 COPY pyproject.toml .
 RUN uv sync --compile-bytecode
 
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS base
+FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS base
 RUN apt-get update && apt-get install -y curl gpg wget && \
     mkdir -p -m 755 /etc/apt/keyrings && \
     wget -nv -O- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null && \

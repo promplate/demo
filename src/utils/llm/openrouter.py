@@ -11,7 +11,7 @@ llm = AsyncChatOpenAI(
     api_key=env.openrouter_api_key,
     default_headers={
         # Site information for rankings on openrouter.ai
-        "HTTP-Referer": "https://promplate.dev",
+        "HTTP-Referer": "https://github.com/promplate",
         "X-Title": "Promplate",
     },
 )
@@ -25,7 +25,10 @@ llm = AsyncChatOpenAI(
 @link_llm("kwaipilot/kat-coder-pro:free")
 @link_llm("alibaba/tongyi-deepresearch-30b-a3b:free")
 @link_llm("meituan/longcat-flash-chat:free")
-@link_llm("openrouter/")
+@link_llm("allenai/olmo-3-32b-think:free")
+@link_llm("arcee-ai/trinity-mini:free")
+@link_llm("tngtech/tng-r1t-chimera:free")
+@link_llm("amazon/nova-2-lite-v1:free")
 class OpenRouter(AsyncChatOpenAI):
     complete = staticmethod(patch.chat.acomplete(llm.complete))
     generate = staticmethod(patch.chat.agenerate(llm.generate))
