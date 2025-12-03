@@ -5,12 +5,12 @@ RUN bun install
 COPY frontend .
 RUN NODE_ENV=production bun run -b build
 
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS py
+FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS py
 WORKDIR /app
 COPY pyproject.toml .
 RUN uv sync --compile-bytecode
 
-FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS base
+FROM ghcr.io/astral-sh/uv:python3.14-bookworm-slim AS base
 WORKDIR /app
 COPY --from=js /app/dist frontend/dist
 COPY --from=py /app .
