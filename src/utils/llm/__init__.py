@@ -196,5 +196,5 @@ Model = Literal[
     "arcee-ai/trinity-mini:free",
     "tngtech/tng-r1t-chimera:free",
     "amazon/nova-2-lite-v1:free",
-    "openrouter/bert-nebulon-alpha",
+    "mistralai/devstral-2512:free",
 ]

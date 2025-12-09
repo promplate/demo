@@ -29,6 +29,7 @@ llm = AsyncChatOpenAI(
 @link_llm("arcee-ai/trinity-mini:free")
 @link_llm("tngtech/tng-r1t-chimera:free")
 @link_llm("amazon/nova-2-lite-v1:free")
+@link_llm("mistralai/devstral-2512:free")
 class OpenRouter(AsyncChatOpenAI):
     complete = staticmethod(patch.chat.acomplete(llm.complete))
     generate = staticmethod(patch.chat.agenerate(llm.generate))
