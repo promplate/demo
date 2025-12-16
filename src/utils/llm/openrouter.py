@@ -27,6 +27,8 @@ llm = AsyncChatOpenAI(
 @link_llm("amazon/nova-2-lite-v1:free")
 @link_llm("mistralai/devstral-2512:free")
 @link_llm("nex-agi/deepseek-v3.1-nex-n1:free")
+@link_llm("nvidia/nemotron-3-nano-30b-a3b:free")
+@link_llm("xiaomi/mimo-v2-flash:free")
 class OpenRouter(AsyncChatOpenAI):
     complete = staticmethod(patch.chat.acomplete(llm.complete))
     generate = staticmethod(patch.chat.agenerate(llm.generate))

@@ -194,4 +194,6 @@ Model = Literal[
     "amazon/nova-2-lite-v1:free",
     "mistralai/devstral-2512:free",
     "nex-agi/deepseek-v3.1-nex-n1:free",
+    "nvidia/nemotron-3-nano-30b-a3b:free",
+    "xiaomi/mimo-v2-flash:free",
 ]
