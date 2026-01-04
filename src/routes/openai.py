@@ -1,6 +1,6 @@
 from typing import AsyncIterable, Literal, cast, get_args
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Header, Request
 from openai.types.chat import ChatCompletionContentPartTextParam
 from promplate import Message
 from pydantic import field_validator
@@ -9,7 +9,7 @@ from typing_extensions import TypedDict
 from ..utils.http import forward_headers
 from ..utils.llm import Model, openai_compatible_providers
 from ..utils.llm.dispatch import find_llm
-from ..utils.openai_api import format_response, stream_output
+from ..utils.openai_api import format_response, need_notice, stream_output
 from ..utils.response import make_response
 from .run import ChainInput
 
@@ -72,8 +72,13 @@ def mix_config(r: Request, data: ChatInput):
 
 
 @openai_router.post("/chat/completions")
-async def chat_completions(data: ChatInput, config: dict = Depends(mix_config)):
+async def chat_completions(
+    data: ChatInput, config: dict = Depends(mix_config), ua=Header(alias="user-agent", include_in_schema=False)
+):
     llm = find_llm(data.model)
+
+    if ua == "FreeChat-API/1.0":
+        need_notice.set(True)
 
     if not data.stream:
         return format_response(
