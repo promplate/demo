@@ -123,6 +123,7 @@ Model = Literal[
     "qwen-3-32b",
     "qwen-3-235b-a22b-instruct-2507",
     "zai-glm-4.6",
+    "zai-glm-4.7",
     "gpt-oss-120b",
     "qwen-turbo",
     "qwen-plus",
