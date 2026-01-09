@@ -30,8 +30,10 @@ run_config_fields = {"model", "temperature", "stop", "stop_sequences", "response
 
 def validate_model(model: Model, handler) -> Model:
     model = cast(Model, f"Pro/{handler(model[4:])}" if model.startswith("Pro/") else handler(model))
-    if model.startswith("gpt-") and not model.startswith("gpt-oss"):
+    if model.startswith("gpt-5"):
         return "azure:gpt-5-nano"
+    if model.startswith("gpt-") and not model.startswith("gpt-oss"):
+        return "azure:gpt-4.1-nano"
     if model == "llama-3.3-70b-versatile":
         return "llama-3.3-70b"
     if model.startswith("grok-3"):
@@ -43,7 +45,7 @@ def validate_model(model: Model, handler) -> Model:
 
 class ChainInput(BaseModel):
     messages: list[Msg] = []
-    model: Annotated[Model, WrapValidator(validate_model)] = "gpt-4o-mini"
+    model: Annotated[Model, WrapValidator(validate_model)] = "azure:gpt-4.1-nano"
     temperature: float = Field(0.7, ge=0, le=2)
     stop: str | list[str] = []  # openai
     stop_sequences: list[str] = []  # anthropic
