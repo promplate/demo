@@ -21,7 +21,7 @@ dependencies = [
     "zai-sdk~=0.2.1",
     "anthropic~=0.65.0",
     "dashscope~=1.25.0",
-    "logfire[fastapi,system-metrics]~=4.19.0",
+    "logfire[fastapi,system-metrics]~=4.21.0",
 ]
 
 [tool.pdm]
