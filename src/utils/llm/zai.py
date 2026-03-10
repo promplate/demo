@@ -19,20 +19,14 @@ def ensure_even(prompt: str | list[Message]) -> list[SafeMessage]:
 @link_llm("glm-")
 class ZhipuAI:
     @staticmethod
-    @validate_call
-    def validate(temperature: float = Field(0.95, gt=0, le=1), top_p: float = Field(0.7, gt=0, lt=1), **_): ...
-
-    @staticmethod
     @patch.chat.acomplete
     async def complete(prompt: str | list[Message], /, **config):
-        __class__.validate(**config)
         config |= {"messages": ensure_even(prompt), "thinking": {"type": "disabled"}}
         return str((await run_in_threadpool(sdk.chat.completions.create, **config)).choices[0].message.content).removeprefix(" ")  # type: ignore
 
     @staticmethod
     @patch.chat.agenerate
     async def generate(prompt: str | list[Message], /, **config):
-        __class__.validate(**config)
         config |= {"messages": ensure_even(prompt), "thinking": {"type": "disabled"}}
         res = sdk.chat.completions.create(**config, stream=True)
         first_token = True
