@@ -202,7 +202,7 @@ Model = Literal[
     "gemini-2.5-pro",
     "z-ai/glm-4.5-air:free",
     "qwen/qwen3-coder:free",
-    "qwen/qwen3.6-plus-preview:free",
+    "qwen/qwen3.6-plus:free",
     "stepfun/step-3.5-flash:free",
     "arcee-ai/trinity-mini:free",
     "nvidia/nemotron-3-nano-30b-a3b:free",

@@ -19,7 +19,7 @@ llm = AsyncChatOpenAI(
 
 @link_llm("z-ai/glm-4.5-air:free")
 @link_llm("qwen/qwen3-coder:free")
-@link_llm("qwen/qwen3.6-plus-preview:free")
+@link_llm("qwen/qwen3.6-plus:free")
 @link_llm("stepfun/step-3.5-flash:free")
 @link_llm("arcee-ai/trinity-mini:free")
 @link_llm("nvidia/nemotron-3-nano-30b-a3b:free")
