@@ -14,6 +14,7 @@ from .qwen import qwen
 from .sambanova import sambanova
 from .siliconflow import siliconflow
 from .xai import xai
+from .xiaomi import xiaomi
 from .yi import yi
 from .zai import zai
 
@@ -207,4 +208,6 @@ Model = Literal[
     "arcee-ai/trinity-mini:free",
     "nvidia/nemotron-3-nano-30b-a3b:free",
     "nvidia/nemotron-3-super-120b-a12b:free",
+    "mimo-v2.5-pro",
+    "mimo-v2.5",
 ]
