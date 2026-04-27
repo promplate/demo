@@ -14,6 +14,7 @@ from .qwen import qwen
 from .sambanova import sambanova
 from .siliconflow import siliconflow
 from .xai import xai
+from .xiaomi import xiaomi
 from .yi import yi
 from .zai import zai
 
@@ -32,7 +33,10 @@ Model = Literal[
     "gpt-4.1-mini-2025-04-14",
     "gpt-4.1-nano",
     "gpt-4.1-nano-2025-04-14",
+    "gpt-5.5",
     "gpt-5.4",
+    "gpt-5.4-mini",
+    "gpt-5.4-nano",
     "gpt-5.3-codex",
     "gpt-5.3-codex-spark",
     "gpt-5.2",
@@ -123,8 +127,13 @@ Model = Literal[
     "glm-4.6",
     "glm-4.6v",
     "glm-4.7",
-    "claude-3-haiku-20240307",
+    "glm-5",
+    "glm-5.1",
+    "claude-instant-1.2",
+    "claude-2.1",
+    "claude-3-opus-20240229",
     "claude-3-sonnet-20240229",
+    "claude-3-haiku-20240307",
     "llama-3.1-8b-instant",
     "llama-3.3-70b-versatile",
     "meta-llama/llama-4-scout-17b-16e-instruct",
@@ -186,6 +195,7 @@ Model = Literal[
     "DeepSeek-V3.1",
     "DeepSeek-V3.1-cb",
     "DeepSeek-V3.1-Terminus",
+    "DeepSeek-V3.2",
     "DeepSeek-V3-0324",
     "DeepSeek-R1-0528",
     "DeepSeek-R1-Distill-Llama-70B",
@@ -200,14 +210,11 @@ Model = Literal[
     "gemini-2.5-pro",
     "z-ai/glm-4.5-air:free",
     "qwen/qwen3-coder:free",
-    "kwaipilot/kat-coder-pro:free",
-    "alibaba/tongyi-deepresearch-30b-a3b:free",
-    "allenai/olmo-3-32b-think:free",
-    "allenai/olmo-3.1-32b-think:free",
+    "qwen/qwen3.6-plus:free",
+    "stepfun/step-3.5-flash:free",
     "arcee-ai/trinity-mini:free",
-    "tngtech/tng-r1t-chimera:free",
-    "mistralai/devstral-2512:free",
-    "nex-agi/deepseek-v3.1-nex-n1:free",
     "nvidia/nemotron-3-nano-30b-a3b:free",
-    "xiaomi/mimo-v2-flash:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "mimo-v2.5-pro",
+    "mimo-v2.5",
 ]
