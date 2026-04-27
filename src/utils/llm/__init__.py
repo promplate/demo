@@ -124,6 +124,8 @@ Model = Literal[
     "glm-4.6",
     "glm-4.6v",
     "glm-4.7",
+    "glm-5",
+    "glm-5.1",
     "claude-instant-1.2",
     "claude-2.1",
     "claude-3-opus-20240229",
