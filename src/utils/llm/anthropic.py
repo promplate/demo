@@ -1,6 +1,6 @@
 from typing import cast
 
-from anthropic import NOT_GIVEN, AsyncAnthropic, NotGiven
+from anthropic import AsyncAnthropic, Omit, omit
 from anthropic.types import MessageParam
 from promplate.prompt.chat import Message, ensure
 from promplate_trace.auto import patch
@@ -12,11 +12,11 @@ from .common import client, ensure_safe
 from .dispatch import link_llm
 
 
-def split(prompt: str | list[Message]) -> tuple[list[MessageParam], NotGiven | str]:
+def split(prompt: str | list[Message]) -> tuple[list[MessageParam], Omit | str]:
     messages = ensure(prompt)
     if messages[0]["role"] == "system":
         return cast(list[MessageParam], ensure_safe(messages[1:])), messages[0]["content"]
-    return cast(list[MessageParam], ensure_safe(messages)), NOT_GIVEN
+    return cast(list[MessageParam], ensure_safe(messages)), omit
 
 
 @cache
