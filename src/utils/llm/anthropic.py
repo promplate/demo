@@ -8,6 +8,7 @@ from promplate_trace.utils import cache
 
 from src.utils import prefill
 
+from ..config import env
 from .common import client, ensure_safe
 from .dispatch import link_llm
 
@@ -21,7 +22,7 @@ def split(prompt: str | list[Message]) -> tuple[list[MessageParam], Omit | str]:
 
 @cache
 def get_anthropic():
-    return AsyncAnthropic(http_client=client)
+    return AsyncAnthropic(http_client=client, base_url=env.anthropic_base_url or None, api_key=env.anthropic_api_key)
 
 
 @prefill.patch_async_complete
