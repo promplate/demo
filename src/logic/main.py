@@ -58,6 +58,7 @@ async def collect_results(context: TypedContext):
     if not actions:
         return
 
+    context.partial = False
     results = await gather(*context.call_tools())
 
     messages = cast(list[Message], context["messages"])
@@ -75,6 +76,7 @@ async def collect_results(context: TypedContext):
         ]
     )
 
+    context._tasks.clear()
     del parsed["actions"]
 
     raise Jump(into=main)
