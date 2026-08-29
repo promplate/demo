@@ -29,7 +29,7 @@ distribution = false
 
 [dependency-groups]
 dev = [
-    "isort~=8.0.1",
+    "isort~=9.0.1",
     "black~=26.5.1",
     "dotenv.pth~=1.0",
 ]
