@@ -15,6 +15,7 @@ class Config(BaseSettings):
     deepseek_api_key: str = ""
     deepseek_base_url: str = "https://api.deepseek.com/v1"
     anthropic_api_key: str = ""
+    anthropic_base_url: str = ""
     dashscope_api_key: str = ""
     cerebras_api_key: str = ""
     cerebras_base_url: str = "https://api.cerebras.ai/v1"
@@ -31,6 +32,8 @@ class Config(BaseSettings):
     groq_base_url: str = "https://api.groq.com/openai/v1"
     xai_api_key: str = ""
     xai_base_url: str = "https://api.x.ai/v1"
+    xiaomi_api_key: str = ""
+    xiaomi_base_url: str = "https://api.xiaomimimo.com/v1"
     yi_api_key: str = ""
     yi_base_url: str = "https://api.lingyiwanwu.com/v1"
 

@@ -1,6 +1,6 @@
 FROM oven/bun:1-alpine AS js
 WORKDIR /app
-COPY frontend/package.json /
+COPY frontend/package.json .
 RUN bun install
 COPY frontend .
 RUN NODE_ENV=production bun run -b build
