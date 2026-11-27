@@ -20,7 +20,7 @@ dependencies = [
     "rich~=15.0.0",
     "zai-sdk~=0.2.1",
     "anthropic~=0.125.0",
-    "dashscope~=1.27.8",
+    "dashscope~=2.1.2",
     "logfire[fastapi,system-metrics]~=4.41.0",
 ]
 
